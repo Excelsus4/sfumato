@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560" role="img" aria-label="Sfumato vs Direct Baseline Test-Time Creativity Scaling Curve">
+  <defs>
+    <linearGradient id="parchmentBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF6EE"/>
+      <stop offset="55%" stop-color="#F5EFE2"/>
+      <stop offset="100%" stop-color="#EFE6D5"/>
+    </linearGradient>
+    <linearGradient id="divFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B83B2A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#B83B2A" stop-opacity="0.03"/>
+    </linearGradient>
+    <linearGradient id="baseFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6B7075" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#6B7075" stop-opacity="0.02"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#2B2118" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Parchment Canvas & Codex Double Frame -->
+  <rect x="0" y="0" width="960" height="560" rx="10" fill="url(#parchmentBg)"/>
+  <rect x="12" y="12" width="936" height="536" rx="6" fill="none" stroke="#C9B99B" stroke-width="1.5"/>
+  <rect x="17" y="17" width="926" height="526" rx="4" fill="none" stroke="#DED2BC" stroke-width="0.8"/>
+
+  <!-- Subtle Codex Corner Ornaments -->
+  <g stroke="#B8A482" stroke-width="1" fill="none" opacity="0.8">
+    <path d="M24,36 L24,24 L36,24"/>
+    <path d="M936,36 L936,24 L924,24"/>
+    <path d="M24,524 L24,536 L36,536"/>
+    <path d="M936,524 L936,536 L924,536"/>
+  </g>
+
+  <!-- Title Block -->
+  <text x="52" y="54" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="bold" fill="#2B2118" letter-spacing="0.4">
+    Test-Time Scaling for Creativity: Sfumato vs. Direct Best-of-N
+  </text>
+  <text x="52" y="77" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12.5" fill="#635647">
+    Cumulative unique mechanisms across K = 1..12 isolated sessions (2 ideas/session, 24 total · Marketplace Disintermediation)
+  </text>
+
+  <!-- Legend (Top Left inside open canvas, generous breathing room) -->
+  <g transform="translate(110, 118)">
+    <rect x="0" y="0" width="292" height="54" rx="6" fill="#FAF7F0" stroke="#D5C7AE" stroke-width="1"/>
+    <line x1="16" y1="19" x2="46" y2="19" stroke="#B83B2A" stroke-width="3.2"/>
+    <circle cx="31" cy="19" r="4.5" fill="#B83B2A" stroke="#FAF7F0" stroke-width="1.5"/>
+    <text x="56" y="23" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#2B2118">Sfumato Dual-Track (Explicit + Blind)</text>
+
+    <line x1="16" y1="39" x2="46" y2="39" stroke="#6B7075" stroke-width="2.4" stroke-dasharray="6,4"/>
+    <circle cx="31" cy="39" r="4" fill="#FAF7F0" stroke="#6B7075" stroke-width="2"/>
+    <text x="56" y="43" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#52565A">Direct Baseline (Standard Best-of-N)</text>
+  </g>
+
+  <!-- Plot Area: X in [90..890] (width 800, 11 intervals -> step 72.727), Y in [125..445] (height 320, 0..20 -> 16px per unit) -->
+  <!-- Y Gridlines -->
+  <g stroke="#E3D8C5" stroke-width="1">
+    <line x1="90" y1="445" x2="890" y2="445" stroke="#8C7B65" stroke-width="1.4"/> <!-- y=0 -->
+    <line x1="90" y1="381" x2="890" y2="381" stroke-dasharray="3,4"/> <!-- y=4 -->
+    <line x1="90" y1="317" x2="890" y2="317" stroke-dasharray="3,4"/> <!-- y=8 -->
+    <line x1="90" y1="253" x2="890" y2="253" stroke-dasharray="3,4"/> <!-- y=12 -->
+    <line x1="90" y1="189" x2="890" y2="189" stroke-dasharray="3,4"/> <!-- y=16 -->
+    <line x1="90" y1="125" x2="890" y2="125" stroke-dasharray="3,4"/> <!-- y=20 -->
+  </g>
+  <!-- Left Axis -->
+  <line x1="90" y1="125" x2="90" y2="445" stroke="#8C7B65" stroke-width="1.4"/>
+
+  <!-- Y-Axis Ticks & Labels -->
+  <g font-family="system-ui, sans-serif" font-size="12" fill="#5C4E3F" text-anchor="end">
+    <text x="80" y="449">0</text>
+    <text x="80" y="385">4</text>
+    <text x="80" y="321">8</text>
+    <text x="80" y="257">12</text>
+    <text x="80" y="193">16</text>
+    <text x="80" y="129">20</text>
+  </g>
+  <text x="36" y="288" transform="rotate(-90 36 288)" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#3E3226" text-anchor="middle">
+    Cumulative Unique Mechanisms
+  </text>
+
+  <!-- X-Axis Ticks & Labels (K=1..12) -->
+  <!-- x(k) = 90 + (k-1) * 72.727 -->
+  <g font-family="system-ui, sans-serif" font-size="12" fill="#5C4E3F" text-anchor="middle">
+    <text x="90" y="465">1</text>
+    <text x="163" y="465">2</text>
+    <text x="235" y="465">3</text>
+    <text x="308" y="465">4</text>
+    <text x="381" y="465">5</text>
+    <text x="454" y="465">6</text>
+    <text x="526" y="465">7</text>
+    <text x="599" y="465">8</text>
+    <text x="672" y="465">9</text>
+    <text x="745" y="465">10</text>
+    <text x="817" y="465">11</text>
+    <text x="890" y="465">12</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10.5" fill="#8C7D6B" text-anchor="middle">
+    <text x="90" y="480">(2)</text>
+    <text x="235" y="480">(6)</text>
+    <text x="308" y="480">(8)</text>
+    <text x="454" y="480">(12)</text>
+    <text x="599" y="480">(16)</text>
+    <text x="745" y="480">(20)</text>
+    <text x="890" y="480">(24 ideas)</text>
+  </g>
+  <text x="490" y="500" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#3E3226" text-anchor="middle">
+    Isolated Sessions Run (K) — Parentheses Show Total Ideas Generated (2K)
+  </text>
+
+  <!-- Shaded Plateau Zone for Direct Baseline (K=8..12) -->
+  <rect x="599" y="349" width="291" height="96" fill="url(#baseFill)"/>
+
+  <!-- Shaded Divergence Area Between Sfumato and Direct Baseline -->
+  <!-- Sfumato points: (90,413) (163,381) (235,349) (308,333) (381,317) (454,285) (526,269) (599,237) (672,221) (745,205) (817,189) (890,157) -->
+  <!-- Direct points:  (90,413) (163,397) (235,397) (308,397) (381,397) (454,381) (526,381) (599,349) (672,349) (745,349) (817,349) (890,349) -->
+  <polygon
+    points="90,413 163,381 235,349 308,333 381,317 454,285 526,269 599,237 672,221 745,205 817,189 890,157 890,349 817,349 745,349 672,349 599,349 526,381 454,381 381,397 308,397 235,397 163,397 90,413"
+    fill="url(#divFill)"/>
+
+  <!-- 3.0x Vertical Gap Indicator at K=12 -->
+  <line x1="876" y1="164" x2="876" y2="342" stroke="#B83B2A" stroke-width="1.4" stroke-dasharray="3,3"/>
+  <path d="M872,171 L876,162 L880,171" fill="none" stroke="#B83B2A" stroke-width="1.4"/>
+  <path d="M872,335 L876,344 L880,335" fill="none" stroke="#B83B2A" stroke-width="1.4"/>
+  <rect x="752" y="242" width="116" height="38" rx="5" fill="#B83B2A" filter="url(#softShadow)"/>
+  <text x="810" y="259" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#FAF6EE" text-anchor="middle">3.0× Diversity</text>
+  <text x="810" y="274" font-family="system-ui, sans-serif" font-size="10.5" fill="#F5DFDA" text-anchor="middle">18 vs. 6 unique</text>
+
+  <!-- Direct Baseline Line -->
+  <polyline
+    fill="none"
+    stroke="#6B7075"
+    stroke-width="2.6"
+    stroke-dasharray="7,4"
+    points="90,413 163,397 235,397 308,397 381,397 454,381 526,381 599,349 672,349 745,349 817,349 890,349"/>
+
+  <!-- Direct Baseline Nodes -->
+  <g fill="#FAF6EE" stroke="#6B7075" stroke-width="2.2">
+    <circle cx="90" cy="413" r="4.2"/>
+    <circle cx="163" cy="397" r="4.2"/>
+    <circle cx="235" cy="397" r="4.2"/>
+    <circle cx="308" cy="397" r="4.2"/>
+    <circle cx="381" cy="397" r="4.2"/>
+    <circle cx="454" cy="381" r="4.2"/>
+    <circle cx="526" cy="381" r="4.2"/>
+    <circle cx="599" cy="349" r="4.2"/>
+    <circle cx="672" cy="349" r="4.2"/>
+    <circle cx="745" cy="349" r="4.2"/>
+    <circle cx="817" cy="349" r="4.2"/>
+    <circle cx="890" cy="349" r="5"/>
+  </g>
+
+  <!-- Sfumato Dual-Track Line -->
+  <polyline
+    fill="none"
+    stroke="#B83B2A"
+    stroke-width="3.6"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    points="90,413 163,381 235,349 308,333 381,317 454,285 526,269 599,237 672,221 745,205 817,189 890,157"/>
+
+  <!-- Sfumato Nodes -->
+  <g fill="#B83B2A" stroke="#FAF6EE" stroke-width="2">
+    <circle cx="90" cy="413" r="5"/>
+    <circle cx="163" cy="381" r="5"/>
+    <circle cx="235" cy="349" r="5"/>
+    <circle cx="308" cy="333" r="5"/>
+    <circle cx="381" cy="317" r="5"/>
+    <circle cx="454" cy="285" r="5"/>
+    <circle cx="526" cy="269" r="5"/>
+    <circle cx="599" cy="237" r="5"/>
+    <circle cx="672" cy="221" r="5"/>
+    <circle cx="745" cy="205" r="5"/>
+    <circle cx="817" cy="189" r="5"/>
+    <circle cx="890" cy="157" r="6.2"/>
+  </g>
+
+  <!-- Data Value Callouts -->
+  <g font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#B83B2A" text-anchor="middle">
+    <text x="163" y="369">4</text>
+    <text x="235" y="337">6</text>
+    <text x="308" y="321">7</text>
+    <text x="454" y="273">10</text>
+    <text x="599" y="225">13</text>
+    <text x="745" y="193">15</text>
+    <text x="890" y="143" font-size="13.5">18</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#5D6267" text-anchor="middle">
+    <text x="308" y="416">3</text>
+    <text x="454" y="400">4</text>
+    <text x="599" y="338">6</text>
+    <text x="890" y="368" font-size="12.5">6</text>
+  </g>
+
+  <!-- Callout Box: Sfumato Still Climbing -->
+  <g transform="translate(430, 122)">
+    <rect x="0" y="0" width="234" height="44" rx="5" fill="#FAF7F0" stroke="#B83B2A" stroke-width="1.2" filter="url(#softShadow)"/>
+    <text x="12" y="18" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#B83B2A">No Saturation Yet at K = 12</text>
+    <text x="12" y="34" font-family="system-ui, sans-serif" font-size="11" fill="#4A3E32">+1.5 new mechanisms/run · 75% unique</text>
+  </g>
+  <line x1="664" y1="144" x2="808" y2="184" stroke="#B83B2A" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Callout Box: Direct Saturation -->
+  <g transform="translate(612, 382)">
+    <rect x="0" y="0" width="246" height="44" rx="5" fill="#F4F2EE" stroke="#8C9094" stroke-width="1.1"/>
+    <text x="12" y="18" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#494E52">Artificial Hivemind Plateau</text>
+    <text x="12" y="34" font-family="system-ui, sans-serif" font-size="11" fill="#63686D">0 new ideas across last 4 runs (75% dupes)</text>
+  </g>
+
+  <!-- Footer Stat Strip -->
+  <line x1="40" y1="514" x2="920" y2="514" stroke="#D8CBB5" stroke-width="1"/>
+  <text x="480" y="534" font-family="system-ui, sans-serif" font-size="11.5" fill="#5A4D3E" text-anchor="middle">
+    Track B (Blind) Uniqueness: 83.3% (0 Baseline overlaps)   ·   Track A (Explicit): 66.7%   ·   Order-Swapped Blind Judge: Sfumato 2–0 (24:21, 23:20)
+  </text>
+</svg>

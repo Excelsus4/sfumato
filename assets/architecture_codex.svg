@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" width="960" height="410" role="img" aria-label="Sfumato Dual-Track Architecture Diagram">
+  <defs>
+    <linearGradient id="bgArch" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF6EE"/>
+      <stop offset="100%" stop-color="#EFE6D5"/>
+    </linearGradient>
+    <marker id="arrowSepia" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#6A5B4B"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#B83B2A"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2F5D62"/>
+    </marker>
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#2B2118" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Parchment Background & Frame -->
+  <rect x="0" y="0" width="960" height="410" rx="10" fill="url(#bgArch)"/>
+  <rect x="12" y="12" width="936" height="386" rx="6" fill="none" stroke="#C9B99B" stroke-width="1.5"/>
+  <rect x="17" y="17" width="926" height="376" rx="4" fill="none" stroke="#DED2BC" stroke-width="0.8"/>
+
+  <!-- Header -->
+  <text x="48" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="#2B2118">
+    Sfumato Architecture: Dissolving Domain Boundaries to Raise Peak Creativity
+  </text>
+  <text x="48" y="70" font-family="system-ui, sans-serif" font-size="12.5" fill="#635647">
+    Zero external RAG · Zero cross-talk between divergent solvers (prevents Diversity Collapse) · Strictly isolated clean-context evaluation
+  </text>
+
+  <!-- Stage Labels -->
+  <g font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#8C7B65" letter-spacing="1">
+    <text x="108" y="102" text-anchor="middle">INPUT</text>
+    <text x="412" y="102" text-anchor="middle">STAGE 1 · ISOLATED PARALLEL DIVERGENCE</text>
+    <text x="720" y="102" text-anchor="middle">STAGE 2 · CLEAN GATE</text>
+    <text x="875" y="102" text-anchor="middle">OUTPUT</text>
+  </g>
+
+  <!-- INPUT BOX -->
+  <g transform="translate(36, 178)">
+    <rect x="0" y="0" width="144" height="114" rx="7" fill="#FFFDF8" stroke="#8C7B65" stroke-width="1.6" filter="url(#cardShadow)"/>
+    <text x="72" y="28" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#2B2118" text-anchor="middle">Hard Problem</text>
+    <line x1="18" y1="38" x2="126" y2="38" stroke="#E3D8C5" stroke-width="1"/>
+    <text x="72" y="57" font-family="system-ui, sans-serif" font-size="11" fill="#4E4235" text-anchor="middle">• Core Goal</text>
+    <text x="72" y="75" font-family="system-ui, sans-serif" font-size="11" fill="#4E4235" text-anchor="middle">• Hard Constraints</text>
+    <text x="72" y="93" font-family="system-ui, sans-serif" font-size="11" fill="#4E4235" text-anchor="middle">• Banned Clichés</text>
+  </g>
+
+  <!-- STAGE 1: Track A (Explicit) -->
+  <g transform="translate(238, 114)">
+    <rect x="0" y="0" width="348" height="78" rx="7" fill="#F2F7F7" stroke="#2F5D62" stroke-width="1.6" filter="url(#cardShadow)"/>
+    <rect x="0" y="0" width="8" height="78" rx="3" fill="#2F5D62"/>
+    <text x="22" y="24" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#1F4246">Track A · Explicit Analogy (High Hit-Rate)</text>
+    <text x="22" y="44" font-family="system-ui, sans-serif" font-size="11.2" fill="#354F52">Original brief + stratified random domain (code RNG)</text>
+    <text x="22" y="62" font-family="system-ui, sans-serif" font-size="10.8" fill="#527073">→ Targets domain-specific attack surfaces with precision</text>
+  </g>
+
+  <!-- STAGE 1: Track B (Blind Isomorphic Reframing) -->
+  <g transform="translate(238, 206)">
+    <rect x="0" y="0" width="348" height="94" rx="7" fill="#FDF5F3" stroke="#B83B2A" stroke-width="1.8" filter="url(#cardShadow)"/>
+    <rect x="0" y="0" width="8" height="94" rx="3" fill="#B83B2A"/>
+    <text x="22" y="24" font-family="Georgia, serif" font-size="12.2" font-weight="bold" fill="#8E281B">Track B · Blind Isomorphic Masking (Max Ceiling)</text>
+    <text x="22" y="44" font-family="system-ui, sans-serif" font-size="11.2" fill="#4A2A25">1. Erase 100% of original vocabulary (preserve polarity)</text>
+    <text x="22" y="62" font-family="system-ui, sans-serif" font-size="11.2" fill="#4A2A25">2. Isolated blind solver solves purely inside remote field</text>
+    <text x="22" y="80" font-family="system-ui, sans-serif" font-size="11.2" font-weight="600" fill="#B83B2A">3. Back-translate mechanism only → zero cliché gravity</text>
+  </g>
+
+  <!-- STAGE 1: Direct Anchor -->
+  <g transform="translate(238, 314)">
+    <rect x="0" y="0" width="348" height="58" rx="7" fill="#F4F3F0" stroke="#7A7F84" stroke-width="1.3" stroke-dasharray="5,3"/>
+    <rect x="0" y="0" width="8" height="58" rx="3" fill="#7A7F84"/>
+    <text x="22" y="24" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#44484C">Direct Anchor (deep mode · Floor Guarantee)</text>
+    <text x="22" y="43" font-family="system-ui, sans-serif" font-size="11" fill="#5F6469">1 isolated baseline solver ensures max(Direct, A, B) ≥ Direct</text>
+  </g>
+
+  <!-- STAGE 2: Clean-Context Red-Team Gate -->
+  <g transform="translate(642, 152)">
+    <rect x="0" y="0" width="156" height="168" rx="7" fill="#FFFDF8" stroke="#3E2F23" stroke-width="1.8" filter="url(#cardShadow)"/>
+    <text x="78" y="26" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#2B2118" text-anchor="middle">Clean-Context</text>
+    <text x="78" y="43" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#B83B2A" text-anchor="middle">Red-Team Gate</text>
+    <line x1="16" y1="53" x2="140" y2="53" stroke="#DED2BC" stroke-width="1"/>
+    <text x="78" y="72" font-family="system-ui, sans-serif" font-size="10.5" fill="#635647" text-anchor="middle">Unlabeled candidates</text>
+    <text x="16" y="95" font-family="system-ui, sans-serif" font-size="10.8" fill="#2B2118">✕ Surface Jargon Cut</text>
+    <text x="16" y="114" font-family="system-ui, sans-serif" font-size="10.8" fill="#2B2118">✕ Adverse Selection</text>
+    <text x="16" y="133" font-family="system-ui, sans-serif" font-size="10.8" fill="#2B2118">✕ Sybil / Exploit Cut</text>
+    <text x="16" y="152" font-family="system-ui, sans-serif" font-size="10.8" font-weight="700" fill="#B83B2A">★ Peak-Ceiling Rank</text>
+  </g>
+
+  <!-- OUTPUT BOX -->
+  <g transform="translate(826, 178)">
+    <rect x="0" y="0" width="98" height="114" rx="7" fill="#B83B2A" filter="url(#cardShadow)"/>
+    <text x="49" y="30" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#FAF6EE" text-anchor="middle">Top-1</text>
+    <text x="49" y="48" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#FAF6EE" text-anchor="middle">Champion</text>
+    <line x1="16" y1="59" x2="82" y2="59" stroke="#D97B6E" stroke-width="1"/>
+    <text x="49" y="78" font-family="system-ui, sans-serif" font-size="10.5" fill="#FAEBE8" text-anchor="middle">+ 2 Runners-up</text>
+    <text x="49" y="96" font-family="system-ui, sans-serif" font-size="10.5" fill="#FAEBE8" text-anchor="middle">+ 1 Wildcard</text>
+  </g>
+
+  <!-- Connecting Arrows: Input -> Stage 1 -->
+  <path d="M180,218 C208,218 208,153 234,153" fill="none" stroke="#2F5D62" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <path d="M180,235 L234,250" fill="none" stroke="#B83B2A" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+  <path d="M180,255 C208,255 208,343 234,343" fill="none" stroke="#7A7F84" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowSepia)"/>
+
+  <!-- Connecting Arrows: Stage 1 -> Stage 2 -->
+  <path d="M586,153 C614,153 614,205 638,205" fill="none" stroke="#2F5D62" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <path d="M586,253 L638,242" fill="none" stroke="#B83B2A" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+  <path d="M586,343 C614,343 614,278 638,278" fill="none" stroke="#7A7F84" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowSepia)"/>
+
+  <!-- Connecting Arrow: Stage 2 -> Output -->
+  <line x1="798" y1="235" x2="822" y2="235" stroke="#B83B2A" stroke-width="2" marker-end="url(#arrowRed)"/>
+</svg>

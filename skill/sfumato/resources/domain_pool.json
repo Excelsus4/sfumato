@@ -1,0 +1,222 @@
+{
+  "version": "1.0",
+  "description": "40 mechanism-rich remote domains across 8 disjoint macro-clusters for cluster-stratified Sfumato sampling.",
+  "clusters": {
+    "biology_ecology": [
+      {
+        "id": "immunology_microbiome",
+        "name": "면역학·미생물 생태학 (Immunology & Microbiome Defense)",
+        "mechanisms": "숙주 선별, 대사 에스크로, 가드 가설(미끼-경비), 정족수 감지 역이용, MHC 다형성, 수동면역"
+      },
+      {
+        "id": "invasive_ecology",
+        "name": "외래 침입종 방제학·행동생태학 (Invasive Species & Behavioral Ecology)",
+        "mechanisms": "r/K 생활사 트레이드오프, 불임 유다 기법, 카이로몬 게이트 매력적 함정, 푸시-풀 유인 작물, 앨리 효과"
+      },
+      {
+        "id": "mycorrhizal_plant_defense",
+        "name": "식물 방어 생태학·균근 네트워크 (Plant Chemical Defense & Mycorrhizal Networks)",
+        "mechanisms": "간접 방어(포식자 호출 휘발성 신호), 유도 저항성 프라이밍, 자원 분배 제재, 공생 파트너 선별"
+      },
+      {
+        "id": "parasitology_coevolution",
+        "name": "기생생물학·붉은 여왕 공진화 (Parasitology & Red Queen Coevolution)",
+        "mechanisms": "숙주 조작, 중간숙주 병목, 국소 적응 비대칭, 독성-전파 트레이드오프"
+      },
+      {
+        "id": "swarm_social_insects",
+        "name": "사회성 곤충 분업·둥지 위생학 (Social Insect Task Allocation & Social Immunity)",
+        "mechanisms": "스티그머지(간접 환경 통신), 임계치 기반 동적 분업, 집단 검역·알로 그루밍, 춤 언어 정족수 의사결정"
+      }
+    ],
+    "physics_engineering": [
+      {
+        "id": "electronic_warfare_pls",
+        "name": "전자전(ECCM)·신호처리·물리계층 보안 (Electronic Warfare & Signal Processing)",
+        "mechanisms": "직교 PN 위상 시프트, 정합 필터 교차상관, 영공간 인공 잡음, 능동 채프·HOJ 역추적, 미세 섭동 폐루프 검증"
+      },
+      {
+        "id": "seismic_structural",
+        "name": "내진 구조공학·감쇠 설계 (Seismic Engineering & Base Isolation)",
+        "mechanisms": "면진 격리, 동조 질량 댐퍼(TMD), 희생 소성 힌지(퓨즈), 공진 주파수 회피"
+      },
+      {
+        "id": "nuclear_passive_safety",
+        "name": "원자력 수동 안전공학 (Passive Nuclear Safety & Fail-Safe Design)",
+        "mechanisms": "음의 기포 계수(자기 안정화), 중력 기반 페일세이프 스크램, 자연대류 냉각, 심층 방어(Defense-in-Depth)"
+      },
+      {
+        "id": "fluid_microfluidics",
+        "name": "유체역학·미세유체 분류공학 (Fluid Dynamics & Microfluidic Sorting)",
+        "mechanisms": "층류-난류 경계, 관성 집중 분류, 테슬라 밸브(무가동 단방향 저항), 벤투리 압력차 활용"
+      },
+      {
+        "id": "thermodynamics_cryogenics",
+        "name": "열역학·극저온 단열 설계 (Thermodynamics & Thermal Management)",
+        "mechanisms": "상변화 열 버퍼(PCM), 다층 복사 차폐, 역류 열교환기, 히트파이프 수동 수송"
+      }
+    ],
+    "history_institutions": [
+      {
+        "id": "maritime_trade_guilds",
+        "name": "17~18세기 해상 무역 길드·해상법 (Maritime Trade Guilds & Admiralty Law)",
+        "mechanisms": "다자 상계청산(Scontration), 소구배서 연대책임, 봉인 항해일지·투하(Jettison) 공시, 신고가 선매권"
+      },
+      {
+        "id": "athenian_sortition_law",
+        "name": "고대 아테네 추첨제·안티도시스 법제 (Athenian Sortition & Antidosis)",
+        "mechanisms": "자가신고 강제교환권(Antidosis), 다단계 추첨(Kleroterion) 매수 방지, 도편추방, 임기 후 의무 회계감사"
+      },
+      {
+        "id": "siege_fortification",
+        "name": "근세 축성술·공성 병참학 (Star Fortification & Siege Logistics)",
+        "mechanisms": "성형 요새 교차사격(사각 제거), 종심 방어, 보급선 신장 역이용, 전진 초소 시간 지연"
+      },
+      {
+        "id": "tokugawa_governance",
+        "name": "전근대 제국 통치·산킨코타이 제도 (Imperial Control & Asymmetric Commitment)",
+        "mechanisms": "인질·정기 교대 비용 부과, 분할 통치 견제, 역참 정보망, 신분·권한 분리"
+      },
+      {
+        "id": "roman_logistics",
+        "name": "로마 군단 표준화·공병 병참 (Roman Military Engineering & Logistics)",
+        "mechanisms": "매일 야영지 표준 모듈 축성, 도로망 기반 내선 작전, 현지 징발 vs 보급창 분리"
+      }
+    ],
+    "intelligence_conflict": [
+      {
+        "id": "counter_intelligence",
+        "name": "지하 점조직 방첩학·정보전 (Clandestine Counter-Intelligence)",
+        "mechanisms": "상호오염 거울 격실(Red-on-Red), 세션 고유 바륨 밀(Canary Trap), 반사적 통제, 실패 신호 박탈, 미세 균열 시금석"
+      },
+      {
+        "id": "submarine_acoustics",
+        "name": "잠수함 정숙 운항·소나 기만전 (Submarine Warfare & Acoustic Deception)",
+        "mechanisms": "수온약층 음영 은폐, 수동 청음 vs 능동 핑 딜레마, 기만기(Decoy) 분리, 저속 무소음 기동"
+      },
+      {
+        "id": "arms_control_verification",
+        "name": "냉전 군축 검증 조약 설계 (Arms Control Verification & Mutual Inspection)",
+        "mechanisms": "무작위 단기 현장사찰(Challenge Inspection), 봉인 변조 탐지 태그, 상호 비대칭 신뢰구축(Open Skies)"
+      },
+      {
+        "id": "wildland_firefighting",
+        "name": "대형 산불 진압·맞불 공학 (Wildland Firefighting & Incident Command)",
+        "mechanisms": "맞불(Backburn) 선제 연료 차단, 방화선 지형 활용, ICS 모듈형 지휘체계, 풍향 반전 리스크 관리"
+      },
+      {
+        "id": "disaster_triage",
+        "name": "재난 의학 트리아지·현장 지휘 (Mass-Casualty Triage & Surge Ops)",
+        "mechanisms": "역방향 트리아지, 30초 초고속 분류 프로토콜, 병목 분리 동선, 재평가 순환 루프"
+      }
+    ],
+    "markets_law": [
+      {
+        "id": "financial_clearinghouse",
+        "name": "금융 중앙청산소·증거금 설계 (Central Counterparty Clearing & Margining)",
+        "mechanisms": "일일 정산(Mark-to-Market), 변동 증거금, 폭포수 손실 분담(Default Waterfall), 결제 지연 에스크로"
+      },
+      {
+        "id": "mechanism_design_auctions",
+        "name": "경매 메커니즘 설계·게임이론 (Auction & Incentive-Compatible Mechanism Design)",
+        "mechanisms": "비크리 2가격 진실 유도, 분리 균형(Screening Menu), 커밋-리빌(Commit-Reveal), 슬래싱 예치금"
+      },
+      {
+        "id": "insurance_moral_hazard",
+        "name": "보험계리·도덕적 해이 통제 (Actuarial Design & Moral Hazard Control)",
+        "mechanisms": "자기부담금(Deductible) 공동부담, 경험요율(Bonus-Malus), 대기기간 면책, 상호보험 연대감시"
+      },
+      {
+        "id": "maritime_salvage_law",
+        "name": "해난 구조법·공동해손 원리 (Maritime Salvage & General Average Law)",
+        "mechanisms": "무성과 무보수(No Cure No Pay), 공동해손 비례 분담, 긴급 구조 우선권 인센티브"
+      },
+      {
+        "id": "provenance_anticounterfeit",
+        "name": "미술품·보석 진위 감정·유통 이력학 (Art/Gem Provenance & Anti-Counterfeiting)",
+        "mechanisms": "파괴 불가 미세 고유 지문, 연쇄 소유 이력 검증, 전문 감정인 평판 담보, 위조 비용 역전"
+      }
+    ],
+    "craft_operations": [
+      {
+        "id": "aviation_crm",
+        "name": "항공 조종석 CRM·체크리스트 공학 (Aviation Safety & Cockpit Resource Management)",
+        "mechanisms": "블레임리스 사고보고(ASRS), 이중 확인 콜아웃, 단계별 멸균 조종석(Sterile Cockpit), 포카요케 오조작 방지"
+      },
+      {
+        "id": "shinkansen_turnaround",
+        "name": "신칸센 7분 청소·고밀도 턴어라운드 (High-Speed Turnaround Operations)",
+        "mechanisms": "공간 분할 병렬 작업, 병목 제거 동선 표준화, 시각적 완료 신호, 단일 장애점 제거"
+      },
+      {
+        "id": "michelin_brigade",
+        "name": "미쉐린 주방 브리가드·미장플라스 (Kitchen Brigade & Mise en Place)",
+        "mechanisms": "사전 준비(Mise en Place) 피크 부하 흡수, 패스(Pass) 단일 품질 관문, 스테이션 비동기 동기화"
+      },
+      {
+        "id": "horology_escapement",
+        "name": "기계식 시계 탈진기·정밀 공학 (Mechanical Horology & Escapement Design)",
+        "mechanisms": "에너지 일정량 분할 방출(탈진기), 투르비용 오차 상쇄, 충격 흡수 탄성 베어링"
+      },
+      {
+        "id": "container_port_logistics",
+        "name": "초대형 컨테이너 항만·야드 운영 (Intermodal Container Port Logistics)",
+        "mechanisms": "표준 규격화(TEU), 하역-적치 선예측 슬로팅, 혼잡 구간 버퍼 야드, 동적 크레인 스케줄링"
+      }
+    ],
+    "art_performance": [
+      {
+        "id": "stage_magic_misdirection",
+        "name": "무대 마술·주의 유도 심리학 (Stage Magic & Attentional Misdirection)",
+        "mechanisms": "시간적·공간적 오도, 인지 부하 타이밍 분산, 관객의 자연스러운 가정 역이용, 사전 준비 숨김"
+      },
+      {
+        "id": "improv_status_games",
+        "name": "즉흥연극(Improv)·지위 게임 설계 (Improvisational Theater & Status Transactions)",
+        "mechanisms": "Yes-And 제약 수용, 저지위/고지위 전환 역학, 패턴 깨기(Game of the Scene), 실시간 콜백"
+      },
+      {
+        "id": "polyphonic_counterpoint",
+        "name": "대위법·푸가 음악 구조학 (Polyphonic Counterpoint & Fugue Architecture)",
+        "mechanisms": "독립 성부의 조화적 제약, 주제 전위·역행·확대, 긴장-해소 비동기 교차"
+      },
+      {
+        "id": "architectural_wayfinding",
+        "name": "건축 동선 유도·어포던스 설계 (Architectural Wayfinding & Behavioral Nudges)",
+        "mechanisms": "표지판 없는 직관적 시선·조명 유도, 병목 완화 곡선 공간, 자연 감시(CPTED)"
+      },
+      {
+        "id": "film_editing_kuleshov",
+        "name": "영화 편집·쿨레쇼프 맥락 프레임 (Film Editing & Narrative Compression)",
+        "mechanisms": "병치 효과(설명 없이 추론 유도), 점프컷 정보 압축, 사운드 브릿지 전환, 오프스크린 긴장감"
+      }
+    ],
+    "social_anthropology": [
+      {
+        "id": "ostrom_commons",
+        "name": "오스트롬 공유지 자치 거버넌스 (Ostrom Self-Governing Commons)",
+        "mechanisms": "명확한 경계, 점진적 제재(Graduated Sanctions), 저비용 상호 감시, 중첩된 다층 자치(Nested Enterprises)"
+      },
+      {
+        "id": "gift_economy_reciprocity",
+        "name": "인류학 증여 경제·호혜성 의례 (Gift Economies & Delayed Reciprocity)",
+        "mechanisms": "지연된 보답(즉시 정산 금지로 관계 지속), 공개 평판 축적, 무임승차 사회적 낙인"
+      },
+      {
+        "id": "maritime_lazaretto",
+        "name": "역사적 검역소(라자레토)·공중보건 설계 (Quarantine & Lazaretto Public Health)",
+        "mechanisms": "잠복기 기반 시간 격리, 오염물 분리 훈증, 단계적 통행 허가증, 항구 간 조기 경보망"
+      },
+      {
+        "id": "ombudsman_whistleblower",
+        "name": "옴부즈만·익명 내부고발 보호 설계 (Ombudsman & Cryptographic Whistleblowing)",
+        "mechanisms": "보복 불가 익명 에스크로 제보, 독립 감사 트랙, 허위 제보 비용 균형"
+      },
+      {
+        "id": "apprentice_guild_exams",
+        "name": "도제 길드 걸작(Masterpiece) 심사제 (Guild Apprenticeship & Proof-of-Craft)",
+        "mechanisms": "단계적 권한 해금, 위조 불가 실기 산출물 검증, 도제-장인 평판 연동, 동료 상호 심사"
+      }
+    ]
+  }
+}
