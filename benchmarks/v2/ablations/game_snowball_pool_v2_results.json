@@ -1,0 +1,283 @@
+{
+  "experiment": "sfumato_domain_pool_v2_gate2_game_snowball",
+  "date": "2026-11-21",
+  "protocol": "iso_compute_4runs_x_2ideas_3new_v2_domains_plus_reused_direct_run1_stage2a_redteam_stage2b_selective_hardening_order_swapped_blind_ab",
+  "model": "antigravity (inherit)",
+  "problem": {
+    "problem_id": "GAME-SNOWBALL",
+    "category": "game_mechanism_design",
+    "title": "Solving the Snowballing vs. Artificial Rubber-Banding Dilemma in Competitive Multiplayer",
+    "polarity": "zero_sum_competitive_game",
+    "exclude_clusters": "art_performance",
+    "brief": "전략·MOBA·배틀로얄 등 멀티플레이 경쟁 게임에서 초반에 앞선 플레이어가 자원·레벨 우위를 굴려 중반 이후 승패가 사실상 확정되는 '스노우볼링(지루한 가비지 타임)' 문제가 고질적이다. 반대로 뒤처진 쪽에 현상금·경험치 2배·파란 등껍질 같은 '억지 고무줄(Rubber-banding)'을 주면 초반 플레이가 무의미해져 숙련자가 분노한다. 초반 우위의 정당한 보상은 100% 존중하면서도, 억지 핸디캡이나 인위적 역전 버프 없이 열세 측에게 짜릿하고 공정한 전략적 역전 드라마가 자연 발생하는 게임 메카닉을 설계해야 한다.",
+    "banned_cliches": "1) 킬 현상금(Shutdown Gold)·열세 팀 경험치/골드 보정 버프, 2) 마리오카트 파란 등껍질식 랜덤 아이템 보정, 3) 후반 1타 역전 오브젝트(바론/장로드래곤 1회 스틸로 게임 종료), 4) 항복(FF) 투표·경기 시간 단축, 5) 선두 플레이어에게 인위적 디버프·세금 부과"
+  },
+  "sampled_new_domains": [
+    {
+      "run": 1,
+      "assigned_track": "explicit",
+      "cluster": "earth_navigation_grids",
+      "id": "power_grid_inertia",
+      "name": "전력망 주파수 관성·블랙스타트 공학 (Power Grid Frequency Inertia & Black-Start)",
+      "subagent_id": "fafdb5c2-de48-459a-a635-a5c6d1dd3d4c"
+    },
+    {
+      "run": 2,
+      "assigned_track": "blind",
+      "cluster": "materials_chemistry",
+      "id": "metallurgy_heat_treatment",
+      "name": "야금학·담금질·뜨임 및 가공경화 (Metallurgy, Quenching, Tempering & Work-Hardening)",
+      "subagent_id": "ec468d21-7444-42de-8ea7-4c82d4d7f480"
+    },
+    {
+      "run": 3,
+      "assigned_track": "explicit",
+      "cluster": "cognition_pedagogy",
+      "id": "combat_sports_tempo",
+      "name": "격투기·펜싱 템포·페인트 및 거리 통제 (Combat Sports Tempo, Feints & Distance Control)",
+      "subagent_id": "bc811560-9681-4025-a485-dae114b0ebfc"
+    },
+    {
+      "run": 4,
+      "assigned_track": "direct_anchor_reused",
+      "cluster": "direct_baseline_pool",
+      "id": "game_snowball_direct_run1",
+      "name": "Direct Run 1 Reused Anchor (from v1_1_weekend/game_snowball_results.json, 0 extra compute)",
+      "subagent_id": null
+    }
+  ],
+  "track_b_structural_skeleton_and_masked_prompt": {
+    "target_domain_id": "metallurgy_heat_treatment",
+    "target_domain_name": "야금학·담금질·뜨임 및 가공경화 (Metallurgy, Quenching, Tempering & Work-Hardening)",
+    "three_line_structural_skeleton": {
+      "actors_and_polarity": "Two (or more) strictly zero-sum adversarial agents competing under identical, symmetrical physical rules to achieve a terminal dominance state over the opponent; no cooperative bailout, no hidden handicap, and early structural gains are 100% preserved.",
+      "core_asymmetry_or_bottleneck": "Early incremental success compounds monotonically into higher raw capacity/output, creating a self-reinforcing positive feedback loop where the leading agent overwhelms the trailing agent well before the terminal boundary, eliminating meaningful contest in the second half.",
+      "why_static_controls_fail": "Penalizing the leader's accumulated capacity, artificially injecting free capacity into the trailer, introducing random shocks, or adding a single lucky coin-flip shortcut destroys the legitimacy of early mastery and invalidates early effort."
+    },
+    "masked_scenario": "두 경쟁 제련 공방(A와 B)이 100% 동일한 대칭적 물리·야금 규칙 아래 각자의 합금 시편을 실시간으로 단조·열처리하며 반복적인 기계적 충격과 전단 하중을 주고받아, 상대 시편을 최종 파단(완전 항복)시키는 쪽이 승리하는 순수 제로섬 대결 시스템이 있다. 핵심 병목은 '단조 발산(누적 고착)' 문제다. 초반 단조·열처리 공정에서 앞선 선행 시편이 더 높은 결정 강도·밀도·충격 출력을 확보하면, 그 우위가 매 충돌 사이클마다 누적 증폭되면서 최종 파단 시점에 도달하기 훨씬 전(중반)부터 승부가 사실상 일방적으로 굳어져 남은 공정이 무의미한 반복 압살로 변질된다. 절대 제약: 초반 공정에서 정밀한 제련으로 축적한 선행 시편의 강도·에너지 우위는 100% 온전히 존중·보존되어야 한다. 그럼에도 양측에 100% 동일하게 적용되는 대칭적 물리·야금 법칙 안에서, 후발 시편 측이 선행 시편의 축적된 물성 구조 자체에 내재된 물리적 트레이드오프를 정밀한 열처리·변형 제어 전략으로 파고들어 정정당당하고 짜릿하게 판세를 뒤집을 수 있는 구조가 자연 발생해야 한다.",
+    "masked_banned_cliches": "1) 후발 시편에만 공짜 합금 원소나 추가 열량을 주입해 주는 인위적 보정, 2) 무작위 불순물 폭발·외부 우연 충격으로 선행 시편을 깨뜨리는 랜덤 개입, 3) 후반 단 한 번의 요행성 충격으로 그간의 모든 물성 격차를 무시하고 즉시 파단시키는 1회성 요행 스위치, 4) 대결을 조기 중단하거나 시험 시간을 단축하는 방식, 5) 선행 시편의 강도가 높다는 이유만으로 인위적 부식·결함 페널티나 가중치를 부과하는 방식",
+    "zero_leak_audit": {
+      "passed": true,
+      "leaked_original_terms_count": 0,
+      "polarity_preserved": "strict_zero_sum_adversarial_symmetric_rules"
+    }
+  },
+  "all_8_ideas": [
+    {
+      "candidate_id": "Candidate 1",
+      "run": 1,
+      "track": "explicit",
+      "domain_id": "power_grid_inertia",
+      "cluster": "earth_navigation_grids",
+      "name": "동기 관성 계통과 자동 부하 차단(UFLS) 아일랜딩 역학 (Synchronous Inertia & UFLS Islanding)",
+      "summary": "양측 활성 유닛·거점이 단일 동기 계통으로 연결되어 규모에 비례한 합산 화력과 회전 관성(단발 외란 면역)을 공유하되, 과부하로 주파수가 하락하면 선두는 외곽 자산 자동 차단(UFLS) 또는 자발적 계통 분할(100 vs 100 국지 대등전 허용) 사이에서 선택해야 한다. 열세 측은 취약하지만 기동·전환이 즉각적인 저관성 독립 섬으로 선두 보급축과 양면 부하를 흔든다."
+    },
+    {
+      "candidate_id": "Candidate 2",
+      "run": 1,
+      "track": "explicit",
+      "domain_id": "power_grid_inertia",
+      "cluster": "earth_navigation_grids",
+      "name": "블랙스타트 크랭킹과 냉부하 점령전 (Black-Start Cranking & Cold-Load Conquest)",
+      "summary": "활성 기준망이 필요한 고출력 주력(GFL)과 무전원 단독 점화가 가능한 기동 유닛(GFM)을 이원화하고, 미점화 영토 점령 시 6~10초간 2.5~4배 돌입 부하(냉부하 투입)가 걸리게 한다. 선두는 단계 점화로 확장해야 하며, 열세 측은 기동 선로 절단·강제 냉부하 투입·암전 구역 역-크랭킹으로 선두 주력을 일시 암전시키고 핵심 거점을 선점한다."
+    },
+    {
+      "candidate_id": "Candidate 3",
+      "run": 2,
+      "track": "blind_back_translated",
+      "domain_id": "metallurgy_heat_treatment",
+      "cluster": "materials_chemistry",
+      "original_blind_name": "전위 배후응력 역전(바우싱거 비대칭) 및 가공경화 고갈을 이용한 '역위상 주기적 연화-단열 전단 붕괴' 시스템",
+      "name": "방향성 축적 편극과 역위상 붕괴(바우싱거 공세 반전) 및 적응 예비력 시스템",
+      "summary": "단일 공세 축으로 스탯·시너지를 단방향 압축 강화할수록 정방향 출력(기본+편극)이 100% 증폭되지만 반대·측면 벡터 저항(기본-편극)과 충격 분산 여유가 감소한다. 열세 측은 미고정 적응 예비력을 유지하며 역위상 반격을 반복 누적시켜 선두의 편극 전선을 국소 연화·붕괴시키고, 동시에 충격을 흡수해 예비력을 실전 스탯으로 전환한다."
+    },
+    {
+      "candidate_id": "Candidate 4",
+      "run": 2,
+      "track": "blind_back_translated",
+      "domain_id": "metallurgy_heat_treatment",
+      "cluster": "materials_chemistry",
+      "original_blind_name": "담금질 잔류응력 평형 역전과 단열 발열 기반 '뜨임 취성창(TME) 심부 공진 박리' 시스템",
+      "name": "비단조 부하 취성창(TME)과 내부 응력 박리 역학",
+      "summary": "초반 우위를 외피·화력으로 압축할수록 코어-외피 경계에 비례하는 내부 응력이 잠재 저장되며, 부하 열기 게이지(0~100%)가 비단조 파괴 곡선을 따른다(0~50% 고화력 안정, 80~100% 저화력 고인성 자가 안정화, 55~75% 취성창만 내부 결합 급락). 열세 측은 중강도 고빈도 교란으로 선두를 55~75%에 다중 사이클 묶어 외피 박리를 유도하되, 80% 이상 과열시키면 오히려 적을 안전 상태로 강화하는 양방향 정밀 수싸움을 만든다."
+    },
+    {
+      "candidate_id": "Candidate 5",
+      "run": 3,
+      "track": "explicit",
+      "domain_id": "combat_sports_tempo",
+      "cluster": "cognition_pedagogy",
+      "name": "투신 벡터 기반 상대속도 역충격 (Committed-Vector Counter-Impulse)",
+      "summary": "교전 행동을 '안전 견제(스탯 100% 행사, 단 핵심 방어선 붕괴 불가)'와 '텔레그래프 결정타 투신(투자 화력에 비례한 활성 투신 에너지 적재)'으로 대칭 이원화한다. 열세 측이 단조로운 투신 박자를 읽어 비정면·엇박자 선제 요격을 꽂으면, 공격 측의 활성 투신 에너지 자체가 진형 붕괴·회수 경직의 역충격 지렛대로 전환된다."
+    },
+    {
+      "candidate_id": "Candidate 6",
+      "run": 3,
+      "track": "explicit",
+      "domain_id": "combat_sports_tempo",
+      "cluster": "cognition_pedagogy",
+      "name": "임계 간합 지향성 가드 & 저비용 페인트 반응 수확 시스템 (Threshold-Boundary Feint & Active Guard Economy)",
+      "summary": "임계 간합 밖에서는 100% 전방위 자동 방어가 유지되나, 교전 거리 안에서는 초반 우위 방어 스탯을 2~3개 전술 축 중 선택 축에만 100% 배분하고 비워둔 축은 기본 내구도로 노출한다. 실타와 동일한 예비 동작을 10~15% 비용으로 캔슬하는 저비용 페인트로 가드 전환 경직을 유도해 비워진 축에 변박 실타를 꽂아 스탯 격차를 돌파한다."
+    },
+    {
+      "candidate_id": "Candidate 7",
+      "run": 4,
+      "track": "direct_anchor_reused",
+      "domain_id": "game_snowball_direct_run1",
+      "cluster": "direct_baseline_pool",
+      "name": "전투력-승리 자본 분리 (Victory-Combat Capital Decoupling / Divestment / Anchoring)",
+      "summary": "축적 자원을 실시간 전투력 강화에 재투자할지, 전투력을 늘리지 않는 비가역적 승리 진척도(승리 자본)로 전환할지 대칭적으로 양자택일하게 분리한다. 선두가 승리를 확정하려 잉여 자원을 승리 자본으로 고정할수록 실질 전투력 격차 확대가 완만해져, 전투력에 집중한 열세 측이 국지 교전으로 전환을 저지·탈환할 전략적 창구가 열린다."
+    },
+    {
+      "candidate_id": "Candidate 8",
+      "run": 4,
+      "track": "direct_anchor_reused",
+      "domain_id": "game_snowball_direct_run1",
+      "cluster": "direct_baseline_pool",
+      "name": "대칭적 생존 여력 담보 배수진 (Symmetrical Safety-Buffer Collateralized Gambit / Empty-Net)",
+      "summary": "아이스하키 엠티넷처럼 양측 동일 규칙 하에 자신의 영구 생존 여력·방어 구조물(최대 체력 상한, 본진 방벽 등)을 자발적으로 담보·포기하는 대신 일시적이고 막대한 공격·기동 출력을 끌어오는 배수진 메커니즘."
+    }
+  ],
+  "unique_mechanisms_count": 8,
+  "unique_mechanisms_total_pool": 8,
+  "stage2_triage_and_hardening": {
+    "stage2a_selector_subagent_id": "bd71b73a-bd26-477e-9306-0226d2dd17b1",
+    "stage2a_unique_audit": "8 / 8 (완전 중복 없음, 8개 모두 독립적인 핵심 인과 루프 보유)",
+    "stage2a_triage": [
+      {
+        "candidate": "Candidate 1 (power_grid_inertia / Track A)",
+        "verdict": "CUT (Unfixable)",
+        "reason": "아군 스킬 과부하로 타 아군 자산이 자동 차단되는 팀전 그리핑 + 과주파수 트립(숨은 선두 유지 세금) + 전력공학 코스프레로 MOBA/BR 가독성 붕괴."
+      },
+      {
+        "candidate": "Candidate 2 (power_grid_inertia / Track A)",
+        "verdict": "CUT (Unfixable)",
+        "reason": "후방 선로만 끊어 주력을 마비시키는 랫/백도어 피로감 고착 + 확장 시 2.5~4배 돌입 부하와 연쇄 암전(가혹한 확장 세금) + RTS 외 장르 이식 불가."
+      },
+      {
+        "candidate": "Candidate 3 (metallurgy_heat_treatment / Track B Blind)",
+        "verdict": "CUT (Unfixable)",
+        "reason": "강해질수록 역방향 저항이 기본치 미만으로 깎이는(기본-편극) 숨은 선두 디버프 + 충격 흡수 예비력 전환(변형 고무줄) + 다대다 교전 벡터 가독성 붕괴."
+      },
+      {
+        "candidate": "Candidate 4 (metallurgy_heat_treatment / Track B Blind)",
+        "verdict": "CUT (Unfixable) [WILDCARD]",
+        "reason": "다대다 팀전에서 아군 오발 1타가 적을 80% 안전 지대로 넘겨 역전 기회를 영구 파괴하는 치명적 팀 그리핑 + 반직관적 딜 조절 UX. 단, 비단조 취약 곡선은 1v1·보스전 잠재력이 가장 날카로운 와일드카드로 선정."
+      },
+      {
+        "candidate": "Candidate 5 (combat_sports_tempo / Track A)",
+        "verdict": "PASS (Fixable Edge-Case) [2nd Place]",
+        "reason": "초반 스탯 100% 보존 + 결정타 투신 순간의 읽기 싸움과 최상급 관전 가독성. 차순위 2위 통과 및 Stage 2b 선택적 접목 재료(텔레그래프 투신 창 + 비정면 요격 반동) 제공."
+      },
+      {
+        "candidate": "Candidate 6 (combat_sports_tempo / Track A)",
+        "verdict": "CUT (Unfixable) [3rd Place, 1v1-only conditional]",
+        "reason": "2인 이상 다중 각도 협공(MOBA 팀파이트·BR 난전·RTS 부대 교전) 시 페인트 없이 비워둔 축 방어 스탯이 자동 무효화되어 초반 우위 붕괴."
+      },
+      {
+        "candidate": "Candidate 7 (Direct Anchor Direct-1-1)",
+        "verdict": "PASS (Fixable Edge-Case) [Top-1 Champion]",
+        "reason": "스노우볼링의 수학적 원인(승리 진척=전투력 복리)을 선두 디버프·고무줄 없이 정면 해체하며 전 장르·팀전·핑 환경 완벽 호환. 단일 수정 가능 약점: 지연 전환(Delayed Divestment) 압살 빌드 및 수동적 경제전 퇴행."
+      },
+      {
+        "candidate": "Candidate 8 (Direct Anchor Direct-1-2)",
+        "verdict": "CUT (Unfixable)",
+        "reason": "열세 측에게는 포기 비용 0에 수렴해 기계적 필수 역전 버튼(변형 고무줄)화, 선두에게는 무위험 본진 담보로 공짜 화력을 챙겨 스노우볼을 가속하는 양면 역설."
+      }
+    ],
+    "stage2a_top1_selected": "Candidate 7 (Direct Anchor Direct-1-1: 전투력-승리 자본 분리)",
+    "stage2a_runner_up_pass": "Candidate 5 (Track A combat_sports_tempo: 투신 벡터 기반 상대속도 역충격)",
+    "stage2a_wildcard": "Candidate 4 (Track B Blind metallurgy_heat_treatment: 비단조 부하 취성창 TME)",
+    "stage2b_hardening_subagent_id": "d3ccd085-4176-4118-85a2-f811a2cbe536",
+    "stage2b_single_weakness_targeted": "지연 전환(Delayed Divestment) 압살 빌드 및 수동적 경제전 퇴행",
+    "stage2b_optional_graft_adopted": true,
+    "stage2b_optional_graft_source": "Candidate 5 (combat_sports_tempo / cognition_pedagogy) — 전장 투신 텔레그래프 창(Committed-Vector Window) 및 비정면 요격 반동",
+    "stage2b_graft_rationale": "억지 접목이 아닌 실무 호환성 판정으로 채택: 승리 자본 전환을 기지 내 수동 클릭이 아니라 전장 위 경로·취약축이 노출되는 능동 투신 패킷으로 치환해 수동적 경제 최적화를 제거하고, 선두가 전투력 안전 마진을 남기고 소폭 정박하는 엣지케이스에서도 비정면 요격으로 당해 패킷에 비례한 공정한 반동 창구를 열도록 완성함. 동시에 회차별 투입 상한, 양익 다중 거점 동시 개방(T_move > T_anchor), 기확정 승점 영구 불가침으로 지연 전환 봉쇄와 1타 역전을 동시 차단함."
+  },
+  "sfumato_champion": {
+    "name": "다중 정박 창 기반 전투력-승리 자본 분리 및 투신 요격",
+    "provenance": "Direct Anchor Top-1 (Candidate 7: 전투력-승리 자본 분리) + Stage 2b Selective Hardening (유한 대역폭 다중 정박 창 T_move > T_anchor) + Optional Graft from Track A Runner-Up Candidate 5 (combat_sports_tempo / cognition_pedagogy: 텔레그래프 투신 창 & 비정면 요격 반동)",
+    "word_count": 163,
+    "summary": "메커니즘 이름: 다중 정박 창 기반 전투력-승리 자본 분리 및 투신 요격\n핵심 구조: 양측은 축적 자원을 전투력 강화 또는 비전투 승리 자본 정박에 대칭적으로 배분한다. 승리 자본은 일괄 구매가 불가하며, 전장 양익에 동시 개방되는 유한 대역폭 거점에 텔레그래프 창을 열고 물리적으로 투신해야 영구 확정된다.\n구체적 작동 단계: 주기마다 전장 반대편에 복수 거점이 회차별 투입 상한과 함께 동시 개방된다. 정박 시도는 가용 자원을 비전투 패킷에 실어 노출된 경로와 취약축을 방어해 완수한다. 완료 시 영구 승점으로 고정되며, 도중 비정면 취약축이 요격되면 해당 투신 패킷만 붕괴해 전장 회수 자원과 국지 반동 창구로 바뀐다.\n초반 보상 보존 및 역전 인과: 선두의 누적 자원과 기확정 승점은 세금·감쇠 없이 100% 보존되어 우월한 전략 예산을 유지한다. 그러나 정박을 미룬 채 전투력만 올인하면 반대편 거점에서 열세 측이 영구 승점을 선점하고, 선두가 승리를 굳히려 자원을 투신할 때는 실질 전투력 격차가 압축되어 열세 측의 비정면 요격 창구가 열린다.\n핵심 리스크 및 완화책: 양 거점 봉쇄, 소폭 정박 고착, 1타 역전화 위험이 있다. 거점 간 이동 시간을 텔레그래프보다 길게 두어 무분할 봉쇄를 막고, 투입 상한과 기확정 승점 불가침으로 반동을 당해 패킷에 한정하며, 교차 정박 시 선두가 유리하게 설계해 열세 측의 능동 요격을 유도한다."
+  },
+  "direct_champion_ref": {
+    "source_file": "C:\\Projects\\Orthogonal\\benchmarks\\v1_1_weekend\\game_snowball_results.json",
+    "name": "위상 결속형 전력망과 연쇄 단전 (Topology-Anchored Power Grid & Cascading Blackout)",
+    "word_count": 158,
+    "summary": "메커니즘 이름: 위상 결속형 전력망과 연쇄 단전\n핵심 구조: 거점 점령의 핵심 전투력 보상을 휴대용 영구 스탯 대신 본진 코어와 위상 연결된 전장 중계망의 실시간 급전에 귀속시킨다. 선두의 영토 확장은 곧 화력 증폭이지만 동시에 외선 연장과 그래프 단절점을 동반하며, 열세 측은 압축된 영역에서 내선 기동 우위를 자연 획득한다.\n구체적 작동 단계: 본진 코어와 연결된 중계 거점을 점령할수록 아군 전체 화력과 스킬 출력이 실시간 증폭된다. 맵 대부분을 장악한 선두가 압도적 급전으로 공성 데스볼을 형성하면, 열세 측은 짧은 내선 기동력으로 배후 핵심 단절점을 기습 타격한다. 단절점이 과부하되면 하류 노드들이 25초간 연쇄 단전되어 전선 급전이 즉각 증발하고, 선두가 이를 막으려 병력을 분산하면 열세 측이 국지 수적 우위로 각개격파를 노린다.\n초반 보상 보존 및 역전 인과: 인위적 보정이나 선두 디버프 없이 초반 우위는 높은 실시간 출력과 경제로 100% 보상된다. 역전은 오직 과확장된 선두의 취약 위상을 간파해 병목을 끊는 정밀 기동과 전략으로만 성립한다.\n핵심 리스크 및 완화책: 소수 기동 유닛의 반복 기습으로 피로한 백도어 핑퐁이 유발될 위험이 있다. 단전을 25초 일시 과부하와 채널링·경보 조건으로 제한하고, 선두가 축적 자원으로 우회 회로와 전진 코어를 건설해 취약점을 단계적으로 봉인하도록 설계한다."
+  },
+  "judge_ab": {
+    "subagent_id": "43d37af5-9f2b-4afc-ab41-7f1f1d6762cb",
+    "a_is": "sfumato_pool_v2",
+    "b_is": "direct_champion",
+    "sfumato_score": {
+      "novelty": 8,
+      "effectiveness": 9,
+      "feasibility": 6,
+      "total": 23
+    },
+    "direct_score": {
+      "novelty": 6,
+      "effectiveness": 6,
+      "feasibility": 8,
+      "total": 20
+    },
+    "raw_winner": "A",
+    "winner": "sfumato_pool_v2",
+    "reason": "Proposal A는 승리를 확정하려면 반드시 전투력 유동성을 비전투 승리 자본으로 물리적 전환해야 하는 구조적 딜레마를 설계해, 선두의 누적 자원을 100% 보존하면서도 '승리 굳히기 행위 자체'가 자연스럽게 전투력 격차를 압축하고 유한한 요격 창구를 여는 게임이론적 완결성을 달성했다. 특히 이동 시간이 텔레그래프보다 긴 양익 동시 개방과 기확정 승점 불가침·투입 상한 규정은 선두의 소극적 전투력 고착(가비지 타임)과 후반 1타 역전을 동시에 봉쇄하며, RTS·MOBA·배틀로얄 전반에 이식 가능한 범용성도 갖췄다. 반면 Proposal B는 전력망 단절과 25초 연쇄 단전이라는 직관적 시각 문법 덕분에 UX와 관전 가독성에서 Proposal A의 추상적 패킷·취약축 구조보다 확실히 우월하다. 그러나 B는 기존 보급선 차단·파일런 파괴 문법의 변주에 가깝고 고정 본진 코어 의존도가 높아 배틀로얄 등 비거점 장르 확장이 어렵다는 한계가 뚜렷하다. 결정적으로 B가 백도어 핑퐁 완화책으로 제시한 '축적 자원을 통한 우회 회로·전진 코어 건설'은 선두가 과잉 자원으로 단절점을 먼저 봉인하며 안전하게 서서히 조여오는 저위험 참호전(가비지 타임)을 합리적 최적 전략으로 되살리는 자기모순을 낳으므로, 핵심 문제 해결력에서 앞선 Proposal A를 최종 승자로 판정한다."
+  },
+  "judge_ba": {
+    "subagent_id": "ce21a22a-a4e2-48a7-9760-2a8b38f1179a",
+    "a_is": "direct_champion",
+    "b_is": "sfumato_pool_v2",
+    "direct_score": {
+      "novelty": 6,
+      "effectiveness": 6,
+      "feasibility": 7,
+      "total": 19
+    },
+    "sfumato_score": {
+      "novelty": 9,
+      "effectiveness": 8,
+      "feasibility": 6,
+      "total": 23
+    },
+    "raw_winner": "B",
+    "winner": "sfumato_pool_v2",
+    "reason": "이번 심사의 결정적 분기점은 스노우볼링의 근원인 '전투력=승리 조건' 등식을 구조적으로 해체했는가와 선두의 안전한 회피(Opt-out)를 원천 봉쇄했는가에 있다. Proposal A는 실시간 전력망과 연쇄 단전이라는 뛰어난 시각적·관전 가독성과 직관성을 갖췄지만, 구조적으로는 기존 보급선·파일런 차단 문법의 변주에 가깝고, 숙련된 선두가 과확장을 자제한 채 잉여 자원으로 우회 회로와 전진 코어를 지어 단절점을 봉인하면 후반 가비지 타임이 재고착되거나 반대로 피로한 백도어 핑퐁 메타로 흐를 위험이 크다. 반면 Proposal B는 전투력과 비전투 승리 자본의 분리라는 독창적 자원 배분 딜레마에 '이동 시간보다 짧은 양익 동시 정박 창'과 '회차별 투입 상한·기확정 승점 불가침'을 결합해, 선두의 초반 자원 우위를 100% 보존하면서도 승리를 굳히려는 행위 자체가 필연적으로 실질 전투력 압축과 능동 요격 창구를 열도록 게임이론적 인과를 탄탄히 설계했다. 다만 Proposal B는 전투력-승리 자본 투자 비율을 둘러싼 팀전 솔로큐 조율 마찰, 양익 동시 전개로 인한 관전 시선 분산 및 높은 규칙 복잡도, 그리고 순수 전투 섬멸로 승리 자본을 우회할 수 없도록 핵심 승리 규칙을 이에 종속시켜야 하는 현실적 부담이 분명한 약점이다. 그럼에도 A가 직관성과 관전 가독성에서 소폭 앞서는 점을 감안하더라도, 억지 고무줄이나 백도어 회피 없이 능동적 교전 중심의 공정한 역전 드라마를 구조적으로 강제하는 참신성과 게임이론적 실효성에서 압도적 우위를 보인 Proposal B를 최종 승자로 선정한다."
+  },
+  "final_verdict": {
+    "outcome": "sfumato_pool_v2_win",
+    "win_loss": "2-0 (Sfumato Pool v2.0 2 wins vs Direct Baseline Champion 0 wins)",
+    "sfumato_sum": 46,
+    "direct_sum": 39,
+    "sfumato_mean": {
+      "novelty": 8.5,
+      "effectiveness": 8.5,
+      "feasibility": 6.0,
+      "total": 23.0
+    },
+    "direct_mean": {
+      "novelty": 6.0,
+      "effectiveness": 6.0,
+      "feasibility": 7.5,
+      "total": 19.5
+    },
+    "delta_vs_v1_2_baseline": {
+      "v1_2_outcome": "direct_win (0-2, Sfumato 43 vs Direct 46)",
+      "v2_pool_outcome": "sfumato_pool_v2_win (2-0, Sfumato 46 vs Direct 39)",
+      "sfumato_sum_delta": "+3 (43 -> 46)",
+      "diversity_delta": "+1 unique mechanism (7/8 -> 8/8; vs Direct 5/8)"
+    }
+  },
+  "honest_assessment": {
+    "did_new_v2_domains_help": "YES, meaningfully — but NOT as a solo cross-domain knockout; rather via genuine polarity compatibility, higher diversity (8/8), a Red-Team PASS runner-up, a high-ceiling Track B Wildcard, and a clean Stage 2b graft.",
+    "attribution_breakdown": [
+      "1. Domain Pool v2.0 Contribution (Non-Institutional Clusters vs v1.2 Institutional Draw): In v1.2, drawing 3 institutional/governance domains (tokugawa_governance, ombudsman_whistleblower, counter_intelligence) produced 0/6 Red-Team PASSers, 0 compatible graft primitives, and 7/8 unique mechanisms. With the 3 new non-institutional v2.0 domains (power_grid_inertia, metallurgy_heat_treatment, combat_sports_tempo), Stage 1 achieved 8/8 unique mechanisms, 1/6 strict Red-Team PASS (combat_sports_tempo Idea 1, 2nd place), 1/6 sharp Track B Wildcard with zero leak (metallurgy_heat_treatment Idea 2: non-monotonic TME brittle window), AND supplied the exact zero-sum compatible tactical primitive (telegraphed committed-vector window + non-frontal recoil) that Stage 2b cleanly grafted onto Top-1.",
+      "2. Stage 2a/2b Protocol Contribution (Direct Anchor + Selective Hardening): Crucially, a new domain did NOT beat the Direct Anchor solo in Stage 2a — Direct Anchor Idea 1 (Candidate 7: Victory-Combat Capital Decoupling) won Stage 2a cleanly, and Stage 2b obeyed the v2.0 guardrail (do NOT force-graft over Direct Anchor), hardening Candidate 7's exact single weakness (Delayed Divestment + passive economic optimization) via finite multi-site anchor windows (T_move > T_anchor) plus the compatible combat_sports_tempo graft.",
+      "3. Scientific Caveat (Hardening Asymmetry vs v1.1 Direct Champion): Per protocol, we compared against the exact unhardened Direct Champion from game_snowball_results.json (winning 2-0, 46 vs 39). Because our Stage 2b received 1 clean-context hardening pass while the v1.1 Direct Champion did not, part of the +7 aggregate margin comes from Stage 2b hardening (note: in v2_ablation_game_snowball.json, the hardened Direct Champion scored 45 sum / 22.5 mean vs our 46 sum / 23.0 mean — suggesting strong competitiveness even under equal hardening, though a direct head-to-head against hardened Direct would be needed to isolate the exact residual margin).",
+      "4. Remaining Weakness Noted by Both Judges: Feasibility scored 6/10 on both judges (vs Direct's 7.5/10), citing solo-queue coordination friction around combat-vs-victory capital splits and visual/spectator abstraction of multi-site packet anchoring compared to a lit power grid. Both judges still awarded Sfumato 2-0 because Effectiveness (8.5 vs 6.0) and Novelty (8.5 vs 6.0) decisively solved the core snowballing opt-out trap."
+    ],
+    "gate2_recommendation": "PASS Gate 2 with nuanced attribution: Domain Pool v2.0 clearly eliminated the v1.2 institutional polarity failure mode on GAME-SNOWBALL (0/6 -> 1/6 PASS + 1/6 Wildcard + 8/8 diversity + compatible graft + 2-0 blind win), and proves the synergy of Non-Institutional Domain Pool v2.0 + Direct Anchor + Stage 2b Selective Hardening."
+  }
+}

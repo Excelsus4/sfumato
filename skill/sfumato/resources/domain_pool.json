@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "description": "40 mechanism-rich remote domains across 8 disjoint macro-clusters for cluster-stratified Sfumato sampling.",
+  "version": "2.0",
+  "description": "74 mechanism-rich remote domains across 11 disjoint macro-clusters (66 Claude-safe domains: exactly 6 per cluster under --safe-profile claude; empirically audited on Claude Opus 5.5 for 0 safety refusals and high transfer yield).",
   "clusters": {
     "biology_ecology": [
       {
@@ -27,6 +27,21 @@
         "id": "swarm_social_insects",
         "name": "사회성 곤충 분업·둥지 위생학 (Social Insect Task Allocation & Social Immunity)",
         "mechanisms": "스티그머지(간접 환경 통신), 임계치 기반 동적 분업, 집단 검역·알로 그루밍, 춤 언어 정족수 의사결정"
+      },
+      {
+        "id": "coral_reef_mutualism",
+        "name": "산호초 청소 공생·시장 선택 (Coral Reef Cleaner-Fish Mutualism & Partner Switching)",
+        "mechanisms": "청소어-숙주 평판 관전(Image Scoring), 배신 시 즉각 파트너 교체·징벌 추격, 외부 관찰자 유무에 따른 협력도 분기, 공생체 셔플링(Symbiont Shuffling)"
+      },
+      {
+        "id": "forest_fire_ecology",
+        "name": "산림 화생 생태학·천이 동역학 (Pyrophyte Ecology & Ecological Succession)",
+        "mechanisms": "세로티니(불로만 열리는 지연 발아 종자), 소규모 주기적 지표화로 대형 수관화 예방, 개척종-극상종 교대, 교란 의존 다양성 유지"
+      },
+      {
+        "id": "cephalopod_camouflage",
+        "name": "두족류 분산 신경·실시간 위장 공학 (Cephalopod Distributed Nervous System & Active Camouflage)",
+        "mechanisms": "말초 팔 자율 반사 제어(중앙 뇌 병목 제거), 색소포 다층 텍스처 매칭, 위장-위협 신호 즉각 전환, 동적 경계 파괴(Disruptive Coloration)"
       }
     ],
     "physics_engineering": [
@@ -54,6 +69,21 @@
         "id": "thermodynamics_cryogenics",
         "name": "열역학·극저온 단열 설계 (Thermodynamics & Thermal Management)",
         "mechanisms": "상변화 열 버퍼(PCM), 다층 복사 차폐, 역류 열교환기, 히트파이프 수동 수송"
+      },
+      {
+        "id": "control_theory_feedback",
+        "name": "자동제어공학·PID 및 임피던스 제어 (Control Theory, Impedance & Feedforward Control)",
+        "mechanisms": "피드포워드 외란 선제 상쇄, 적분 와인드업 방지(Anti-Windup), 히스테리시스 데드밴드(채터링 차단), 강인 제어·위상 여유"
+      },
+      {
+        "id": "optical_interferometry",
+        "name": "광학 간섭계·적응 광학 공학 (Optical Interferometry & Adaptive Optics)",
+        "mechanisms": "보강·상쇄 간섭을 통한 초미세 위상차 검출, 기준별(Guide Star) 실시간 파면 왜곡 보정, 이색성 빔스플리터 분리, 코히런스 길이 필터링"
+      },
+      {
+        "id": "acoustics_concert_halls",
+        "name": "건축 음향학·잔향 및 흡음 설계 (Architectural Acoustics & Reverberation Control)",
+        "mechanisms": "초기 반사음-잔향 시간(RT60) 분리, 헬름홀츠 공명기 특정 대역 선택 흡음, QRD 난반사 확산체(플러터 에코 제거), 음향 섀도우 존 설계"
       }
     ],
     "history_institutions": [
@@ -81,6 +111,11 @@
         "id": "roman_logistics",
         "name": "로마 군단 표준화·공병 병참 (Roman Military Engineering & Logistics)",
         "mechanisms": "매일 야영지 표준 모듈 축성, 도로망 기반 내선 작전, 현지 징발 vs 보급창 분리"
+      },
+      {
+        "id": "venetian_doge_election",
+        "name": "베네치아 공화국 다단계 추첨·선거 공학 (Venetian Mixed-Lottery Election & Anti-Faction Design)",
+        "mechanisms": "추첨과 투표 10단계 교차로 담합 계산 불가능화, 파벌 매수 비용 폭증, 이해충돌 친족 자동 배제, 임기 중 사적 거래 금지"
       }
     ],
     "intelligence_conflict": [
@@ -108,6 +143,26 @@
         "id": "disaster_triage",
         "name": "재난 의학 트리아지·현장 지휘 (Mass-Casualty Triage & Surge Ops)",
         "mechanisms": "역방향 트리아지, 30초 초고속 분류 프로토콜, 병목 분리 동선, 재평가 순환 루프"
+      },
+      {
+        "id": "mountain_search_rescue",
+        "name": "산악·해상 수색구조(SAR)·확률 수색 이론 (Search & Rescue Theory & Probabilistic Allocation)",
+        "mechanisms": "탐지확률(POD)×존재확률(POA) 동적 베이지안 갱신, 골든아워 수색 구역 분할, 최후 목격 지점(PLS) 링 확장, 구조대 2차 조난 차단 컷오프"
+      },
+      {
+        "id": "forensic_accident_investigation",
+        "name": "항공·산업 사고 포렌식·스위스 치즈 분석 (Forensic Accident Investigation & Root-Cause Analysis)",
+        "mechanisms": "블랙박스 비가역 원시 기록 보존, 스위스 치즈 다중 방어선 정렬 추적, 확증 편향 차단 이중 가설 검증, 현장 증거 동결(Chain of Custody)"
+      },
+      {
+        "id": "sports_refereeing_var",
+        "name": "프로 스포츠 심판학·비디오 판독(VAR) 프로토콜 (Sports Officiating & Review Governance)",
+        "mechanisms": "명백한 오심(Clear & Obvious) 개입 임계치, 어드밴티지 룰(흐름 보존 지연 판정), 챌린지 횟수 제한(지연 전술 억제), 비대칭 파울 트러블 압박"
+      },
+      {
+        "id": "crisis_negotiation_deescalation",
+        "name": "위기 협상·단계적 긴장 완화 설계 (Crisis Negotiation & Behavioral De-escalation)",
+        "mechanisms": "전술적 시간 지연(감정 곡선 냉각), 소규모 상호 양보 사다리, 체면 보존 출구(Golden Bridge) 설계, 결정권자-협상가 분리(Decision Buffer)"
       }
     ],
     "markets_law": [
@@ -135,6 +190,11 @@
         "id": "provenance_anticounterfeit",
         "name": "미술품·보석 진위 감정·유통 이력학 (Art/Gem Provenance & Anti-Counterfeiting)",
         "mechanisms": "파괴 불가 미세 고유 지문, 연쇄 소유 이력 검증, 전문 감정인 평판 담보, 위조 비용 역전"
+      },
+      {
+        "id": "patent_standards_frand",
+        "name": "표준필수특허(SEP)·FRAND 특허풀 설계 (Patent Pools, FRAND Licensing & Open Standards)",
+        "mechanisms": "상호 보완 특허 일괄 번들링(로열티 중첩 해소), 비차별 필수 라이선싱 의무, 표준 채택 전 사전 공개(Hold-up 차단), 필수성 독립 제3자 판정"
       }
     ],
     "craft_operations": [
@@ -162,6 +222,11 @@
         "id": "container_port_logistics",
         "name": "초대형 컨테이너 항만·야드 운영 (Intermodal Container Port Logistics)",
         "mechanisms": "표준 규격화(TEU), 하역-적치 선예측 슬로팅, 혼잡 구간 버퍼 야드, 동적 크레인 스케줄링"
+      },
+      {
+        "id": "toyota_kanban_andon",
+        "name": "도요타 간판(Kanban)·안돈(Andon) 린 생산공학 (Lean Pull Systems, Kanban & Andon Cord)",
+        "mechanisms": "하류 당김 신호(Pull)로 과잉 재고 물리적 상한 고정, 안돈 줄(현장 작업자 라인 정지권), 단일 공정 흐름(One-Piece Flow), 헤이준카(부하 평준화)"
       }
     ],
     "art_performance": [
@@ -189,6 +254,11 @@
         "id": "film_editing_kuleshov",
         "name": "영화 편집·쿨레쇼프 맥락 프레임 (Film Editing & Narrative Compression)",
         "mechanisms": "병치 효과(설명 없이 추론 유도), 점프컷 정보 압축, 사운드 브릿지 전환, 오프스크린 긴장감"
+      },
+      {
+        "id": "japanese_joinery_kigumi",
+        "name": "전통 목조 결구(Kigumi)·가역적 장인 설계 (Traditional Timber Joinery & Reversible Craft)",
+        "mechanisms": "못 없이 하중이 걸릴수록 조여지는 자기잠금 쐐기, 열팽창·습도 변형 흡수 유격, 분해·부분 교체 가능한 가역 결합, 목재 결 방향 하중 정렬"
       }
     ],
     "social_anthropology": [
@@ -216,6 +286,112 @@
         "id": "apprentice_guild_exams",
         "name": "도제 길드 걸작(Masterpiece) 심사제 (Guild Apprenticeship & Proof-of-Craft)",
         "mechanisms": "단계적 권한 해금, 위조 불가 실기 산출물 검증, 도제-장인 평판 연동, 동료 상호 심사"
+      },
+      {
+        "id": "restorative_justice_circles",
+        "name": "회복적 사법·공동체 화해 서클 (Restorative Justice & Reintegrative Shaming)",
+        "mechanisms": "행위와 행위자 분리(낙인 방지), 피해 복구 계약 직접 협상, 공동체 재통합 의례, 재발 방지 상호 책임 서클"
+      },
+      {
+        "id": "oral_tradition_mnemonics",
+        "name": "구전 서사·기억 궁전 전승학 (Oral Tradition, Meter & Cultural Transmission)",
+        "mechanisms": "수행 자체가 무료 무결성 검증이 되는 운율·리듬 제약(위반 시 즉시 '어색함' 노출), 사전 결합 공식구(Formulaic Phrase) 모듈 조립, 기억 궁전 공간 앵커링, 세대 간 검증 낭송"
+      }
+    ],
+    "cognition_pedagogy": [
+      {
+        "id": "spaced_repetition_memory",
+        "name": "간격 반복·바람직한 난이도 인지심리학 (Spaced Repetition & Desirable Difficulty)",
+        "mechanisms": "망각 직전 인출 연습(Retrieval Practice), 인터리빙(교차 혼합 학습), 과잉 확신 깨는 즉시 피드백, 점진적 힌트 소거(Fading)"
+      },
+      {
+        "id": "montessori_scaffolding",
+        "name": "몬테소리 교구·자가오류 교정 스캐폴딩 (Montessori Control-of-Error & Scaffolding)",
+        "mechanisms": "교사 개입 없이 교구 자체가 오답을 드러내는 내장 오류 제어(Control of Error), 단일 개념 격리, 근접발달영역(ZPD) 단계적 해금, 자기 선택 작업 사이클"
+      },
+      {
+        "id": "motor_learning_rehab",
+        "name": "재활 의학·운동학습 셰이핑 공학 (Rehabilitation & Motor-Learning Shaping)",
+        "mechanisms": "건측 억제 유도(CIMT: 강한 쪽을 일시 제약해 약한 경로 활성화), 외적 주의 초점(결과 지향 큐), 감각 피드백 점감, 미세 성공 연쇄(Shaping)"
+      },
+      {
+        "id": "combat_sports_tempo",
+        "name": "격투기·펜싱 템포·페인트 및 거리 통제 (Combat Sports Tempo, Feints & Distance Control)",
+        "mechanisms": "리듬 파괴(Broken Rhythm)로 예측 타이밍 붕괴, 저비용 페인트로 상대 반응 정보 수집, 안전거리-타격거리 경계 압박, 카운터 유인 함정"
+      },
+      {
+        "id": "choice_architecture_friction",
+        "name": "행동경제학 선택 설계·의도적 마찰 (Choice Architecture & Strategic Friction)",
+        "mechanisms": "유익한 마찰(충동 오류 방지 냉각 턱), 기본값(Default) 경로 의존 활용, 사전 약정 장치(Ulysses Pact), 선택 과부하 차단 점진 공개"
+      },
+      {
+        "id": "simultaneous_interpretation",
+        "name": "동시통역·작업기억 시차 버퍼링 (Simultaneous Interpretation & Irreversible Streaming)",
+        "mechanisms": "비가역 실시간 출력 속 '유창한 필러(Placeholder)'의 침묵 누락 은폐 방지, 적정 시차 버퍼(Ear-Voice Span), 살라미 분절 재구성(Salami Technique), 피로 붕괴 전 부스 파트너 교대(Booth Handoff)"
+      }
+    ],
+    "materials_chemistry": [
+      {
+        "id": "metallurgy_heat_treatment",
+        "name": "야금학·담금질·뜨임 및 가공경화 (Metallurgy, Quenching, Tempering & Work-Hardening)",
+        "mechanisms": "제너 피닝(Zener Pinning) 비캡형 결정립 성장 억제, 급랭(경도)-뜨임(인성) 2단계 조율 및 취성창 회피, 표면 경화+심부 연성 복합화(Case Hardening), 가공경화 자가 보강"
+      },
+      {
+        "id": "fermentation_microbial_craft",
+        "name": "발효공학·스타터 배양 및 숙성 설계 (Fermentation Craft, Starter Culture & Aging)",
+        "mechanisms": "선점 접종(유익균 우점으로 부패균 원천 차단), 온도·염도 구배로 대사 속도 정밀 제어, 백슬로핑(이전 배치 일부 계승), 시간 숙성 풍미 복합화"
+      },
+      {
+        "id": "self_healing_polymers",
+        "name": "자가치유 고분자·희생 결합 재료공학 (Self-Healing Polymers & Sacrificial Bonds)",
+        "mechanisms": "균열 시 파열되는 마이크로캡슐 자동 봉합, 가역적 수소결합으로 반복 손상 복원, 희생 결합(주 골격 보호용 가벼운 끊어짐), 형상기억 복원"
+      },
+      {
+        "id": "permaculture_agroecology",
+        "name": "퍼머컬처·윤작 및 동반식재 생태농업 (Permaculture, Crop Rotation & Companion Planting)",
+        "mechanisms": "질소 고정-소모 작물 교대 윤작(토양 고갈 방지), 다층 수관 공간 중첩, 유익곤충 서식지 완충대, 폐기물-투입재 순환 폐루프"
+      },
+      {
+        "id": "catalysis_reaction_kinetics",
+        "name": "촉매 화학·반응 속도론 및 상전이 (Catalysis, Activation Barriers & Phase Transitions)",
+        "mechanisms": "활성화 에너지 장벽 선택적 하향(원하는 경로만 가속), 촉매 독(Poisoning) 방지 재생 사이클, 르샤틀리에 평형 이동(생성물 즉시 제거), 핵생성(Nucleation) 임계점 제어"
+      },
+      {
+        "id": "crystallography_annealing",
+        "name": "결정학·시뮬레이티드 어닐링 및 결함 공학 (Crystallography, Annealing & Defect Engineering)",
+        "mechanisms": "오스트발트 숙성(Ostwald Ripening) 과포화 승자독식 역학, 고온 탐색-서냉 결정화로 국소 최적 탈출, 종자 결정(Seed Crystal) 템플릿 성장, 불순물 존 리파이닝(Zone Refining)"
+      }
+    ],
+    "earth_navigation_grids": [
+      {
+        "id": "power_grid_inertia",
+        "name": "전력망 주파수 관성·블랙스타트 공학 (Power Grid Frequency Inertia & Black-Start)",
+        "mechanisms": "회전 관성 기반 즉각 주파수 완충, 주파수 연동 자동 부하 차단(UFLS), 계통 분리 아일랜딩(연쇄 정전 차단), 무전원 블랙스타트 단계 복구"
+      },
+      {
+        "id": "river_hydrology_floodplains",
+        "name": "하천 수문학·범람원 및 제방 사행 역학 (River Hydrology, Floodplains & Meander Dynamics)",
+        "mechanisms": "하류 파국 막는 의도적 유수지·범람원 개방(Room for the River), 퇴적-침식 자가 균형 사행, 제방 역설(Levee Paradox) 회피, 유역 단위 분산 저류"
+      },
+      {
+        "id": "polynesian_wayfinding",
+        "name": "폴리네시아 비계기 성좌·너울 항법 (Polynesian Non-Instrument Wayfinding)",
+        "mechanisms": "의도적 편향 항해(Deliberate Bias: 오차 방향을 미리 확정해 복구 비용 반감), 별·너울·바닷새 다중 약신호 삼각측량, 목표 섬의 확장 표적(Expanded Target Screen), 데드레코닝 정신 모델"
+      },
+      {
+        "id": "tidal_locks_estuaries",
+        "name": "운하 갑문·조석 하구 수리 공학 (Canal Lock Hydraulics & State-Dependent Turnaround)",
+        "mechanisms": "선행 통과 상태에 따라 비용이 달라지는 교대 왕복 유량 재활용(Turnaround Lockage: 동방향 군집 시 비용 2배·교대 시 절감), 측방 저수지(Water-Saving Basins) 부분 회수, 다단계 갑문 압력·수위 평형 전이, 정조(Slack Water) 무저항 전환"
+      },
+      {
+        "id": "tectonic_stress_release",
+        "name": "지진학·지각 응력 축적 및 조기경보 (Seismology, Stress-Release Cycles & Early Warning)",
+        "mechanisms": "소규모 무해 미소지진(Creep)으로 대형 단층 파열 에너지 분산, P파 감지로 S파 도착 전 선제 차단, 응력 그림자(Stress Shadow) 전이 추적"
+      },
+      {
+        "id": "watershed_water_rights",
+        "name": "건조지 수리권·카나트(Qanat) 관개 배분학 (Arid Watershed Allocation & Qanat Irrigation)",
+        "mechanisms": "증발 차단 지하 수로 중력 수송, 고정 유량이 아닌 비율 지분(Share) 분배로 가뭄 리스크 자동 공유, 순번제 관개 시계, 상류-하류 회귀수(Return Flow) 연계"
       }
     ]
   }

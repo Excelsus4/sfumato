@@ -93,7 +93,7 @@ We ran **strict Iso-Compute benchmarks** (`4 isolated runs × 2 ideas = 8 ideas/
 
 > **⚖️ Where Sfumato Shines — and Where It Doesn't:**
 > - **Shines brightest** on open-ended strategy, incentive/mechanism design, non-obvious UX & behavioral design (`UX-ONBOARD` 2–0), and breaking entrenched industry clichés.
-> - **Honest limitation (`GAME-SNOWBALL`):** On tightly coupled real-time physics/balance loops with small sample budgets (`K=3`), unlucky institutional draws can lose to a strong Direct Baseline — and our v2.0 ablation proved **forced cross-domain grafting makes it worse (`43 → 39`)**. Use `deep` mode (`Direct Anchor + K=6`) for tight engineering/systems loops so the anchor locks your floor (`≥ Direct`).
+> - **Honest limitation (`GAME-SNOWBALL`) & Pool v2.0 fix:** On tightly coupled real-time physics/balance loops with small sample budgets (`K=3`), unlucky institutional draws can lose to a strong Direct Baseline — and our v2.0 ablation proved **forced cross-domain grafting makes it worse (`43 → 39`)**. Expanding to **Domain Pool v2.0** (`74 domains / 11 clusters`, adding cognition, materials, and grid/hydrology clusters) flipped `GAME-SNOWBALL` to **8/8 unique mechanisms & a `2–0` Blind Win (`46:39`, log in [`benchmarks/v2/ablations/`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json))**; still use `deep` mode (`Direct Anchor + K=6`) on tight systems loops to lock your floor (`≥ Direct`).
 
 ---
 
@@ -109,7 +109,7 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
   <img src="./assets/architecture_codex.svg" alt="Sfumato Architecture Diagram" width="100%" />
 </p>
 
-1. **Cluster-Stratified Code RNG + Safety Profiles (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **40 mechanism-rich domains across 8 disjoint macro-clusters** using pure Python `random`. Pass `--safe-profile claude` to exclude 8 sensitive bio/cyber/espionage domains (leaving 32 domains across all 8 clusters with **0 safety refusals on Claude Opus 5.5**).
+1. **Cluster-Stratified Code RNG + Safety Profiles (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **74 mechanism-rich domains across 11 disjoint macro-clusters** using pure Python `random`. Pass `--safe-profile claude` to exclude 8 sensitive bio/cyber/espionage domains — leaving **66 Claude-safe domains (exactly 6 per cluster across all 11 clusters)** empirically verified at **0 safety refusals on Claude Opus 5.5**.
 2. **Track A — Explicit Analogy *(High Hit-Rate)*:** Original brief + assigned remote domain → surgical hits against domain-specific attack surfaces.
 3. **Track B — Blind Isomorphic Masking *(Max Ceiling · v2.0 3-Line Structural Skeleton)*:**
    - First distill the problem into a **3-line domain-neutral Structural Skeleton** (*State Variables · Incentive Polarity · Irreducible Trade-Off*), then rewrite it into the target field with a **0-leak vocabulary check**.
@@ -172,7 +172,7 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
 Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **4 inspectable files**:
 - `SKILL.md` — skill instructions & workflow
 - `references/prompt_templates.md` — Explicit, Blind, and Red-Team templates
-- `resources/domain_pool.json` — 40 curated mechanism-rich domains across 8 macro-clusters
+- `resources/domain_pool.json` — 74 curated mechanism-rich domains across 11 macro-clusters (`66` Claude-safe, balanced 6/cluster)
 - `scripts/sample_domains.py` — pure Python stdlib (`argparse`, `json`, `pathlib`, `random`, `sys`; zero network calls, zero file writes)
 
 Clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:

@@ -93,7 +93,7 @@
 
 > **⚖️ Sfumato 最擅长的场景——以及诚实的边界：**
 > - **最闪耀的领域：** 开放式产品与商业战略、激励与机制设计、打破刻板印象的情感/行为 UX（`UX-ONBOARD` 2–0 完胜），以及需要突破行业定式的系统架构难题。
-> - **诚实的局限（`GAME-SNOWBALL`）：** 在强耦合的实时物理/数值平衡系统中，如果抽样预算较小（`K=3`）且碰巧连续抽到制度治理类领域，可能输给强力 Direct 基线——而且我们的 v2.0 消融实验证实：**强行把极性不匹配的跨领域点子嫁接到更强的 Direct 方案上反而会拉低质量（`43 → 39`）**。对于强工程/数值系统，建议使用 `deep` 模式（`Direct Anchor + K=6`），由锚点锁住下限（`≥ Direct`）。
+> - **诚实的局限（`GAME-SNOWBALL`）与 Pool v2.0 改进结果：** 在强耦合的实时物理/数值平衡系统中，如果抽样预算较小（`K=3`）且碰巧连续抽到制度治理类领域，可能输给强力 Direct 基线，强行嫁接不匹配的跨领域点子反而会拉低质量（`43 → 39`）。扩展至新增认知·材料·电网/水文大类的 **Domain Pool v2.0（`74 个领域 / 11 个大类`）** 后，`GAME-SNOWBALL` 已翻盘为 **`8/8` 独立机制 + 盲评 `2–0` 胜出（`46:39`，日志见 [`game_snowball_pool_v2_results.json`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json)）**；面对强工程/数值系统，仍建议使用 `deep` 模式（`Direct Anchor + K=6`）由锚点锁住下限（`≥ Direct`）。
 
 ---
 
@@ -109,7 +109,7 @@
   <img src="./assets/architecture_codex.svg" alt="Sfumato 架构图" width="100%" />
 </p>
 
-1. **分簇代码随机抽样 + 安全配置（`sample_domains.py`）：** 绝不让 LLM 自己“随机选个领域”（它总会反复挑*蚂蚁、爵士乐和国际象棋*）。Sfumato 使用纯 Python 标准库 `random` 从 **8 个互斥大类 × 5 个 = 40 个高机制密度领域** 中分层抽取。传入 `--safe-profile claude` 可自动排除 8 个敏感生物/网络战/反间谍领域（保留全部 8 个大类的 32 个安全领域，**Claude Opus 5.5 实测 0 拒答**）。
+1. **分簇代码随机抽样 + 安全配置（`sample_domains.py`）：** 绝不让 LLM 自己“随机选个领域”（它总会反复挑*蚂蚁、爵士乐和国际象棋*）。Sfumato 使用纯 Python 标准库 `random` 从 **11 个互斥大类共 74 个高机制密度领域** 中分层抽取。传入 `--safe-profile claude` 可自动排除 8 个敏感生物/网络战/反间谍领域——保留 **66 个 Claude 安全领域（11 个大类各精确 6 个，零抽样偏置），Claude Opus 5.5 实测 0 拒答**。
 2. **Track A — 显式类比 *（高命中率）*：** 原始问题简报 + 分配的远程领域 → 精准打击具体业务攻击面。
 3. **Track B — 盲态同构掩码 *（最高上限 · v2.0 三行结构骨架）*：**
    - 先将原问题提炼为 **三行领域中立结构骨架**（*状态变量 · 激励极性 · 不可消除的权衡*），再改写进目标领域，并执行 **原始词汇零泄漏检查**。
@@ -172,7 +172,7 @@
 Sfumato 运行所需的全部内容都在 [`skill/sfumato/`](./skill/sfumato/) 目录下——仅包含 **4 个可直接审阅的文件**：
 - `SKILL.md` — 技能指令与执行流程
 - `references/prompt_templates.md` — Explicit、Blind 与 Red-Team 提示词模板
-- `resources/domain_pool.json` — 8 个大类共 40 个高机制密度领域池
+- `resources/domain_pool.json` — 11 个大类共 74 个高机制密度领域池（Claude 安全配置 66 个，每类 6 个均衡分布）
 - `scripts/sample_domains.py` — 仅使用 Python 标准库（`argparse`、`json`、`pathlib`、`random`、`sys`；零网络请求、零磁盘写入）
 
 克隆仓库、审阅文件内容后，将 `skill/sfumato` 复制到对应智能体的全局技能目录即可：

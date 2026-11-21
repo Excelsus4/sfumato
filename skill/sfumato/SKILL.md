@@ -35,7 +35,7 @@ Never ask an LLM to "pick random domains" (it repeats ants, jazz, and chess). Ru
 
 - **Available macro-clusters (8):** `biology_ecology`, `physics_engineering`, `history_institutions`, `intelligence_conflict`, `markets_law`, `craft_operations`, `art_performance`, `social_anthropology`
 - **Default (`dual-track`):** `--k 4` (2 Explicit + 2 Blind). Use `--k 6` ONLY when the user explicitly requests `deep` mode.
-- **Claude Code Safety Profile:** When running on **Claude / Claude Code**, always append `--safe-profile claude` to exclude bio-pathogen, nuclear, cyber/EW, and espionage domains that can trigger false-positive safety refusals during Blind Masking (32 rich domains across all 8 clusters remain available). On Antigravity/Codex, omit it to use the full 40-domain pool.
+- **Claude Code Safety Profile:** When running on **Claude / Claude Code**, always append `--safe-profile claude` to exclude bio-pathogen, nuclear, cyber/EW, and espionage domains that can trigger false-positive safety refusals during Blind Masking (66 rich domains — exactly 6 per cluster across all 11 clusters — remain available). On Antigravity/Codex, omit it to use the full 74-domain pool across 11 clusters.
 
 ```powershell
 python "<skill_dir>/scripts/sample_domains.py" --k 4 --exclude-clusters <same_cluster_if_any>
