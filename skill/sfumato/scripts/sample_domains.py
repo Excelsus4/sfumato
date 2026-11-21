@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import sys
 from pathlib import Path
@@ -28,6 +29,9 @@ CLAUDE_SAFE_EXCLUDE_IDS = {
 }
 
 
+POLARITIES = ("adversarial", "cooperative", "physical_loop", "human_ux", "systems_ops")
+
+
 def load_pool(pool_path: Path) -> dict[str, list[dict]]:
     data = json.loads(pool_path.read_text(encoding="utf-8"))
     return data["clusters"]
@@ -39,6 +43,7 @@ def sample_domains(
     exclude_clusters: set[str],
     exclude_ids: set[str],
     seed: int | None,
+    polarity: str = "any",
 ) -> list[dict]:
     rng = random.Random(seed)
     eligible_clusters = [
@@ -53,6 +58,32 @@ def sample_domains(
     rng.shuffle(eligible_clusters)
     picked: list[dict] = []
     used_ids = set(exclude_ids)
+
+    if polarity and polarity != "any":
+        # Soft polarity weighting: the first ceil(k/2) picks come from disjoint clusters
+        # that hold an affinity-matching domain (choosing among matching domains there);
+        # the rest come from the other disjoint clusters. Falls back gracefully when too
+        # few matching clusters remain, then continues with the round-robin below.
+        def matches(item: dict) -> bool:
+            return item["id"] not in used_ids and polarity in item.get("affinities", [])
+
+        need = math.ceil(k / 2)
+        matching = [c for c in eligible_clusters if any(matches(i) for i in clusters[c])]
+        first_round = matching[:need]
+        rest = [c for c in eligible_clusters if c not in first_round]
+        for cname in first_round:
+            choice = rng.choice([i for i in clusters[cname] if matches(i)])
+            used_ids.add(choice["id"])
+            picked.append({"cluster": cname, **choice})
+        for cname in rest:
+            if len(picked) >= k:
+                break
+            choice = rng.choice([i for i in clusters[cname] if i["id"] not in used_ids])
+            used_ids.add(choice["id"])
+            picked.append({"cluster": cname, **choice})
+        if len(picked) >= k:
+            return picked[:k]
+        rng.shuffle(eligible_clusters)
 
     # Round-robin across shuffled clusters to maximize cluster disjointness
     while len(picked) < k:
@@ -96,6 +127,13 @@ def all_domains(
     return groups
 
 
+def strip_hints(items: list[dict], include_hints: bool) -> list[dict]:
+    """Drop ``mechanisms`` (hint priming) unless explicitly requested."""
+    if include_hints:
+        return items
+    return [{k: v for k, v in item.items() if k != "mechanisms"} for item in items]
+
+
 def assign_tracks(items: list[dict], mode: str) -> list[dict]:
     out = []
     for idx, item in enumerate(items):
@@ -109,7 +147,7 @@ def assign_tracks(items: list[dict], mode: str) -> list[dict]:
     return out
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Sample disjoint remote domains.")
     parser.add_argument("--k", type=int, default=4, help="Number of domains to sample (default: 4)")
     parser.add_argument(
@@ -136,6 +174,17 @@ def main() -> int:
         default="full",
         help="Filter out bio/CBRN/cyber/espionage domains that may trigger false-positive refusals on Claude (default: full)",
     )
+    parser.add_argument(
+        "--polarity",
+        choices=("any",) + POLARITIES,
+        default="any",
+        help="Soft-weight sampling so at least ceil(k/2) domains share this structural affinity (default: any)",
+    )
+    parser.add_argument(
+        "--include-hints",
+        action="store_true",
+        help="Include each domain's 'mechanisms' hints in the output (omitted by default to avoid hint priming)",
+    )
     parser.add_argument("--seed", type=int, default=None, help="Optional RNG seed for reproducibility")
     parser.add_argument(
         "--all",
@@ -143,7 +192,7 @@ def main() -> int:
         help="Return ALL eligible domains grouped by cluster (ignores --k)",
     )
     parser.add_argument("--list-clusters", action="store_true", help="List available macro-clusters and exit")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     pool_path = Path(__file__).resolve().parent.parent / "resources" / "domain_pool.json"
     clusters = load_pool(pool_path)
@@ -153,23 +202,46 @@ def main() -> int:
             print(f"{cname} ({len(items)}): {', '.join(i['id'] for i in items)}")
         return 0
 
+    if args.k < 1:
+        parser.error(f"--k must be >= 1 (got {args.k})")
+
     exclude_clusters = {c.strip() for c in args.exclude_clusters.split(",") if c.strip()}
     exclude_ids = {i.strip() for i in args.exclude_ids.split(",") if i.strip()}
+    unknown_clusters = sorted(exclude_clusters - set(clusters))
+    if unknown_clusters:
+        parser.error(
+            f"unknown --exclude-clusters: {', '.join(unknown_clusters)}. "
+            f"Valid clusters: {', '.join(clusters)}"
+        )
+    valid_ids = [i["id"] for items in clusters.values() for i in items]
+    unknown_ids = sorted(exclude_ids - set(valid_ids))
+    if unknown_ids:
+        parser.error(
+            f"unknown --exclude-ids: {', '.join(unknown_ids)}. "
+            f"Valid ids: {', '.join(valid_ids)}"
+        )
     if args.safe_profile == "claude":
         exclude_ids |= CLAUDE_SAFE_EXCLUDE_IDS
 
     if args.all:
         # Tracks alternate explicit/blind within each cluster (or follow --mode).
-        assigned = [
-            item
-            for group in all_domains(clusters, exclude_clusters, exclude_ids, args.seed)
-            for item in assign_tracks(group, args.mode)
-        ]
+        try:
+            groups = all_domains(clusters, exclude_clusters, exclude_ids, args.seed)
+        except ValueError as exc:
+            parser.error(str(exc))
+        assigned = [item for group in groups for item in assign_tracks(group, args.mode)]
     else:
-        sampled = sample_domains(clusters, args.k, exclude_clusters, exclude_ids, args.seed)
+        try:
+            sampled = sample_domains(
+                clusters, args.k, exclude_clusters, exclude_ids, args.seed, args.polarity
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
         assigned = assign_tracks(sampled, args.mode)
+    assigned = strip_hints(assigned, args.include_hints)
 
-    sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     print(json.dumps(assigned, ensure_ascii=False, indent=2))
     return 0
 

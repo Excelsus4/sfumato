@@ -1,397 +1,478 @@
 {
-  "version": "2.0",
-  "description": "74 mechanism-rich remote domains across 11 disjoint macro-clusters (66 Claude-safe domains: exactly 6 per cluster under --safe-profile claude; empirically audited on Claude Opus 5.5 for 0 safety refusals and high transfer yield).",
+  "version": "2.1",
+  "description": "74 mechanism-rich remote domains across 11 disjoint macro-clusters (66 Claude-safe domains: exactly 6 per cluster under --safe-profile claude), English-first with structural polarity affinities.",
+  "polarities": [
+    "adversarial",
+    "cooperative",
+    "physical_loop",
+    "human_ux",
+    "systems_ops"
+  ],
   "clusters": {
     "biology_ecology": [
       {
         "id": "immunology_microbiome",
-        "name": "면역학·미생물 생태학 (Immunology & Microbiome Defense)",
-        "mechanisms": "숙주 선별, 대사 에스크로, 가드 가설(미끼-경비), 정족수 감지 역이용, MHC 다형성, 수동면역"
+        "name": "Immunology & Microbiome Defense",
+        "affinities": ["adversarial", "systems_ops"],
+        "mechanisms": "host selection, metabolic escrow, guard hypothesis (decoy-sentinel), quorum-sensing hijacking, MHC polymorphism, passive immunity"
       },
       {
         "id": "invasive_ecology",
-        "name": "외래 침입종 방제학·행동생태학 (Invasive Species & Behavioral Ecology)",
-        "mechanisms": "r/K 생활사 트레이드오프, 불임 유다 기법, 카이로몬 게이트 매력적 함정, 푸시-풀 유인 작물, 앨리 효과"
+        "name": "Invasive Species Control & Behavioral Ecology",
+        "affinities": ["adversarial", "physical_loop"],
+        "mechanisms": "r/K life-history trade-offs, sterile Judas-animal technique, kairomone trap-gate, push-pull cropping, Allee-effect threshold"
       },
       {
         "id": "mycorrhizal_plant_defense",
-        "name": "식물 방어 생태학·균근 네트워크 (Plant Chemical Defense & Mycorrhizal Networks)",
-        "mechanisms": "간접 방어(포식자 호출 휘발성 신호), 유도 저항성 프라이밍, 자원 분배 제재, 공생 파트너 선별"
+        "name": "Plant Chemical Defense & Mycorrhizal Networks",
+        "affinities": ["cooperative", "adversarial", "systems_ops"],
+        "mechanisms": "indirect defense (volatile predator-calling signals), induced resistance priming, carbon-allocation sanctions, symbiotic partner screening"
       },
       {
         "id": "parasitology_coevolution",
-        "name": "기생생물학·붉은 여왕 공진화 (Parasitology & Red Queen Coevolution)",
-        "mechanisms": "숙주 조작, 중간숙주 병목, 국소 적응 비대칭, 독성-전파 트레이드오프"
+        "name": "Parasitology & Red Queen Coevolution",
+        "affinities": ["adversarial", "physical_loop"],
+        "mechanisms": "host manipulation, intermediate-host bottleneck, local adaptation asymmetry, virulence-transmission trade-off, sexual recombination defense"
       },
       {
         "id": "swarm_social_insects",
-        "name": "사회성 곤충 분업·둥지 위생학 (Social Insect Task Allocation & Social Immunity)",
-        "mechanisms": "스티그머지(간접 환경 통신), 임계치 기반 동적 분업, 집단 검역·알로 그루밍, 춤 언어 정족수 의사결정"
+        "name": "Social Insect Task Allocation & Social Immunity",
+        "affinities": ["cooperative", "physical_loop", "systems_ops"],
+        "mechanisms": "stigmergy (indirect environmental signaling), response-threshold dynamic division of labor, social quarantine and allogrooming, waggle-dance quorum sensing"
       },
       {
         "id": "coral_reef_mutualism",
-        "name": "산호초 청소 공생·시장 선택 (Coral Reef Cleaner-Fish Mutualism & Partner Switching)",
-        "mechanisms": "청소어-숙주 평판 관전(Image Scoring), 배신 시 즉각 파트너 교체·징벌 추격, 외부 관찰자 유무에 따른 협력도 분기, 공생체 셔플링(Symbiont Shuffling)"
+        "name": "Coral Reef Cleaner-Fish Mutualism & Partner Switching",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "cleaner-host image scoring (public audience effect), immediate partner switching and punishment chasing on defection, symbiont shuffling"
       },
       {
         "id": "forest_fire_ecology",
-        "name": "산림 화생 생태학·천이 동역학 (Pyrophyte Ecology & Ecological Succession)",
-        "mechanisms": "세로티니(불로만 열리는 지연 발아 종자), 소규모 주기적 지표화로 대형 수관화 예방, 개척종-극상종 교대, 교란 의존 다양성 유지"
+        "name": "Pyrophyte Ecology & Ecological Succession",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "serotiny (fire-triggered delayed germination), frequent low-intensity surface fires preventing catastrophic crown fires, pioneer-climax succession, disturbance-maintained diversity"
       },
       {
         "id": "cephalopod_camouflage",
-        "name": "두족류 분산 신경·실시간 위장 공학 (Cephalopod Distributed Nervous System & Active Camouflage)",
-        "mechanisms": "말초 팔 자율 반사 제어(중앙 뇌 병목 제거), 색소포 다층 텍스처 매칭, 위장-위협 신호 즉각 전환, 동적 경계 파괴(Disruptive Coloration)"
+        "name": "Cephalopod Distributed Nervous System & Active Camouflage",
+        "affinities": ["physical_loop", "human_ux", "adversarial"],
+        "mechanisms": "peripheral arm autonomous reflex control (removing central brain bottleneck), multi-layer chromatophore texture matching, instant camouflage-to-deimatic threat switch, disruptive coloration"
       }
     ],
     "physics_engineering": [
       {
         "id": "electronic_warfare_pls",
-        "name": "전자전(ECCM)·신호처리·물리계층 보안 (Electronic Warfare & Signal Processing)",
-        "mechanisms": "직교 PN 위상 시프트, 정합 필터 교차상관, 영공간 인공 잡음, 능동 채프·HOJ 역추적, 미세 섭동 폐루프 검증"
+        "name": "Electronic Warfare (ECCM) & Physical-Layer Security",
+        "affinities": ["adversarial", "physical_loop"],
+        "mechanisms": "orthogonal PN phase shifting, matched-filter cross-correlation, null-space artificial noise, active chaff and home-on-jam, closed-loop micro-perturbation"
       },
       {
         "id": "seismic_structural",
-        "name": "내진 구조공학·감쇠 설계 (Seismic Engineering & Base Isolation)",
-        "mechanisms": "면진 격리, 동조 질량 댐퍼(TMD), 희생 소성 힌지(퓨즈), 공진 주파수 회피"
+        "name": "Seismic Engineering & Base Isolation",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "base isolation decoupling, tuned mass dampers (TMD), sacrificial plastic hinges (structural fuses), resonant frequency avoidance"
       },
       {
         "id": "nuclear_passive_safety",
-        "name": "원자력 수동 안전공학 (Passive Nuclear Safety & Fail-Safe Design)",
-        "mechanisms": "음의 기포 계수(자기 안정화), 중력 기반 페일세이프 스크램, 자연대류 냉각, 심층 방어(Defense-in-Depth)"
+        "name": "Passive Nuclear Safety & Fail-Safe Design",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "negative void coefficient (self-stabilizing feedback), gravity-driven fail-safe scram, natural convection decay cooling, defense-in-depth"
       },
       {
         "id": "fluid_microfluidics",
-        "name": "유체역학·미세유체 분류공학 (Fluid Dynamics & Microfluidic Sorting)",
-        "mechanisms": "층류-난류 경계, 관성 집중 분류, 테슬라 밸브(무가동 단방향 저항), 벤투리 압력차 활용"
+        "name": "Fluid Dynamics & Microfluidic Sorting",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "laminar-turbulent boundary separation, inertial focusing, Tesla valve (no-moving-parts directional impedance), Venturi pressure differential"
       },
       {
         "id": "thermodynamics_cryogenics",
-        "name": "열역학·극저온 단열 설계 (Thermodynamics & Thermal Management)",
-        "mechanisms": "상변화 열 버퍼(PCM), 다층 복사 차폐, 역류 열교환기, 히트파이프 수동 수송"
+        "name": "Thermodynamics & Cryogenic Thermal Management",
+        "affinities": ["physical_loop", "systems_ops", "human_ux"],
+        "mechanisms": "phase-change thermal buffers (PCM), multi-layer radiation shielding, counter-flow heat exchangers, passive heat-pipe transport, supercooled nucleation"
       },
       {
         "id": "control_theory_feedback",
-        "name": "자동제어공학·PID 및 임피던스 제어 (Control Theory, Impedance & Feedforward Control)",
-        "mechanisms": "피드포워드 외란 선제 상쇄, 적분 와인드업 방지(Anti-Windup), 히스테리시스 데드밴드(채터링 차단), 강인 제어·위상 여유"
+        "name": "Control Theory, Impedance & Feedforward Control",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "feedforward disturbance cancellation, integral anti-windup, hysteresis deadband (chatter suppression), robust phase-margin stabilization"
       },
       {
         "id": "optical_interferometry",
-        "name": "광학 간섭계·적응 광학 공학 (Optical Interferometry & Adaptive Optics)",
-        "mechanisms": "보강·상쇄 간섭을 통한 초미세 위상차 검출, 기준별(Guide Star) 실시간 파면 왜곡 보정, 이색성 빔스플리터 분리, 코히런스 길이 필터링"
+        "name": "Optical Interferometry & Adaptive Optics",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "constructive/destructive interference detecting microscopic phase shifts, guide-star real-time wavefront correction, dichroic beam splitting, coherence-length filtering"
       },
       {
         "id": "acoustics_concert_halls",
-        "name": "건축 음향학·잔향 및 흡음 설계 (Architectural Acoustics & Reverberation Control)",
-        "mechanisms": "초기 반사음-잔향 시간(RT60) 분리, 헬름홀츠 공명기 특정 대역 선택 흡음, QRD 난반사 확산체(플러터 에코 제거), 음향 섀도우 존 설계"
+        "name": "Architectural Acoustics & Reverberation Control",
+        "affinities": ["human_ux", "physical_loop"],
+        "mechanisms": "early-reflection vs. RT60 reverberation decoupling, Helmholtz resonators targeting narrow frequency bands, QRD quadratic-residue diffusers eliminating flutter echo, acoustic shadow zoning"
       }
     ],
     "history_institutions": [
       {
         "id": "maritime_trade_guilds",
-        "name": "17~18세기 해상 무역 길드·해상법 (Maritime Trade Guilds & Admiralty Law)",
-        "mechanisms": "다자 상계청산(Scontration), 소구배서 연대책임, 봉인 항해일지·투하(Jettison) 공시, 신고가 선매권"
+        "name": "17th-18th Century Maritime Trade Guilds & Admiralty Law",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "multilateral giro clearing (scontration), recourse-endorsement joint liability, sealed logbook and jettison disclosure, declared-value pre-emption right"
       },
       {
         "id": "athenian_sortition_law",
-        "name": "고대 아테네 추첨제·안티도시스 법제 (Athenian Sortition & Antidosis)",
-        "mechanisms": "자가신고 강제교환권(Antidosis), 다단계 추첨(Kleroterion) 매수 방지, 도편추방, 임기 후 의무 회계감사"
+        "name": "Ancient Athenian Sortition & Antidosis Law",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "self-assessed forced property swap (Antidosis), multi-stage allotment machine (Kleroterion) anti-bribery, ostracism, mandatory post-term audit (euthyna)"
       },
       {
         "id": "siege_fortification",
-        "name": "근세 축성술·공성 병참학 (Star Fortification & Siege Logistics)",
-        "mechanisms": "성형 요새 교차사격(사각 제거), 종심 방어, 보급선 신장 역이용, 전진 초소 시간 지연"
+        "name": "Early Modern Star Fortification & Siege Logistics",
+        "affinities": ["adversarial", "physical_loop"],
+        "mechanisms": "enfilading crossfire eliminating dead ground, defense-in-depth, exploiting overextended supply lines, forward outposts trading space for time"
       },
       {
         "id": "tokugawa_governance",
-        "name": "전근대 제국 통치·산킨코타이 제도 (Imperial Control & Asymmetric Commitment)",
-        "mechanisms": "인질·정기 교대 비용 부과, 분할 통치 견제, 역참 정보망, 신분·권한 분리"
+        "name": "Pre-Modern Imperial Control & Asymmetric Commitment (Sankin-kotai)",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "alternate-attendance cost imposition, divide-and-balance oversight, relay station intelligence networks, separation of status from executive power"
       },
       {
         "id": "roman_logistics",
-        "name": "로마 군단 표준화·공병 병참 (Roman Military Engineering & Logistics)",
-        "mechanisms": "매일 야영지 표준 모듈 축성, 도로망 기반 내선 작전, 현지 징발 vs 보급창 분리"
+        "name": "Roman Legion Standardization & Military Engineering",
+        "affinities": ["systems_ops", "physical_loop"],
+        "mechanisms": "standardized daily modular camp construction, road-network interior lines, separation of local foraging from depot supply chains"
       },
       {
         "id": "venetian_doge_election",
-        "name": "베네치아 공화국 다단계 추첨·선거 공학 (Venetian Mixed-Lottery Election & Anti-Faction Design)",
-        "mechanisms": "추첨과 투표 10단계 교차로 담합 계산 불가능화, 파벌 매수 비용 폭증, 이해충돌 친족 자동 배제, 임기 중 사적 거래 금지"
+        "name": "Venetian Mixed-Lottery Election & Anti-Faction Design",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "10-stage alternating sortition and voting making coalition bribery intractable, automatic kinship conflict-of-interest exclusion, ban on private commercial dealings in office"
       }
     ],
     "intelligence_conflict": [
       {
         "id": "counter_intelligence",
-        "name": "지하 점조직 방첩학·정보전 (Clandestine Counter-Intelligence)",
-        "mechanisms": "상호오염 거울 격실(Red-on-Red), 세션 고유 바륨 밀(Canary Trap), 반사적 통제, 실패 신호 박탈, 미세 균열 시금석"
+        "name": "Clandestine Counter-Intelligence & Information Operations",
+        "affinities": ["adversarial"],
+        "mechanisms": "mutually contaminating mirror cells (red-on-red), session-unique barium meal (canary trap), reflexive control, failure-signal deprivation, micro-fracture litmus tests"
       },
       {
         "id": "submarine_acoustics",
-        "name": "잠수함 정숙 운항·소나 기만전 (Submarine Warfare & Acoustic Deception)",
-        "mechanisms": "수온약층 음영 은폐, 수동 청음 vs 능동 핑 딜레마, 기만기(Decoy) 분리, 저속 무소음 기동"
+        "name": "Submarine Stealth & Acoustic Deception",
+        "affinities": ["adversarial", "physical_loop"],
+        "mechanisms": "thermocline acoustic shadow concealment, passive listening vs. active ping dilemma, expendable acoustic decoys, low-speed quiet propulsion"
       },
       {
         "id": "arms_control_verification",
-        "name": "냉전 군축 검증 조약 설계 (Arms Control Verification & Mutual Inspection)",
-        "mechanisms": "무작위 단기 현장사찰(Challenge Inspection), 봉인 변조 탐지 태그, 상호 비대칭 신뢰구축(Open Skies)"
+        "name": "Cold War Arms Control Verification & Mutual Inspection",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "short-notice random challenge inspections, tamper-evident unique-pattern seals, asymmetric reciprocal transparency (Open Skies)"
       },
       {
         "id": "wildland_firefighting",
-        "name": "대형 산불 진압·맞불 공학 (Wildland Firefighting & Incident Command)",
-        "mechanisms": "맞불(Backburn) 선제 연료 차단, 방화선 지형 활용, ICS 모듈형 지휘체계, 풍향 반전 리스크 관리"
+        "name": "Wildland Firefighting & Backburn Engineering",
+        "affinities": ["physical_loop", "systems_ops", "adversarial"],
+        "mechanisms": "pre-emptive fuel removal (backburning), topographic firebreaks, modular Incident Command System (ICS), wind-shift escape-route planning"
       },
       {
         "id": "disaster_triage",
-        "name": "재난 의학 트리아지·현장 지휘 (Mass-Casualty Triage & Surge Ops)",
-        "mechanisms": "역방향 트리아지, 30초 초고속 분류 프로토콜, 병목 분리 동선, 재평가 순환 루프"
+        "name": "Mass-Casualty Disaster Triage & Surge Operations",
+        "affinities": ["systems_ops", "cooperative", "human_ux"],
+        "mechanisms": "reverse triage under extreme scarcity, 30-second rapid sorting protocol, separated bottleneck flow lanes, continuous retriage loops"
       },
       {
         "id": "mountain_search_rescue",
-        "name": "산악·해상 수색구조(SAR)·확률 수색 이론 (Search & Rescue Theory & Probabilistic Allocation)",
-        "mechanisms": "탐지확률(POD)×존재확률(POA) 동적 베이지안 갱신, 골든아워 수색 구역 분할, 최후 목격 지점(PLS) 링 확장, 구조대 2차 조난 차단 컷오프"
+        "name": "Search & Rescue Theory & Probabilistic Allocation",
+        "affinities": ["systems_ops", "cooperative"],
+        "mechanisms": "dynamic Bayesian POD x POA search updating, golden-hour sector partitioning, expanding rings from Point Last Seen (PLS), hard safety cutoffs preventing secondary rescuer casualties"
       },
       {
         "id": "forensic_accident_investigation",
-        "name": "항공·산업 사고 포렌식·스위스 치즈 분석 (Forensic Accident Investigation & Root-Cause Analysis)",
-        "mechanisms": "블랙박스 비가역 원시 기록 보존, 스위스 치즈 다중 방어선 정렬 추적, 확증 편향 차단 이중 가설 검증, 현장 증거 동결(Chain of Custody)"
+        "name": "Forensic Accident Investigation & Swiss-Cheese Analysis",
+        "affinities": ["systems_ops", "cooperative"],
+        "mechanisms": "tamper-proof raw black-box retention, Swiss-Cheese multi-layer defense alignment tracing, dual-hypothesis testing against confirmation bias, chain-of-custody scene freezing"
       },
       {
         "id": "sports_refereeing_var",
-        "name": "프로 스포츠 심판학·비디오 판독(VAR) 프로토콜 (Sports Officiating & Review Governance)",
-        "mechanisms": "명백한 오심(Clear & Obvious) 개입 임계치, 어드밴티지 룰(흐름 보존 지연 판정), 챌린지 횟수 제한(지연 전술 억제), 비대칭 파울 트러블 압박"
+        "name": "Sports Officiating & Video Review (VAR) Governance",
+        "affinities": ["adversarial", "human_ux", "cooperative"],
+        "mechanisms": "clear-and-obvious intervention threshold, advantage rule preserving flow via delayed whistle, finite coach challenge tokens curbing stalling, asymmetric foul-trouble pressure"
       },
       {
         "id": "crisis_negotiation_deescalation",
-        "name": "위기 협상·단계적 긴장 완화 설계 (Crisis Negotiation & Behavioral De-escalation)",
-        "mechanisms": "전술적 시간 지연(감정 곡선 냉각), 소규모 상호 양보 사다리, 체면 보존 출구(Golden Bridge) 설계, 결정권자-협상가 분리(Decision Buffer)"
+        "name": "Crisis Negotiation & Behavioral De-escalation",
+        "affinities": ["human_ux", "adversarial", "cooperative"],
+        "mechanisms": "tactical time dilation cooling emotional arcs, small reciprocal concession ladders, face-saving exit ramps (Golden Bridge), separating decision-maker from negotiator (Decision Buffer)"
       }
     ],
     "markets_law": [
       {
         "id": "financial_clearinghouse",
-        "name": "금융 중앙청산소·증거금 설계 (Central Counterparty Clearing & Margining)",
-        "mechanisms": "일일 정산(Mark-to-Market), 변동 증거금, 폭포수 손실 분담(Default Waterfall), 결제 지연 에스크로"
+        "name": "Central Counterparty Clearing & Margin Design",
+        "affinities": ["adversarial", "systems_ops"],
+        "mechanisms": "daily mark-to-market settlement, variation margin calls, tiered default waterfall loss sharing, delayed-settlement escrow"
       },
       {
         "id": "mechanism_design_auctions",
-        "name": "경매 메커니즘 설계·게임이론 (Auction & Incentive-Compatible Mechanism Design)",
-        "mechanisms": "비크리 2가격 진실 유도, 분리 균형(Screening Menu), 커밋-리빌(Commit-Reveal), 슬래싱 예치금"
+        "name": "Auction Theory & Incentive-Compatible Mechanism Design",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "Vickrey second-price truth-telling, separating-equilibrium screening menus, commit-reveal protocols, slashable security deposits"
       },
       {
         "id": "insurance_moral_hazard",
-        "name": "보험계리·도덕적 해이 통제 (Actuarial Design & Moral Hazard Control)",
-        "mechanisms": "자기부담금(Deductible) 공동부담, 경험요율(Bonus-Malus), 대기기간 면책, 상호보험 연대감시"
+        "name": "Actuarial Design & Moral Hazard Control",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "deductible co-insurance, bonus-malus experience rating, waiting-period exclusions, mutual-insurance peer monitoring, ex-post loss development"
       },
       {
         "id": "maritime_salvage_law",
-        "name": "해난 구조법·공동해손 원리 (Maritime Salvage & General Average Law)",
-        "mechanisms": "무성과 무보수(No Cure No Pay), 공동해손 비례 분담, 긴급 구조 우선권 인센티브"
+        "name": "Maritime Salvage & General Average Law",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "no cure no pay outcome-contingent reward, proportional general average sacrifice sharing, emergency salvage priority incentives"
       },
       {
         "id": "provenance_anticounterfeit",
-        "name": "미술품·보석 진위 감정·유통 이력학 (Art/Gem Provenance & Anti-Counterfeiting)",
-        "mechanisms": "파괴 불가 미세 고유 지문, 연쇄 소유 이력 검증, 전문 감정인 평판 담보, 위조 비용 역전"
+        "name": "Art & Gem Provenance & Anti-Counterfeiting",
+        "affinities": ["adversarial", "systems_ops"],
+        "mechanisms": "non-destructive microscopic physical fingerprints, unbroken chain-of-custody verification, expert appraiser reputational staking, forgery-cost inversion"
       },
       {
         "id": "patent_standards_frand",
-        "name": "표준필수특허(SEP)·FRAND 특허풀 설계 (Patent Pools, FRAND Licensing & Open Standards)",
-        "mechanisms": "상호 보완 특허 일괄 번들링(로열티 중첩 해소), 비차별 필수 라이선싱 의무, 표준 채택 전 사전 공개(Hold-up 차단), 필수성 독립 제3자 판정"
+        "name": "Patent Pools, FRAND Licensing & Open Standards",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "complementary patent bundling eliminating royalty stacking, non-discriminatory licensing obligations, pre-adoption disclosure preventing hold-up, independent third-party essentiality evaluation"
       }
     ],
     "craft_operations": [
       {
         "id": "aviation_crm",
-        "name": "항공 조종석 CRM·체크리스트 공학 (Aviation Safety & Cockpit Resource Management)",
-        "mechanisms": "블레임리스 사고보고(ASRS), 이중 확인 콜아웃, 단계별 멸균 조종석(Sterile Cockpit), 포카요케 오조작 방지"
+        "name": "Aviation Safety & Cockpit Resource Management (CRM)",
+        "affinities": ["systems_ops", "cooperative", "human_ux"],
+        "mechanisms": "blameless incident reporting (ASRS), cross-check callouts, phase-gated sterile cockpit rules, poka-yoke physical error-proofing"
       },
       {
         "id": "shinkansen_turnaround",
-        "name": "신칸센 7분 청소·고밀도 턴어라운드 (High-Speed Turnaround Operations)",
-        "mechanisms": "공간 분할 병렬 작업, 병목 제거 동선 표준화, 시각적 완료 신호, 단일 장애점 제거"
+        "name": "High-Speed Rail 7-Minute Turnaround Operations",
+        "affinities": ["systems_ops", "physical_loop", "human_ux"],
+        "mechanisms": "spatially partitioned parallel execution, standardized zero-bottleneck choreography, visual completion signals, single-point-of-failure elimination"
       },
       {
         "id": "michelin_brigade",
-        "name": "미쉐린 주방 브리가드·미장플라스 (Kitchen Brigade & Mise en Place)",
-        "mechanisms": "사전 준비(Mise en Place) 피크 부하 흡수, 패스(Pass) 단일 품질 관문, 스테이션 비동기 동기화"
+        "name": "Michelin Kitchen Brigade & Mise en Place",
+        "affinities": ["systems_ops", "cooperative", "human_ux"],
+        "mechanisms": "front-loaded mise en place absorbing peak variance, single quality gate at the pass, asynchronous station synchronization"
       },
       {
         "id": "horology_escapement",
-        "name": "기계식 시계 탈진기·정밀 공학 (Mechanical Horology & Escapement Design)",
-        "mechanisms": "에너지 일정량 분할 방출(탈진기), 투르비용 오차 상쇄, 충격 흡수 탄성 베어링"
+        "name": "Mechanical Horology & Escapement Engineering",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "quantized energy release (escapement), tourbillon rotational error averaging, compliant shock-absorbing jewel bearings, remontoir constant-force buffering"
       },
       {
         "id": "container_port_logistics",
-        "name": "초대형 컨테이너 항만·야드 운영 (Intermodal Container Port Logistics)",
-        "mechanisms": "표준 규격화(TEU), 하역-적치 선예측 슬로팅, 혼잡 구간 버퍼 야드, 동적 크레인 스케줄링"
+        "name": "Intermodal Container Port & Yard Logistics",
+        "affinities": ["systems_ops", "physical_loop"],
+        "mechanisms": "standardized intermodal units (TEU), predictive slotting, congestion buffer yards (drop-and-hook), dual-cycling return-leg chaining"
       },
       {
         "id": "toyota_kanban_andon",
-        "name": "도요타 간판(Kanban)·안돈(Andon) 린 생산공학 (Lean Pull Systems, Kanban & Andon Cord)",
-        "mechanisms": "하류 당김 신호(Pull)로 과잉 재고 물리적 상한 고정, 안돈 줄(현장 작업자 라인 정지권), 단일 공정 흐름(One-Piece Flow), 헤이준카(부하 평준화)"
+        "name": "Lean Pull Systems, Kanban & Andon Cord",
+        "affinities": ["systems_ops", "cooperative", "physical_loop"],
+        "mechanisms": "downstream pull signals physically capping WIP inventory, Andon cord line-stop empowerment, one-piece flow, heijunka load leveling"
       }
     ],
     "art_performance": [
       {
         "id": "stage_magic_misdirection",
-        "name": "무대 마술·주의 유도 심리학 (Stage Magic & Attentional Misdirection)",
-        "mechanisms": "시간적·공간적 오도, 인지 부하 타이밍 분산, 관객의 자연스러운 가정 역이용, 사전 준비 숨김"
+        "name": "Stage Magic & Attentional Misdirection",
+        "affinities": ["human_ux", "adversarial"],
+        "mechanisms": "temporal and spatial misdirection, off-beat cognitive load distribution, exploiting natural audience assumptions, concealed pre-staging"
       },
       {
         "id": "improv_status_games",
-        "name": "즉흥연극(Improv)·지위 게임 설계 (Improvisational Theater & Status Transactions)",
-        "mechanisms": "Yes-And 제약 수용, 저지위/고지위 전환 역학, 패턴 깨기(Game of the Scene), 실시간 콜백"
+        "name": "Improvisational Theater & Status Transactions",
+        "affinities": ["human_ux", "cooperative"],
+        "mechanisms": "Yes-And constraint acceptance, low-status/high-status seesaw dynamics, finding the game of the scene, live callbacks"
       },
       {
         "id": "polyphonic_counterpoint",
-        "name": "대위법·푸가 음악 구조학 (Polyphonic Counterpoint & Fugue Architecture)",
-        "mechanisms": "독립 성부의 조화적 제약, 주제 전위·역행·확대, 긴장-해소 비동기 교차"
+        "name": "Polyphonic Counterpoint & Fugue Architecture",
+        "affinities": ["human_ux", "physical_loop"],
+        "mechanisms": "independent voices under harmonic constraints, theme inversion/retrograde/augmentation, staggered tension-and-resolution cadence"
       },
       {
         "id": "architectural_wayfinding",
-        "name": "건축 동선 유도·어포던스 설계 (Architectural Wayfinding & Behavioral Nudges)",
-        "mechanisms": "표지판 없는 직관적 시선·조명 유도, 병목 완화 곡선 공간, 자연 감시(CPTED)"
+        "name": "Architectural Wayfinding & Behavioral Affordances",
+        "affinities": ["human_ux", "cooperative", "systems_ops"],
+        "mechanisms": "sign-free sightline and lighting guidance, curved bottleneck relief, Crime Prevention Through Environmental Design (CPTED) natural surveillance"
       },
       {
         "id": "film_editing_kuleshov",
-        "name": "영화 편집·쿨레쇼프 맥락 프레임 (Film Editing & Narrative Compression)",
-        "mechanisms": "병치 효과(설명 없이 추론 유도), 점프컷 정보 압축, 사운드 브릿지 전환, 오프스크린 긴장감"
+        "name": "Film Editing & Kuleshov Contextual Framing",
+        "affinities": ["human_ux", "cooperative"],
+        "mechanisms": "juxtaposition inducing unspoken inference (Kuleshov effect), jump-cut information compression, J/L-cut sound bridges, off-screen tension"
       },
       {
         "id": "japanese_joinery_kigumi",
-        "name": "전통 목조 결구(Kigumi)·가역적 장인 설계 (Traditional Timber Joinery & Reversible Craft)",
-        "mechanisms": "못 없이 하중이 걸릴수록 조여지는 자기잠금 쐐기, 열팽창·습도 변형 흡수 유격, 분해·부분 교체 가능한 가역 결합, 목재 결 방향 하중 정렬"
+        "name": "Traditional Timber Joinery (Kigumi) & Reversible Craft",
+        "affinities": ["physical_loop", "systems_ops", "human_ux"],
+        "mechanisms": "nail-free self-locking wedges that tighten under load, expansion tolerance absorbing humidity shifts, reversible disassembly for localized replacement, load-aligned grain orientation"
       }
     ],
     "social_anthropology": [
       {
         "id": "ostrom_commons",
-        "name": "오스트롬 공유지 자치 거버넌스 (Ostrom Self-Governing Commons)",
-        "mechanisms": "명확한 경계, 점진적 제재(Graduated Sanctions), 저비용 상호 감시, 중첩된 다층 자치(Nested Enterprises)"
+        "name": "Ostrom Self-Governing Commons Governance",
+        "affinities": ["cooperative", "adversarial"],
+        "mechanisms": "clearly defined boundaries, graduated sanctions, low-cost mutual monitoring, nested polycentric enterprises"
       },
       {
         "id": "gift_economy_reciprocity",
-        "name": "인류학 증여 경제·호혜성 의례 (Gift Economies & Delayed Reciprocity)",
-        "mechanisms": "지연된 보답(즉시 정산 금지로 관계 지속), 공개 평판 축적, 무임승차 사회적 낙인"
+        "name": "Gift Economies & Delayed Reciprocity Rituals",
+        "affinities": ["cooperative", "human_ux"],
+        "mechanisms": "delayed reciprocation prohibiting instant settlement to sustain ties, public pedigree accumulation (Kula ring), generalized triadic reciprocity"
       },
       {
         "id": "maritime_lazaretto",
-        "name": "역사적 검역소(라자레토)·공중보건 설계 (Quarantine & Lazaretto Public Health)",
-        "mechanisms": "잠복기 기반 시간 격리, 오염물 분리 훈증, 단계적 통행 허가증, 항구 간 조기 경보망"
+        "name": "Historical Quarantine (Lazaretto) & Public Health Design",
+        "affinities": ["systems_ops", "adversarial"],
+        "mechanisms": "incubation-window time isolation, ring quarantine on collective syndromic anomalies, staged bills of health, inter-port early warning networks"
       },
       {
         "id": "ombudsman_whistleblower",
-        "name": "옴부즈만·익명 내부고발 보호 설계 (Ombudsman & Cryptographic Whistleblowing)",
-        "mechanisms": "보복 불가 익명 에스크로 제보, 독립 감사 트랙, 허위 제보 비용 균형"
+        "name": "Ombudsman & Cryptographic Whistleblowing Design",
+        "affinities": ["adversarial", "cooperative"],
+        "mechanisms": "retaliation-proof anonymous escrow reporting, threshold-triggered collective disclosure, independent audit tracks, balanced false-report cost"
       },
       {
         "id": "apprentice_guild_exams",
-        "name": "도제 길드 걸작(Masterpiece) 심사제 (Guild Apprenticeship & Proof-of-Craft)",
-        "mechanisms": "단계적 권한 해금, 위조 불가 실기 산출물 검증, 도제-장인 평판 연동, 동료 상호 심사"
+        "name": "Guild Apprenticeship & Proof-of-Craft Masterpiece Exams",
+        "affinities": ["cooperative", "human_ux"],
+        "mechanisms": "staged privilege unlocking, unforgeable practical artifact verification, apprentice-master shared reputation, peer jury review"
       },
       {
         "id": "restorative_justice_circles",
-        "name": "회복적 사법·공동체 화해 서클 (Restorative Justice & Reintegrative Shaming)",
-        "mechanisms": "행위와 행위자 분리(낙인 방지), 피해 복구 계약 직접 협상, 공동체 재통합 의례, 재발 방지 상호 책임 서클"
+        "name": "Restorative Justice & Reintegrative Shaming",
+        "affinities": ["cooperative", "human_ux"],
+        "mechanisms": "separating act from actor to avoid permanent stigma, direct negotiated repair compacts, community reintegration rituals, mutual accountability circles"
       },
       {
         "id": "oral_tradition_mnemonics",
-        "name": "구전 서사·기억 궁전 전승학 (Oral Tradition, Meter & Cultural Transmission)",
-        "mechanisms": "수행 자체가 무료 무결성 검증이 되는 운율·리듬 제약(위반 시 즉시 '어색함' 노출), 사전 결합 공식구(Formulaic Phrase) 모듈 조립, 기억 궁전 공간 앵커링, 세대 간 검증 낭송"
+        "name": "Oral Tradition, Meter & Cultural Transmission",
+        "affinities": ["human_ux", "cooperative", "systems_ops"],
+        "mechanisms": "prosodic meter acting as zero-cost built-in integrity checksum (errors sound immediately wrong), modular formulaic-phrase assembly, spatial memory-palace anchoring, cross-generational verification recitation"
       }
     ],
     "cognition_pedagogy": [
       {
         "id": "spaced_repetition_memory",
-        "name": "간격 반복·바람직한 난이도 인지심리학 (Spaced Repetition & Desirable Difficulty)",
-        "mechanisms": "망각 직전 인출 연습(Retrieval Practice), 인터리빙(교차 혼합 학습), 과잉 확신 깨는 즉시 피드백, 점진적 힌트 소거(Fading)"
+        "name": "Spaced Repetition & Desirable Difficulty",
+        "affinities": ["human_ux", "cooperative"],
+        "mechanisms": "just-before-forgetting retrieval practice, interleaved mixed practice, immediate calibration feedback breaking overconfidence, progressive hint fading"
       },
       {
         "id": "montessori_scaffolding",
-        "name": "몬테소리 교구·자가오류 교정 스캐폴딩 (Montessori Control-of-Error & Scaffolding)",
-        "mechanisms": "교사 개입 없이 교구 자체가 오답을 드러내는 내장 오류 제어(Control of Error), 단일 개념 격리, 근접발달영역(ZPD) 단계적 해금, 자기 선택 작업 사이클"
+        "name": "Montessori Control-of-Error & Scaffolding",
+        "affinities": ["human_ux", "cooperative"],
+        "mechanisms": "built-in physical control of error exposing mistakes without teacher intervention, single-concept isolation, zone-of-proximal-development staged unlocking, self-directed work cycles"
       },
       {
         "id": "motor_learning_rehab",
-        "name": "재활 의학·운동학습 셰이핑 공학 (Rehabilitation & Motor-Learning Shaping)",
-        "mechanisms": "건측 억제 유도(CIMT: 강한 쪽을 일시 제약해 약한 경로 활성화), 외적 주의 초점(결과 지향 큐), 감각 피드백 점감, 미세 성공 연쇄(Shaping)"
+        "name": "Rehabilitation & Motor-Learning Shaping",
+        "affinities": ["human_ux", "physical_loop"],
+        "mechanisms": "constraint-induced movement therapy (temporarily restricting dominant path to activate weak path), external outcome-focused cues, faded sensory feedback, micro-success shaping chains"
       },
       {
         "id": "combat_sports_tempo",
-        "name": "격투기·펜싱 템포·페인트 및 거리 통제 (Combat Sports Tempo, Feints & Distance Control)",
-        "mechanisms": "리듬 파괴(Broken Rhythm)로 예측 타이밍 붕괴, 저비용 페인트로 상대 반응 정보 수집, 안전거리-타격거리 경계 압박, 카운터 유인 함정"
+        "name": "Combat Sports Tempo, Feints & Distance Control",
+        "affinities": ["adversarial", "physical_loop", "human_ux"],
+        "mechanisms": "broken-rhythm cadence disrupting anticipation, low-cost feints harvesting reaction telemetry, threshold-distance guard pressure, committed-vector counter-traps"
       },
       {
         "id": "choice_architecture_friction",
-        "name": "행동경제학 선택 설계·의도적 마찰 (Choice Architecture & Strategic Friction)",
-        "mechanisms": "유익한 마찰(충동 오류 방지 냉각 턱), 기본값(Default) 경로 의존 활용, 사전 약정 장치(Ulysses Pact), 선택 과부하 차단 점진 공개"
+        "name": "Choice Architecture & Strategic Friction",
+        "affinities": ["human_ux", "cooperative", "adversarial"],
+        "mechanisms": "beneficial cooling friction preventing impulsive errors, path-dependent smart defaults, Ulysses pre-commitment pacts, progressive disclosure capping choice overload"
       },
       {
         "id": "simultaneous_interpretation",
-        "name": "동시통역·작업기억 시차 버퍼링 (Simultaneous Interpretation & Irreversible Streaming)",
-        "mechanisms": "비가역 실시간 출력 속 '유창한 필러(Placeholder)'의 침묵 누락 은폐 방지, 적정 시차 버퍼(Ear-Voice Span), 살라미 분절 재구성(Salami Technique), 피로 붕괴 전 부스 파트너 교대(Booth Handoff)"
+        "name": "Simultaneous Interpretation & Irreversible Streaming",
+        "affinities": ["human_ux", "systems_ops"],
+        "mechanisms": "preventing fluent placeholder fillers from masking silent omissions, optimal ear-voice span buffering, salami-slicing incremental restructuring, pre-fatigue booth handoffs"
       }
     ],
     "materials_chemistry": [
       {
         "id": "metallurgy_heat_treatment",
-        "name": "야금학·담금질·뜨임 및 가공경화 (Metallurgy, Quenching, Tempering & Work-Hardening)",
-        "mechanisms": "제너 피닝(Zener Pinning) 비캡형 결정립 성장 억제, 급랭(경도)-뜨임(인성) 2단계 조율 및 취성창 회피, 표면 경화+심부 연성 복합화(Case Hardening), 가공경화 자가 보강"
+        "name": "Metallurgy, Quenching, Tempering & Work-Hardening",
+        "affinities": ["physical_loop", "adversarial", "systems_ops"],
+        "mechanisms": "Zener pinning capping grain coarsening without hard ceilings, quench-and-temper hardness/toughness trade-off and temper-embrittlement windows, case hardening (hard shell, ductile core), Bauschinger reverse-load softening"
       },
       {
         "id": "fermentation_microbial_craft",
-        "name": "발효공학·스타터 배양 및 숙성 설계 (Fermentation Craft, Starter Culture & Aging)",
-        "mechanisms": "선점 접종(유익균 우점으로 부패균 원천 차단), 온도·염도 구배로 대사 속도 정밀 제어, 백슬로핑(이전 배치 일부 계승), 시간 숙성 풍미 복합화"
+        "name": "Fermentation Craft, Starter Culture & Aging",
+        "affinities": ["physical_loop", "systems_ops", "cooperative"],
+        "mechanisms": "competitive starter inoculation crowding out spoilage pathogens, temperature/salinity gradients tuning metabolic rate, backslopping lineage inheritance, time-aged complexity"
       },
       {
         "id": "self_healing_polymers",
-        "name": "자가치유 고분자·희생 결합 재료공학 (Self-Healing Polymers & Sacrificial Bonds)",
-        "mechanisms": "균열 시 파열되는 마이크로캡슐 자동 봉합, 가역적 수소결합으로 반복 손상 복원, 희생 결합(주 골격 보호용 가벼운 끊어짐), 형상기억 복원"
+        "name": "Self-Healing Polymers & Sacrificial Bonds",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "crack-ruptured microcapsules auto-sealing fractures, reversible hydrogen bonds absorbing repeated shocks, sacrificial bonds protecting primary load-bearing backbones, shape-memory recovery"
       },
       {
         "id": "permaculture_agroecology",
-        "name": "퍼머컬처·윤작 및 동반식재 생태농업 (Permaculture, Crop Rotation & Companion Planting)",
-        "mechanisms": "질소 고정-소모 작물 교대 윤작(토양 고갈 방지), 다층 수관 공간 중첩, 유익곤충 서식지 완충대, 폐기물-투입재 순환 폐루프"
+        "name": "Permaculture, Crop Rotation & Companion Planting",
+        "affinities": ["cooperative", "physical_loop", "systems_ops"],
+        "mechanisms": "nitrogen-fixing and nutrient-drawing rotation preventing exhaustion, multi-story canopy stacking, beneficial-predator habitat buffers, closed-loop waste-to-input cycling"
       },
       {
         "id": "catalysis_reaction_kinetics",
-        "name": "촉매 화학·반응 속도론 및 상전이 (Catalysis, Activation Barriers & Phase Transitions)",
-        "mechanisms": "활성화 에너지 장벽 선택적 하향(원하는 경로만 가속), 촉매 독(Poisoning) 방지 재생 사이클, 르샤틀리에 평형 이동(생성물 즉시 제거), 핵생성(Nucleation) 임계점 제어"
+        "name": "Catalysis, Activation Barriers & Phase Transitions",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "selectively lowering activation energy only along desired reaction pathways, anti-poisoning regeneration cycles, Le Chatelier product removal shifting equilibrium, critical nucleation control"
       },
       {
         "id": "crystallography_annealing",
-        "name": "결정학·시뮬레이티드 어닐링 및 결함 공학 (Crystallography, Annealing & Defect Engineering)",
-        "mechanisms": "오스트발트 숙성(Ostwald Ripening) 과포화 승자독식 역학, 고온 탐색-서냉 결정화로 국소 최적 탈출, 종자 결정(Seed Crystal) 템플릿 성장, 불순물 존 리파이닝(Zone Refining)"
+        "name": "Crystallography, Annealing & Defect Engineering",
+        "affinities": ["physical_loop", "systems_ops", "adversarial"],
+        "mechanisms": "Ostwald ripening supersaturation dynamics, high-heat exploration followed by slow cooling escaping local optima, seed-crystal templated growth, zone-refining impurity sweeping"
       }
     ],
     "earth_navigation_grids": [
       {
         "id": "power_grid_inertia",
-        "name": "전력망 주파수 관성·블랙스타트 공학 (Power Grid Frequency Inertia & Black-Start)",
-        "mechanisms": "회전 관성 기반 즉각 주파수 완충, 주파수 연동 자동 부하 차단(UFLS), 계통 분리 아일랜딩(연쇄 정전 차단), 무전원 블랙스타트 단계 복구"
+        "name": "Power Grid Frequency Inertia & Black-Start",
+        "affinities": ["physical_loop", "systems_ops", "adversarial"],
+        "mechanisms": "rotational inertia buffering sudden shocks, under-frequency load shedding (UFLS), defensive islanding stopping cascading blackouts, staged unpowered black-start cranking"
       },
       {
         "id": "river_hydrology_floodplains",
-        "name": "하천 수문학·범람원 및 제방 사행 역학 (River Hydrology, Floodplains & Meander Dynamics)",
-        "mechanisms": "하류 파국 막는 의도적 유수지·범람원 개방(Room for the River), 퇴적-침식 자가 균형 사행, 제방 역설(Levee Paradox) 회피, 유역 단위 분산 저류"
+        "name": "River Hydrology, Floodplains & Meander Dynamics",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "intentional sacrificial floodplains (Room for the River) preventing downstream catastrophe, deposition-erosion self-balancing meanders, escaping the Levee Paradox, distributed watershed detention"
       },
       {
         "id": "polynesian_wayfinding",
-        "name": "폴리네시아 비계기 성좌·너울 항법 (Polynesian Non-Instrument Wayfinding)",
-        "mechanisms": "의도적 편향 항해(Deliberate Bias: 오차 방향을 미리 확정해 복구 비용 반감), 별·너울·바닷새 다중 약신호 삼각측량, 목표 섬의 확장 표적(Expanded Target Screen), 데드레코닝 정신 모델"
+        "name": "Polynesian Non-Instrument Wayfinding",
+        "affinities": ["human_ux", "systems_ops", "physical_loop"],
+        "mechanisms": "deliberate upwind bias fixing error direction to halve recovery cost, multi-weak-signal triangulation (stars, swells, seabirds), expanded target-island screens, dead-reckoning mental models"
       },
       {
         "id": "tidal_locks_estuaries",
-        "name": "운하 갑문·조석 하구 수리 공학 (Canal Lock Hydraulics & State-Dependent Turnaround)",
-        "mechanisms": "선행 통과 상태에 따라 비용이 달라지는 교대 왕복 유량 재활용(Turnaround Lockage: 동방향 군집 시 비용 2배·교대 시 절감), 측방 저수지(Water-Saving Basins) 부분 회수, 다단계 갑문 압력·수위 평형 전이, 정조(Slack Water) 무저항 전환"
+        "name": "Canal Lock Hydraulics & State-Dependent Turnaround",
+        "affinities": ["physical_loop", "systems_ops"],
+        "mechanisms": "state-dependent turnaround lockage recycling water on alternating traffic, lateral water-saving basins, multi-stage pressure equalization, slack-water zero-resistance transitions"
       },
       {
         "id": "tectonic_stress_release",
-        "name": "지진학·지각 응력 축적 및 조기경보 (Seismology, Stress-Release Cycles & Early Warning)",
-        "mechanisms": "소규모 무해 미소지진(Creep)으로 대형 단층 파열 에너지 분산, P파 감지로 S파 도착 전 선제 차단, 응력 그림자(Stress Shadow) 전이 추적"
+        "name": "Seismology, Stress-Release Cycles & Early Warning",
+        "affinities": ["physical_loop", "systems_ops", "adversarial"],
+        "mechanisms": "frequent harmless micro-creep dissipating fault strain before mega-rupture, fast P-wave detection triggering pre-S-wave cutoff, Coulomb stress-shadow transfer tracking"
       },
       {
         "id": "watershed_water_rights",
-        "name": "건조지 수리권·카나트(Qanat) 관개 배분학 (Arid Watershed Allocation & Qanat Irrigation)",
-        "mechanisms": "증발 차단 지하 수로 중력 수송, 고정 유량이 아닌 비율 지분(Share) 분배로 가뭄 리스크 자동 공유, 순번제 관개 시계, 상류-하류 회귀수(Return Flow) 연계"
+        "name": "Arid Watershed Allocation & Qanat Irrigation",
+        "affinities": ["cooperative", "systems_ops", "physical_loop"],
+        "mechanisms": "underground gravity-fed qanats eliminating evaporation, proportional share rights (not fixed volume) auto-sharing drought risk, rotational time-clock turns, upstream-downstream return-flow coupling"
       }
     ]
   }

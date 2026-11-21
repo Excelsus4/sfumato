@@ -1,0 +1,300 @@
+{
+  "date": "2026-11-22",
+  "generator_model": "gemini-4-neon",
+  "judge_model": "claude-opus-5-5",
+  "protocol": "independent_cross_model_blind_judge_order_swapped_ab_ba_30pt",
+  "note": "Claude Opus 5.5 independently judged the 7 primary Gemini 4 Neon champion pairs from benchmarks/v2/*.json (using DOC-ROT v1.2 primary file, not the v2.0 ablation) in two isolated read-only calls (AB and BA).",
+  "summary": {
+    "problems": 7,
+    "sfumato_wins": 3,
+    "ties": 1,
+    "direct_wins": 3,
+    "judge_verdicts": {
+      "sfumato": 7,
+      "direct": 7,
+      "tie": 0
+    }
+  },
+  "results": [
+    {
+      "problem_id": "MKT-DIS",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 6,
+          "effectiveness": 5,
+          "feasibility": 6,
+          "total": 17
+        },
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 21
+        },
+        "winner": "sfumato",
+        "reason": "Proposal B makes the platform carry part of the work itself: a recurring independent third-party verification slot cannot be copied in an off-platform 1:1 deal, so an offer to take the deal off-platform reads as a lemon signal. Proposal A relies on vaguely defined backfill and cross-category VIP perks, which retain users only weakly and do not remove the incentive to bypass the platform."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 21
+        },
+        "direct_scores": {
+          "novelty": 6,
+          "effectiveness": 7,
+          "feasibility": 7,
+          "total": 20
+        },
+        "winner": "sfumato",
+        "reason": "A uses part of the fee to pay for periodic third-party verification that a direct off-platform deal cannot copy, so suggesting a direct deal starts to look like dodging scrutiny. B's backfill pool and VIP access are useful retention perks, but they are more familiar loyalty mechanics, while A's extra verification cost and friction are its main risk."
+      },
+      "outcome": "sfumato_win_2_0"
+    },
+    {
+      "problem_id": "UX-ONBOARD",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 7,
+          "effectiveness": 8,
+          "feasibility": 6,
+          "total": 21
+        },
+        "sfumato_scores": {
+          "novelty": 7,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 20
+        },
+        "winner": "direct",
+        "reason": "Proposal A reverses the order to input first, structure later: the user's own rough input becomes several native structures through one dial gesture, with lossless preview and a guaranteed fallback container. That gives a stronger, more legible aha moment. Proposal B's ghost-facet projection is elegant, but it depends on fiddly timing thresholds and has an orthogonal-grid bias, which makes it more fragile in practice."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 21
+        },
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 8,
+          "feasibility": 7,
+          "total": 23
+        },
+        "winner": "direct",
+        "reason": "B lets the user type or sketch first and decide the structure afterwards, keeping their content intact, so the dial turns their own rough input into a polished structure with a guaranteed fallback for input it cannot parse. A's ghost facets grown from a single seed offer fewer, more grid-bound choices and need more tuning to avoid flicker and drag conflicts."
+      },
+      "outcome": "direct_win_2_0"
+    },
+    {
+      "problem_id": "WEB-SCRAPE",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 6,
+          "feasibility": 5,
+          "total": 19
+        },
+        "sfumato_scores": {
+          "novelty": 6,
+          "effectiveness": 7,
+          "feasibility": 7,
+          "total": 20
+        },
+        "winner": "sfumato",
+        "reason": "Proposal A's parametric materialization is original, but the form exposes the valid coordinate space, so a crawler can enumerate a sparse manifold far more cheaply than the O(k^d) estimate. It also adds significant content-restructuring cost and works only for conditional knowledge. Proposal B's identity-free monitoring of collective long-tail entropy plus a serialized throttle is less novel, but it is deployable, survives proxy rotation, and keeps the open front tier fully intact."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 7,
+          "effectiveness": 7,
+          "feasibility": 7,
+          "total": 21
+        },
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 6,
+          "feasibility": 5,
+          "total": 19
+        },
+        "winner": "sfumato",
+        "reason": "A watches aggregate access patterns across long-tail topics instead of tracking individuals, so proxy rotation does not help, and slowing only the long tail caps the defender's cost without touching popular content. B's parameter matrix is clever, but it only fits conditional documentation, costs a lot to restructure, and a 4–6 axis space can still be enumerated by a well-funded crawler."
+      },
+      "outcome": "sfumato_win_2_0"
+    },
+    {
+      "problem_id": "OSS-PR",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 5,
+          "total": 20
+        },
+        "sfumato_scores": {
+          "novelty": 7,
+          "effectiveness": 5,
+          "feasibility": 5,
+          "total": 17
+        },
+        "winner": "direct",
+        "reason": "Proposal A shifts the cost of upkeep onto the submitter. Its drift-survival requirement filters out one-shot slop automatically, and isolated overlays bring maintainer review cost close to zero. Proposal B's claim of a 1-2 second skeleton scan per PR is unrealistic, and its own trade-off admits that logic defects inside functions pass the first stage, which is exactly where AI slop tends to hide."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 7,
+          "effectiveness": 6,
+          "feasibility": 6,
+          "total": 19
+        },
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 5,
+          "total": 20
+        },
+        "winner": "direct",
+        "reason": "B cuts maintainer review cost for unvetted PRs to zero and pushes upkeep onto submitters through drift survival, which one-shot slop cannot sustain. A's skeleton grid speeds up structural triage, but the 1–2 second scan is optimistic and logic bugs inside functions get through, though B's TrustRank and overlay supply-chain machinery is heavy to run."
+      },
+      "outcome": "direct_win_2_0"
+    },
+    {
+      "problem_id": "AI-ARCH",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 5,
+          "total": 20
+        },
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 21
+        },
+        "winner": "sfumato",
+        "reason": "Proposal B measures the friction that later agents actually experience and traces it back to the PRs that caused it. This targets the delayed onset of erosion, and today's agent cannot game a signal that future work produces. Proposal A's clean-room re-synthesis with differential fuzzing is bold, but it depends heavily on how complete the test and contract coverage is, and it risks losing non-functional behaviour despite the stated mitigations."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 6,
+          "total": 21
+        },
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 6,
+          "feasibility": 5,
+          "total": 19
+        },
+        "winner": "sfumato",
+        "reason": "A measures the real friction later agents hit and traces it back to the PRs that caused it, which the current agent cannot game ahead of time, and it uses existing telemetry to throttle autonomy. B's clean-slate re-synthesis with differential fuzzing is bold, but rewriting whole modules risks losing non-functional behaviour and is costly to run, so it is harder to rely on."
+      },
+      "outcome": "sfumato_win_2_0"
+    },
+    {
+      "problem_id": "DOC-ROT",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 7,
+          "effectiveness": 7,
+          "feasibility": 7,
+          "total": 21
+        },
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 7,
+          "feasibility": 5,
+          "total": 20
+        },
+        "winner": "direct",
+        "reason": "Proposal A binds doc blocks to deterministic code anchors, quarantines stale text without blocking merges, and routes questions to authors only when someone actually reads the doc. It covers design docs, runbooks and onboarding guides at low organizational cost. Proposal B's runbook-as-capability gate is powerful, but it covers only executable operational docs and requires a disruptive revocation of standing permissions."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 7,
+          "effectiveness": 8,
+          "feasibility": 6,
+          "total": 21
+        },
+        "direct_scores": {
+          "novelty": 8,
+          "effectiveness": 8,
+          "feasibility": 7,
+          "total": 23
+        },
+        "winner": "direct",
+        "reason": "B ties each doc block to a code anchor and quarantines it the moment the anchor breaks, then sends the fix to the author who broke it only when a reader actually needs it. That covers design docs and onboarding as well as runbooks without slowing development. A's capability-gated runbooks are a powerful forcing function, but they only cover executable operational docs and need a heavy security migration."
+      },
+      "outcome": "direct_win_2_0"
+    },
+    {
+      "problem_id": "GAME-SNOWBALL",
+      "ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_scores": {
+          "novelty": 7,
+          "effectiveness": 8,
+          "feasibility": 7,
+          "total": 22
+        },
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 6,
+          "feasibility": 5,
+          "total": 19
+        },
+        "winner": "direct",
+        "reason": "In Proposal A, the leader's expansion creates graph cut-points and long exterior supply lines on its own, so comebacks come from skillful play and need no artificial balancing. It also fits naturally into continuous RTS or MOBA play. Proposal B's forced Blotto theater phases enforce structure from outside, interrupt game flow, and create spectator and morale problems for players on abandoned fronts, which reads as a rubber band in disguise."
+      },
+      "ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "sfumato_scores": {
+          "novelty": 8,
+          "effectiveness": 8,
+          "feasibility": 6,
+          "total": 22
+        },
+        "direct_scores": {
+          "novelty": 6,
+          "effectiveness": 7,
+          "feasibility": 7,
+          "total": 20
+        },
+        "winner": "sfumato",
+        "reason": "A's simultaneous independent fronts keep the leader's full advantage, but winning by more than a majority stops paying off, so moderate leads become contestable through allocation mind games while dominant leads still close out cleanly. B's supply-grid cut-offs work but resemble known supply-line and power-grid RTS mechanics and risk repetitive backdoor raids, while A's main costs are spectator load and redesigning the game mode."
+      },
+      "outcome": "split_1_1"
+    }
+  ]
+}

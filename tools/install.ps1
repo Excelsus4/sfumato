@@ -14,9 +14,10 @@
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File tools\install.ps1 -Target all
 .EXAMPLE
-  irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1 | iex
-.EXAMPLE
-  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1))) -Target all -DryRun
+  powershell -ExecutionPolicy Bypass -File tools\install.ps1 -Target all -DryRun
+.NOTES
+  Clone the repo and inspect skill\sfumato and this script before running it
+  from the checkout; do not pipe remote code into a shell.
 #>
 [CmdletBinding()]
 param(

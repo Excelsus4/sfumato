@@ -10,7 +10,7 @@
 
 # 🎨 Sfumato
 
-### *Dissolve domain boundaries. Break the Artificial Hivemind. Unlock Test-Time Scaling for Creativity.*
+### *Dissolve domain boundaries. Break the Artificial Hivemind. Unlock Test-Time Scaling for Exploration Diversity.*
 
 <p>
   <a href="./README.md"><strong>English</strong></a> · <a href="./README.ko.md">한국어</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.zh-CN.md">简体中文</a>
@@ -25,7 +25,7 @@
 
 > *"Sfumato" (Italian: evaporated like smoke) is Leonardo da Vinci's painting technique of dissolving harsh outlines so entirely new forms emerge. Leonardo didn't stay inside one discipline — he ported anatomy, fluid dynamics, fortification, and optics into each other.*
 >
-> **Sfumato** is an ultra-lightweight agent skill (`/sfumato`, `/sfm`) that does the same for frontier LLMs — **with zero external RAG, zero fine-tuning, and zero dependencies.**
+> **Sfumato** is an ultra-lightweight agent skill (`/sfumato`, `/sfm`) that does the same for frontier LLMs — **5 plain-text files, zero external RAG, zero fine-tuning, and zero third-party dependencies.**
 
 </div>
 
@@ -33,11 +33,11 @@
 
 ## 🔥 The Problem: Standard LLMs Hit an *Artificial Hivemind* Wall
 
-For coding and reasoning, **clean, strictly relevant context** is king. Irrelevant context distracts attention and kills accuracy.
+For coding and strict reasoning, **clean, strictly relevant context** is king. Irrelevant context distracts attention and kills accuracy.
 
 **For brainstorming, the exact opposite happens.**
 
-When you ask an LLM to brainstorm a hard open-ended problem — even across 12 completely isolated sessions — it collapses into the same 3–6 safe textbook clichés (*Artificial Hivemind*, NeurIPS). Raising `temperature` breaks coherence before it creates real conceptual leaps. Multi-agent debate makes it *worse* (*Diversity Collapse*).
+When you ask an LLM to brainstorm a hard open-ended problem — even across 12 completely isolated sessions — it collapses into the same 3–6 safe textbook clichés (*Artificial Hivemind*, NeurIPS 2025). Raising `temperature` breaks coherence before it creates real conceptual leaps. Multi-agent debate makes it *worse* (*Diversity Collapse*, 2026).
 
 > **🧪 Real Smoking Gun from Our Pilot (`OSS-PR`):**
 > Across isolated runs solving *"how to stop AI-generated slop PRs in open-source repos"*, **three completely separate sessions** (`Direct Baseline 1`, `Direct Baseline 2`, and even an `Explicit Thermodynamics` session) **independently invented the exact same example package string: `pkg@pr-4821` / `pkg@patch-4821`.**
@@ -46,7 +46,7 @@ When you ask an LLM to brainstorm a hard open-ended problem — even across 12 c
 
 ---
 
-## 📈 Test-Time Scaling for Creativity (Real Measured Data, `K = 1..12`)
+## 📈 Test-Time Scaling for Exploration Diversity (Real Measured Data, `K = 1..12`)
 
 We ran **12 completely isolated sessions (24 ideas each)** on a classic hard product problem — *stopping buyer-seller disintermediation (off-platform cash deals) in two-sided marketplaces without chat surveillance, fines, or deficit subsidies* — using strict deduplication of underlying causal mechanisms:
 
@@ -57,11 +57,11 @@ We ran **12 completely isolated sessions (24 ideas each)** on a classic hard pro
 | Metric (`K = 12` isolated runs, 24 ideas each) | Direct Best-of-N | **Sfumato Dual-Track** | Delta |
 |---|---:|---:|---:|
 | **Unique Structural Mechanisms Discovered** | `6 / 24` (`25.0%`) | **`18 / 24` (`75.0%`)** | **3.0×** |
-| **New Mechanisms in Runs 9–12 (last 8 ideas)** | `0` *(hard plateau)* | **`+5` *(still climbing)* ** | **∞** |
+| **New Mechanisms in Runs 9–12 (last 8 ideas)** | `0` *(hard plateau)* | **`+5` *(still climbing)* ** | **No plateau** |
 | **Track B (Blind) Uniqueness / Baseline Overlap** | — | **`83.3%` / `0` overlaps** | Zero cliché gravity |
 | **Order-Swapped Blind A/B Judge (`AB` & `BA`)** | `0–2` *(21:24, 20:23)* | **`2–0` Win *(24:21, 23:20)*** | Position-debiased |
 
-> **Key Takeaway:** Swinging harder with **Direct Best-of-N** doesn't work — it flatlines at `6` mechanisms (75% repetition). **Sfumato unlocks Test-Time Scaling for Creativity:** every additional swing explores a genuinely orthogonal mechanism cluster, pushing the **maximum creativity ceiling (Top-1)** higher.
+> **Key Takeaway:** Swinging harder with **Direct Best-of-N** doesn't work — it flatlines at `6` mechanisms (75% repetition). **Sfumato unlocks Test-Time Scaling for Exploration Diversity:** every additional swing probes an orthogonal mechanism cluster, widening the frontier of non-obvious candidates available to your selector.
 
 ---
 
@@ -69,56 +69,74 @@ We ran **12 completely isolated sessions (24 ideas each)** on a classic hard pro
 
 Does this hold outside marketplace game theory — including **emotional UX design**, **open-web anti-scraping**, **software architecture**, and **other frontier models** like **Claude Opus 5.5**?
 
-We ran **strict Iso-Compute benchmarks** (`4 isolated runs × 2 ideas = 8 ideas/method`, order-swapped `AB`/`BA` Blind Judges) across **7 public hard problems** on Gemini 4 Neon plus **2 cross-model replications** on **Claude Opus 5.5** using `--safe-profile claude` (which filters out 8 bio/CBRN/cyber/espionage domains so Claude hits **0 safety refusals across 24 isolated calls**):
+We ran **Iso-Candidate-Budget benchmarks** (`4 isolated Stage-1 solvers × 2 ideas = 8 candidate ideas/method`, order-swapped `AB`/`BA` Blind Judges) across **7 public hard problems** on Gemini 4 Neon plus **2 cross-model replications** on **Claude Opus 5.5** using `--safe-profile claude` (which excludes 8 sensitive bio/CBRN/cyber/espionage domains so Claude hits **0 safety refusals across 24 isolated calls**). *(Note: Sfumato uses the same 8-idea Stage-1 candidate budget, plus extra coordinator masking/back-translation and Stage 2a/2b evaluation calls — see the Compute Budget table below.)*
 
 <p align="center">
   <img src="./assets/multi_problem_benchmark.svg" alt="Multi-Problem and Cross-Model Benchmark: 9/9 Undefeated on Diversity" width="100%" />
 </p>
 
-| Public Hard Problem | Model | Direct Unique/8 | Sfumato Unique/8 | Gain | Blind `AB · BA` (30pt) | Verdict |
+### Primary Runs (Exact Match with `python tools/summarize_benchmarks.py benchmarks/v2 --strict`)
+
+| Public Hard Problem | Model | Direct Unique/8 | Sfumato Unique/8 | Gain | Primary Blind `AB · BA` (30pt) | Verdict |
 |---|---|---:|---:|---:|---|---|
 | **`MKT-DIS`** *(Marketplace Disintermediation)* | Gemini 4 Neon | 3 / 8 | **7 / 8** | **2.33×** | **24:21 · 23:20** | **Sfumato 2–0 Win** |
 | **`UX-ONBOARD`** *(Blank-Canvas Fear · Emotion/UX, v2.0)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **25:20 · 24:21** | **Sfumato 2–0 Win** |
 | **`WEB-SCRAPE`** *(Open Web vs. Mass AI Scrapers)* | Gemini 4 Neon | 6 / 8 | **7 / 8** | **1.17×** | **22:18 · 20:18** | **Sfumato 2–0 Win** |
-| **`OSS-PR`** *(Open-Source AI-Slop PR Flood)* | Gemini 4 Neon | 2 / 8 | **5 / 8** | **2.50×** | **21:17 · 18:21** | **Split 1–1** *(Agg +1)* |
+| **`OSS-PR`** *(Open-Source AI-Slop PR Flood)* | Gemini 4 Neon | 2 / 8 | **5 / 8** | **2.50×** | **21:17 · 18:21** | **Split 1–1** |
 | **`AI-ARCH`** *(AI Agent Architectural Erosion)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **23:22.5 · 22.5:24** | **Split 1–1** |
-| **`DOC-ROT`** *(Self-Healing Org Doc Rot, v2.0)* | Gemini 4 Neon | 2 / 8 | **6 / 8** | **3.00×** | **23:22 · 23:26** | **Split 1–1** *(+3pt vs v1.2)* |
-| **`GAME-SNOWBALL`** *(Snowball vs. Rubber-Banding)* | Gemini 4 Neon | 5 / 8 | **7 / 8** | **1.40×** | 22:23 · 21:23 | Direct 2–0 *(honest miss)* |
-| **`MKT-DIS`** *(Cross-Model · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 18:19 · **20:17** | **Split 1–1** *(Agg +2 · 0 refusals)* |
+| **`DOC-ROT`** *(Self-Healing Org Doc Rot, v1.2 primary)* | Gemini 4 Neon | 2 / 8 | **6 / 8** | **3.00×** | 22:24 · 21:24 | Direct 2–0 *(see v2.0 ablation)* |
+| **`GAME-SNOWBALL`** *(Snowball vs. Rubber-Banding, v1.2)* | Gemini 4 Neon | 5 / 8 | **7 / 8** | **1.40×** | 22:23 · 21:23 | Direct 2–0 *(see v2.0 ablation)* |
+| **`MKT-DIS`** *(Cross-Model · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 18:19 · **20:17** | **Split 1–1** *(0 refusals)* |
 | **`DOC-ROT`** *(Cross-Model · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 20:22 · 20:22 | Direct 2–0 *(no Anchor · 0 refusals)* |
+| **Grand Total (9 primary runs · 72 ideas/method)** | **2 models** | `34 / 72` (`47.2%`) | **`60 / 72` (`83.3%`)** | **1.76×** | **9 Sfumato : 9 Direct** | **9/9 Diversity · 3W / 3T / 3L** |
 
-- **Grand Total (9 runs, 72 ideas/method):** **9 / 9 undefeated on diversity** — `60 / 72 (83.3%)` unique mechanisms vs. Direct `34 / 72 (47.2%)` (**1.76×**).
-- **7-Problem v2.0 Blind Judge Record:** **9 Sfumato vs. 5 Direct (`64.3%`)** — **3 Wins, 3 Splits, 1 Loss** (and **0 losses** on all 6 problems where a cross-domain mechanism survived to Top-1).
-- **Reproducible Raw Logs:** Every raw JSON transcript and judge rubric is published in [`benchmarks/v2/`](./benchmarks/v2/) — verify locally with `python tools/summarize_benchmarks.py benchmarks/v2`.
+### v2.0 Stage 2b Equal-Hardening Ablations (Both Gains & Regressions Reported)
 
-> **⚖️ Where Sfumato Shines — and Where It Doesn't:**
-> - **Shines brightest** on open-ended strategy, incentive/mechanism design, non-obvious UX & behavioral design (`UX-ONBOARD` 2–0), and breaking entrenched industry clichés.
-> - **Honest limitation (`GAME-SNOWBALL`) & Pool v2.0 fix:** On tightly coupled real-time physics/balance loops with small sample budgets (`K=3`), unlucky institutional draws can lose to a strong Direct Baseline — and our v2.0 ablation proved **forced cross-domain grafting makes it worse (`43 → 39`)**. Expanding to **Domain Pool v2.0** (`74 domains / 11 clusters`, adding cognition, materials, and grid/hydrology clusters) flipped `GAME-SNOWBALL` to **8/8 unique mechanisms & a `2–0` Blind Win (`46:39`, log in [`benchmarks/v2/ablations/`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json))**; still use `deep` mode (`Direct Anchor + K=6`) on tight systems loops to lock your floor (`≥ Direct`).
+| Problem | v1.2 Primary (`S:D`) | v2.0 Equal-Hardening (`S:D`) | Sfumato Delta | Verdict & Lesson |
+|---|---:|---:|---:|---|
+| **`DOC-ROT`** | `43 : 48` *(0–2)* | **`46 : 48`** *(23:22 · 23:26)* | **+3** | **Split 1–1** — Repairing a strong cross-domain gem (`thermodynamics_cryogenics`) closed the gap |
+| **`GAME-SNOWBALL`** *(v1.2 pool, forced graft)* | `43 : 46` *(0–2)* | `39 : 45` *(20:22 · 19:23)* | **−4** | **Direct 2–0** — Proved forcing a polarity-mismatched domain graft hurts; never override a stronger Anchor |
+| **`GAME-SNOWBALL`** *(Pool v2.0: 74 domains / 11 clusters)* | `43 : 46` *(0–2)* | **`46 : 39`** *(8/8 unique)* | **+3** | **Sfumato 2–0 Win** — Adding cognition, materials & grid clusters fixed the polarity mismatch ([log](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json)) |
+
+### Independent Cross-Model Blind Judge Audit (Eliminating Same-Model Judge Bias)
+
+To guard against same-model self-preference, we ran **Claude Opus 5.5** as an independent, read-only order-swapped (`AB`/`BA`) blind judge over all **7 primary Gemini 4 Neon champion pairs** ([`benchmarks/v2/cross_model_judges/claude_on_gemini.json`](./benchmarks/v2/cross_model_judges/claude_on_gemini.json)):
+
+- **Cross-Model Judge Result:** **3 Wins (`MKT-DIS` 2–0, `WEB-SCRAPE` 2–0, `AI-ARCH` 2–0), 1 Split (`GAME-SNOWBALL` 1–1), 3 Losses (`UX-ONBOARD`, `OSS-PR`, `DOC-ROT` v1.2)** — **7 Sfumato vs. 7 Direct** (with 6/7 problems showing zero order bias).
+- **What the data honestly proves:**
+  - **Model-invariant proven strength:** **9 / 9 undefeated exploration diversity (`1.76×` at K=4, `3.0×` at K=12)**, consistently unlocking structurally distinct mechanisms that Direct prompting never generates — and winning `2–0` across *both* Gemini and Claude judges on `MKT-DIS` and `WEB-SCRAPE` (plus `AI-ARCH` under Claude).
+  - **Honest limitations (`n=1` seed per problem):** Single-shot Top-1 win rate against a strong 4-run Direct Best-of-N baseline is near parity (`9:9` primary, `7:7` cross-model), and Track B Blind wins Top-1 less often than Track A Explicit (acting primarily as a zero-cliché wildcard and reframing generator). That is why **Sfumato v2.1 includes a Direct Anchor by default** in `dual-track` and `deep` modes — locking your quality floor (`≥ Direct`) while giving you 1.7–3.0× wider structural exploration.
+- **Reproducible Logs & Execution Trace:**
+  - Verify all 9 primary runs + both v2.0 Stage 2b ablations (`v2_ablation_*.json`) locally: `python tools/summarize_benchmarks.py benchmarks/v2 --strict` *(the separate Pool v2.0 run is logged in [`game_snowball_pool_v2_results.json`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json))*
+  - Structured benchmark summaries & judge rationales: [`benchmarks/v2/`](./benchmarks/v2/)
+  - Independent cross-model judge audit: [`benchmarks/v2/cross_model_judges/claude_on_gemini.json`](./benchmarks/v2/cross_model_judges/claude_on_gemini.json)
+  - End-to-end v2.1 execution trace (`sample_domains.py` → `check_leak.py` → 4 isolated solvers → Stage 2a `PASS/HARDEN/KILL` → Stage 2b Hardening): [`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
 
 ---
 
-## 🏛️ How Sfumato v2.0 Works: The *Domain-Masking Trade-Off*
+## 🏛️ How Sfumato v2.1 Works: The *Domain-Masking Trade-Off*
 
-Most cross-domain prompting papers use **Explicit Analogy** (*"apply biology to solve marketplace churn"*). Because the original problem's words stay in the prompt, the LLM still suffers **partial homogenization** back toward industry clichés.
+Most cross-domain prompting papers rely only on **Explicit Analogy** (*"apply biology to solve marketplace churn"*). Because original-domain vocabulary stays in the prompt, the LLM still suffers **partial homogenization** back toward industry clichés.
 
-Conversely, **pure Blind Reframing** (hiding the original problem completely) breaks cliché gravity 100%, but has a lower hit-rate because some abstract solutions don't translate cleanly back.
+Conversely, **pure Blind Reframing** (erasing the original domain completely) breaks cliché gravity 100%, but has a lower hit-rate because some abstract solutions lose fidelity during back-translation.
 
-**Sfumato v2.0 pairs both tracks in parallel — then runs a Clean-Context Red-Team Triage + Optional Hardening pass:**
+**Sfumato v2.1 pairs a Direct Anchor with both cross-domain tracks in isolated parallel — guarded by polarity-aware code RNG, code-verified zero-leak masking, and Clean-Context Red-Team Triage + Selective Hardening:**
 
 <p align="center">
-  <img src="./assets/architecture_codex.svg" alt="Sfumato Architecture Diagram" width="100%" />
+  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.1 Architecture Diagram" width="100%" />
 </p>
 
-1. **Cluster-Stratified Code RNG + Safety Profiles (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **74 mechanism-rich domains across 11 disjoint macro-clusters** using pure Python `random`. Pass `--safe-profile claude` to exclude 8 sensitive bio/cyber/espionage domains — leaving **66 Claude-safe domains (exactly 6 per cluster across all 11 clusters)** empirically verified at **0 safety refusals on Claude Opus 5.5**.
-2. **Track A — Explicit Analogy *(High Hit-Rate)*:** Original brief + assigned remote domain → surgical hits against domain-specific attack surfaces.
-3. **Track B — Blind Isomorphic Masking *(Max Ceiling · v2.0 3-Line Structural Skeleton)*:**
-   - First distill the problem into a **3-line domain-neutral Structural Skeleton** (*State Variables · Incentive Polarity · Irreducible Trade-Off*), then rewrite it into the target field with a **0-leak vocabulary check**.
-   - A fresh, isolated subagent solves the masked twin purely inside the remote field — **physically incapable of emitting original-domain clichés.**
-   - Back-translate only the causal mechanism & trade-off (ruthlessly discard strained translations).
-4. **Direct Anchor *(`deep` mode · Floor Guarantee)*:** Includes 1 isolated Direct Baseline solver in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — never worse than standard prompting on engineering-native problems.
-5. **Stage 2a/2b — Clean-Context Red-Team Triage & Selective Hardening *(v2.0)*:**
-   - **Stage 2a:** A fresh, uncontaminated evaluator cuts surface jargon cosplay, screens every candidate for **Adverse Selection**, **Sybil/Wash-Trading exploits**, and **feasibility**, and tags fixable gems as `HARDEN` instead of binary-killing them.
-   - **Stage 2b:** Hardens *only* the Top-1 winner's single biggest operational weakness (without forcing cross-domain grafts when the `Direct Anchor` legitimately wins). This turned `DOC-ROT` from `0–2` to `1–1` (+3pt) and drove `UX-ONBOARD` to a `2–0` sweep.
+1. **Polarity-Aware Cluster-Stratified Code RNG (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **74 mechanism-rich domains across 11 disjoint macro-clusters** using pure Python `random`, omits `mechanisms` hints by default (preventing intra-domain hint priming; opt-in via `--include-hints`), and supports `--polarity` (`adversarial | cooperative | physical_loop | human_ux | systems_ops`) so at least half of sampled domains share structural affinity while preserving cross-cluster breadth. Pass `--safe-profile claude` on Claude Code to keep **66 Claude-safe domains (exactly 6 per cluster across all 11 clusters)** with **0 safety refusals**.
+2. **Direct Anchor *(Default in `dual-track` & `deep` · Floor Guarantee)*:** Includes 1 isolated native-domain solver in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — never regressing on tightly coupled engineering or physics loops.
+3. **Track A — Explicit Analogy *(High Hit-Rate)*:** Original brief + assigned remote domain → surgical hits against concrete domain attack surfaces.
+4. **Track B — Blind Isomorphic Masking *(Max Ceiling · 3-Line Skeleton + `check_leak.py`)*:**
+   - Distill the problem into a **3-line domain-neutral Structural Skeleton** (*Actors & Incentive Polarity · Core Asymmetry · Why Static Controls Fail*), rewrite it inside the target field, and **verify 0 leaked original-domain terms via `scripts/check_leak.py`** before spawning.
+   - A fresh isolated subagent solves the masked twin purely inside the remote field — **physically incapable of emitting original-domain clichés.**
+   - Back-translate only the causal mechanism & trade-off (ruthlessly drop strained fits).
+5. **Stage 2a/2b — Clean-Context Red-Team Triage (`PASS / HARDEN / KILL`) & Selective Hardening:**
+   - **Stage 2a:** A fresh evaluator strips jargon cosplay, screens for **Adverse Selection**, **Sybil/Gaming exploits**, and **Feasibility**, and classifies every candidate into `PASS`, `HARDEN` (with 1 explicit fixable flaw), or `KILL`.
+   - **Stage 2b:** Hardens *only* the Top-1 winner's single diagnosed flaw (optionally grafting 1 practical primitive from a passing runner-up — never force-grafting a polarity-mismatched seed over a stronger Direct Anchor).
+   - **Global Language-Neutral Templates:** All prompts in `prompt_templates.md` and `domain_pool.json` are English-first with explicit `Respond in {USER_LANGUAGE}.` directives, so English, Korean, Russian, Chinese, and other users get native-language output with zero hardcoded language drift.
 
 ---
 
@@ -129,10 +147,10 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
 | Method | What It Produced | Why It Differs |
 |---|---|---|
 | **Direct Best-of-N**<br>*(12 runs, 24 ideas)* | Repeated the same 3 core ideas 18 times: *T+0 Reverse Escrow*, *Transferable Client-Book*, *Idle-Slot Backfill*. | High practical quality, but stuck inside the exact same fintech/ops playbook. |
-| **Sfumato · Winner**<br>*(Parasitology · Two-Fold Cost of Sex)* | **🏆 Chimeric Task Recombination** *(Blind Judge 2–0 Winner)* — Redirect 5–7% of the repeat fee into an independent **3rd-party cross-verification slot every N sessions** (blind mock-exam for tutoring, thermal/level cross-inspection for renovations, senior async review for code). | Direct 1:1 cash deals *physically cannot* replicate independent 3rd-party checks, collapsing the collusion price zone — and **proposing cash off-platform becomes a "Lemon Signal" of dodging quality audit.** |
+| **Sfumato · Winner**<br>*(Parasitology · Two-Fold Cost of Sex)* | **🏆 Chimeric Task Recombination** *(2–0 Win under BOTH Gemini & Claude judges)* — Redirect 5–7% of the repeat fee into an independent **3rd-party cross-verification slot every N sessions** (blind mock-exam for tutoring, thermal/level cross-inspection for renovations, senior async review for code). | Direct 1:1 cash deals *physically cannot* replicate independent 3rd-party checks, collapsing the collusion price zone — and **proposing cash off-platform becomes a "Lemon Signal" of dodging quality audit.** |
 | **Sfumato · Track B Blind**<br>*(Ombudsman & Cryptographic Whistleblowing)* | **Zero-Knowledge Safe-Harbor Attestation** — Seal pricing/deliverable commits + retaliation-proof whistleblower absence proof so corporate/HOA/team buyers get **audit-proof anti-kickback immunity**. | Reframed disintermediation from "saving 15%" into "eliminating embezzlement/kickback liability for institutional buyers." |
 | **Sfumato · Track B Blind**<br>*(Anthropology · Kula Ring)* | **Kula Pedigree Provenance Chain** — On-platform jobs stamp verifiable craftsman lineage onto outputs (boosting home resale value, VC/M&A IP due diligence, or credential portability). | Off-platform work becomes an "unpedigreed nameless artifact" that loses downstream third-party resale value. |
-| **Sfumato · Red-Team Catch**<br>*(Fluid Dynamics · Venturi Ejector)* | **Venturi Negative-Fee Capacity Suction** — Charge *-3%* (buyer pays 90, supplier gets 93) funded by ±24–48h shift call-options exercised during urgent B2B spikes (160). | Brilliant physics transfer — **and Sfumato's v1.2 Red-Team Gate instantly caught its wash-trading arbitrage exploit (90→93)** before it could steal Top-1! |
+| **Sfumato · Red-Team Catch**<br>*(Fluid Dynamics · Venturi Ejector)* | **Venturi Negative-Fee Capacity Suction** — Charge *-3%* (buyer pays 90, supplier gets 93) funded by ±24–48h shift call-options exercised during urgent B2B spikes (160). | Brilliant physics transfer — **and Sfumato's Red-Team Gate instantly caught its wash-trading arbitrage exploit (90→93)** before it could steal Top-1! |
 
 <details>
 <summary><strong>📊 Inspect All 18 Unique Sfumato Mechanisms vs. 6 Direct Mechanisms (Full K = 1..12 Log)</strong></summary>
@@ -167,13 +185,14 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
 
 ---
 
-## 🚀 Installation & Usage (4 Plain-Text Files · Zero Dependencies)
+## 🚀 Installation & Usage (5 Plain-Text Files · Zero Dependencies)
 
-Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **4 inspectable files**:
-- `SKILL.md` — skill instructions & workflow
-- `references/prompt_templates.md` — Explicit, Blind, and Red-Team templates
-- `resources/domain_pool.json` — 74 curated mechanism-rich domains across 11 macro-clusters (`66` Claude-safe, balanced 6/cluster)
-- `scripts/sample_domains.py` — pure Python stdlib (`argparse`, `json`, `pathlib`, `random`, `sys`; zero network calls, zero file writes)
+Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **5 inspectable files**:
+- `SKILL.md` — skill instructions, multi-agent guide (Claude Code / Antigravity / Codex CLI) & workflow
+- `references/prompt_templates.md` — language-neutral (`{USER_LANGUAGE}`) Anchor, Explicit, Blind, Stage 2a Triage, and Stage 2b Hardening templates
+- `resources/domain_pool.json` — 74 curated mechanism-rich domains across 11 macro-clusters (`66` Claude-safe, balanced 6/cluster) with polarity affinities
+- `scripts/sample_domains.py` — pure Python stdlib stratified polarity-aware sampler (zero network calls, zero file writes)
+- `scripts/check_leak.py` — pure Python stdlib zero-leak vocabulary validator for Track B masking (ASCII word-boundary + CJK/Korean/Cyrillic substring matching)
 
 Clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:
 
@@ -208,30 +227,32 @@ bash tools/install.sh --target claude   # or agy | codex | all | auto
 
 </details>
 
-### Usage
+### Usage & Compute Budget
 
 ```text
 /sfm Design a non-obvious mechanic to prevent snowballing in a 3-faction asymmetric RTS
 /sfumato deep mode: How do we defend open-source repos from AI-slop PR floods without paywalls?
+/sfm-max Exhaustively sweep all 11 clusters to design a non-linear 3-year retention moat
 ```
 
-| Mode | Pipeline | Best For |
-|---|---|---|
-| `dual-track` *(default)* | `2 Explicit + 2 Blind` → Red-Team Selector | Everyday high-ceiling brainstorming |
-| `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` → Red-Team Selector | Stuck strategic problems (guarantees `≥ Direct` floor) |
-| `fast` | `3 Explicit` → Red-Team Selector | Quick practical hits under tight token budgets |
-| `sweep` *(opt-in)* | `1 Direct Anchor + 11 domains` (1 per macro-cluster) → Red-Team | Full 11-cluster coverage in one wave |
-| `max` (`/sfm-max`, *opt-in*) | **All 66 (Claude) / 74 domains** → 2-Round Tournament *(11 Cluster Playoffs → 12-Finalist Grand Final)* | High-stakes exhaustive brainstorming *(always confirms session count before running)* |
+| Mode | Stage 1 Solvers | Total Isolated Calls | Est. Token Cost (vs. 1 Direct Call) | Best For |
+|---|---|---:|---:|---|
+| `fast` | `3 Explicit` (`--k 3 --mode explicit-only`) | `4` *(3 + Stage 2a)* | ~4–5× | Quick practical cross-domain ideas under tight token budgets |
+| `dual-track` *(default)* | `1 Direct Anchor + 2 Explicit + 1 Blind` (`--k 3`) | `5–6` *(4 + Stage 2a + opt. 2b)* | ~6–8× | Everyday high-ceiling brainstorming (matches primary benchmark composition; guarantees `≥ Direct` floor) |
+| `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` (`--k 6`) | `8–9` *(7 + Stage 2a + opt. 2b)* | ~10–12× | High-stakes strategic/architecture breakthroughs needing maximum exploration width |
+| `sweep` *(opt-in)* | `1 Direct Anchor + 11 domains` (`--k 11`, 1/cluster) | `13–14` *(12 + Stage 2a + opt. 2b)* | ~15–18× | Full 11-cluster coverage in one wave without selector overload |
+| `max` (`/sfm-max`, *opt-in*) | **All 66 (Claude) / 74 domains** (`--all`) + **1 Direct Anchor** → **2-Round Tournament** | `79–80` / `87–88` | ~80–90× | Exhaustive high-budget brainstorming *(always confirms session count before running)* |
 
 ---
 
 ## 📚 Research Foundations
 
-Sfumato builds directly on four converging lines of 2024–2026 LLM creativity research:
-- **Artificial Hivemind** — Jiang et al. (*NeurIPS Best Paper*): documents intra- and inter-model homogenization on open-ended ideation.
-- **Diversity Collapse in Multi-Agent LLM Systems** — shows dense debate/consensus topologies crush semantic diversity; motivates Sfumato's strict **zero-crosstalk** parallel Stage 1.
-- **Unlocking LLM Creativity in Science through Analogical Reasoning** (Shen et al., 2026) & **Assessing Cross-Domain Mapping in Humans and LLMs** (Liu et al., 2026) — validates structural relational transfer over surface metaphors.
-- **Sfumato's Distinct Contribution:** Formalizes the **Domain-Masking Trade-Off** between *Explicit Analogy* (high hit-rate, partial homogenization) and *Blind Isomorphic Masking* (lower hit-rate, zero cliché gravity, heavy-tail mutations), unified with a **Direct Anchor** and **Clean-Context Red-Team Gate**.
+Sfumato builds directly on four converging lines of 2025–2026 LLM creativity research:
+- **Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)** — Liwei Jiang et al., *NeurIPS 2025 D&B* ([arXiv:2510.22954](https://arxiv.org/abs/2510.22954)): documents intra- and inter-model homogenization on open-ended ideation.
+- **Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation** — Nuo Chen et al., 2026 ([arXiv:2604.18005](https://arxiv.org/abs/2604.18005)): shows dense debate/consensus topologies crush semantic diversity; motivates Sfumato's strict **zero-crosstalk** parallel Stage 1.
+- **Unlocking LLM Creativity in Science through Analogical Reasoning** — Andrew Shen, Shaul Druckmann, James Zou, 2026 ([arXiv:2605.11258](https://arxiv.org/abs/2605.11258)): demonstrates substantial diversity and novelty gains from structural cross-domain analogies.
+- **Assessing the Effect of Cross-Domain Mapping on Creativity in Humans and Large Language Models** — Qiawen Ella Liu, Marina Dubova, Henry Conklin, Takumi Harada, Thomas L. Griffiths, 2026 ([arXiv:2603.19087](https://arxiv.org/abs/2603.19087)): shows frontier LLMs benefit from cross-domain mapping specifically when source domains are sufficiently remote and transfer relational/structural properties.
+- **Sfumato's Engineering Contribution:** Operationalizes the **Domain-Masking Trade-Off** between *Explicit Analogy* (high hit-rate, partial homogenization) and *Blind Isomorphic Masking* (lower hit-rate, zero cliché gravity, heavy-tail reframings), unified with a **Direct Anchor floor**, **polarity-aware code RNG**, **code-verified zero-leak masking**, and **Clean-Context Red-Team Triage + Selective Hardening**.
 
 ---
 

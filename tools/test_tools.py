@@ -8,6 +8,7 @@ temporary home (-HomeDir / --home). Tests are skipped when the shell is absent.
 from __future__ import annotations
 
 import contextlib
+import importlib.util
 import io
 import json
 import os
@@ -177,6 +178,97 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("note: skipped xmodel.json", err)
         self.assertIn("across 1 problem(s)", out)
 
+    def test_cross_model_flat_container_parsed(self):
+        self._write("mkt.json", dict(_result("MKT-DIS", 3, 8, 7, 8, "sfumato", "sfumato"),
+                                     model="gemini-4-neon-high"))
+        self._write("xmodel.json", {"model": "claude-opus-5-5", "results": [{
+            "problem_id": "MKT-DIS", "direct_unique": 4, "direct_total": 8,
+            "sfumato_unique": 7, "sfumato_total": 8,
+            "blind_ab": {"direct_score": 19, "sfumato_score": 18, "winner": "direct"},
+            "blind_ba": {"direct_score": 17, "sfumato_score": 20, "winner": "sfumato"}}]})
+        code, out, err = self._run("--strict")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(err, "")
+        self.assertIn("| Problem | Model |", out)
+        self.assertIn("| MKT-DIS | claude-opus-5-5 | 4 / 8 | 7 / 8 | 1.75x | direct (S 18 : D 19) "
+                      "| sfumato (S 20 : D 17) | Tie |", out)
+        self.assertIn("| MKT-DIS | gemini-4-neon | 3 / 8 | 7 / 8 |", out)
+        self.assertIn("| **Total** | | 7 / 16 | 14 / 16 | 2.00x |", out)
+        self.assertIn("across 2 run(s) on 2 model(s)", out)
+        self.assertIn("| *Subtotal (1 run)* | claude-opus-5-5 | 4 / 8 | 7 / 8 | 1.75x | | | 0W / 1T / 0L |", out)
+
+    def test_cross_model_container_bad_item_warns(self):
+        self._write("xmodel.json", {"model": "m", "results": [
+            {"problem_id": "A", "direct_unique": 9, "direct_total": 8, "sfumato_unique": 1,
+             "sfumato_total": 8, "blind_ab": {"winner": "tie"}},
+            dict(_result("B", 1, 2, 2, 2, "sfumato", "sfumato"))]})
+        code, out, err = self._run()
+        self.assertEqual(code, 0)
+        self.assertIn("warning: xmodel.json:results[0]: direct.unique (9) exceeds", err)
+        self.assertIn("| B |", out)
+        self.assertEqual(self._run("--strict")[0], 1)
+
+    def test_normalize_model(self):
+        cases = {"gemini-4-neon-high": "gemini-4-neon", "antigravity-inherit": "gemini-4-neon",
+                 "Antigravity (Model=inherit)": "gemini-4-neon",
+                 "antigravity-self (inherit)": "gemini-4-neon",
+                 "claude-opus-5-5": "claude-opus-5-5", None: "-", "": "-", "My Model": "my-model"}
+        for raw, want in cases.items():
+            with self.subTest(raw=raw):
+                self.assertEqual(sb.normalize_model(raw), want)
+
+    def test_ablations_table_and_errors(self):
+        self._write("mkt.json", _result("MKT-DIS", 3, 8, 7, 8, "sfumato", "sfumato"))
+        os.makedirs(os.path.join(self.tmp, "ablations"))
+        abl = {"problem_id": "X-1",
+               "baseline_v1_2": {"scores": {"ab": {"direct": 24, "sfumato": 22, "winner": "direct"},
+                                            "ba": {"direct": 23, "sfumato": 21, "winner": "direct"}}},
+               "blind_judges": {
+                   "ab": {"direct_score": 22, "sfumato_score": {"total": 25}, "winner": "sfumato_v2_hardened"},
+                   "ba": {"direct_hardened_score": {"total": 20}, "sfumato_v2_hardened_score": {"total": 23},
+                          "winner": "sfumato_v2_hardened"}}}
+        with open(os.path.join(self.tmp, "ablations", "v2_ablation_x.json"), "w") as f:
+            json.dump(abl, f)
+        with open(os.path.join(self.tmp, "ablations", "other_results.json"), "w") as f:
+            f.write("{not json")  # not v2_ablation_* -> ignored
+        code, out, err = self._run("--strict")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(err, "")
+        self.assertIn("### v2.0 Stage 2b Equal-Hardening Ablations", out)
+        self.assertIn("| X-1 | 43:47 | 48:42 | +5 | Sfumato 2-0 Win |", out)
+        code, out, _ = self._run("--strict", "--no-ablations")
+        self.assertEqual(code, 0)
+        self.assertNotIn("Ablations", out)
+        with open(os.path.join(self.tmp, "ablations", "v2_ablation_bad.json"), "w") as f:
+            json.dump({"problem_id": "BAD", "baseline_v1_2": {"total_direct": 1}}, f)
+        code, out, err = self._run()
+        self.assertEqual(code, 0)
+        self.assertIn("warning: ablations/v2_ablation_bad.json: missing required key(s): blind_judges", err)
+        self.assertEqual(self._run("--strict")[0], 1)
+
+
+class RealBenchmarksTests(unittest.TestCase):
+    """Smoke test: benchmarks/v2 is the single source of truth for the README table."""
+
+    def test_v2_strict(self):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = sb.main([BENCH_V2, "--strict"])
+        out, err = out.getvalue(), err.getvalue()
+        self.assertEqual(code, 0, err)
+        self.assertNotIn("warning", err)
+        rows = [l for l in out.splitlines()
+                if l.startswith("| ") and ("| gemini-4-neon |" in l or "| claude-opus-5-5 |" in l)
+                and not l.startswith("| *Subtotal")]
+        self.assertEqual(len(rows), 9, "\n".join(rows))
+        self.assertEqual(sum("| claude-opus-5-5 |" in l for l in rows), 2)
+        self.assertEqual(sum("| MKT-DIS |" in l for l in rows), 2)
+        self.assertIn("| **Total** | | 34 / 72 | 60 / 72 | 1.76x |", out)
+        self.assertIn("across 9 run(s) on 2 model(s)", out)
+        self.assertIn("### v2.0 Stage 2b Equal-Hardening Ablations", out)
+        self.assertIn("| DOC-ROT | 43:48 | 46:48 | +3 | Split 1-1 |", out)
+        self.assertIn("| GAME-SNOWBALL | 43:46 | 39:45 | -4 | Direct 2-0 Win |", out)
+
 
 def _tree(path):
     found = []
@@ -218,12 +310,45 @@ BASH_IS_WSL = bool(BASH) and os.name == "nt" and os.path.normcase(
 SAMPLER = os.path.join(REPO, "skill", "sfumato", "scripts", "sample_domains.py")
 
 
+CHECK_LEAK = os.path.join(REPO, "skill", "sfumato", "scripts", "check_leak.py")
+POOL_PATH = os.path.join(REPO, "skill", "sfumato", "resources", "domain_pool.json")
+BENCH_V2 = os.path.join(REPO, "benchmarks", "v2")
+
+
+def _load_script(path, name):
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+sd = _load_script(SAMPLER, "sample_domains")
+with open(POOL_PATH, encoding="utf-8") as _fh:
+    POOL = json.load(_fh)["clusters"]
+ALL_IDS = {i["id"] for items in POOL.values() for i in items}
+AFFINITY = {i["id"]: set(i.get("affinities", [])) for items in POOL.values() for i in items}
+
+
+def _claude_count(items):
+    return sum(1 for i in items if i["id"] not in sd.CLAUDE_SAFE_EXCLUDE_IDS)
+
+
 class SampleDomainsTests(unittest.TestCase):
+    def _proc(self, *args):
+        return subprocess.run([sys.executable, "-B", SAMPLER] + list(args), capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=60)
+
     def _run(self, *args):
-        p = subprocess.run([sys.executable, "-B", SAMPLER] + list(args), capture_output=True,
-                           text=True, encoding="utf-8", errors="replace", timeout=60)
+        p = self._proc(*args)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         return json.loads(p.stdout)
+
+    def _call(self, *args):
+        """In-process run (fast, for many-seed loops)."""
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(sd.main(list(args)), 0)
+        return json.loads(out.getvalue())
 
     def _assert_grouped(self, items):
         seen = []
@@ -235,29 +360,33 @@ class SampleDomainsTests(unittest.TestCase):
 
     def test_all_full_profile(self):
         items = self._run("--all", "--safe-profile", "full", "--seed", "7", "--k", "2")
-        self.assertEqual(len(items), 74)
-        self.assertEqual(len({i["id"] for i in items}), 74)
-        self.assertEqual(len(self._assert_grouped(items)), 11)
+        self.assertEqual(len(items), len(ALL_IDS))
+        self.assertEqual({i["id"] for i in items}, ALL_IDS)
+        self.assertEqual(len(self._assert_grouped(items)), len(POOL))
 
-    def test_all_claude_profile_six_per_cluster_and_alternating_tracks(self):
+    def test_all_claude_profile_per_cluster_counts_and_alternating_tracks(self):
         items = self._run("--all", "--safe-profile", "claude", "--seed", "3")
-        self.assertEqual(len(items), 66)
+        self.assertEqual(len(items), len(ALL_IDS - sd.CLAUDE_SAFE_EXCLUDE_IDS))
         clusters = self._assert_grouped(items)
-        self.assertEqual(len(clusters), 11)
+        self.assertEqual(len(clusters), sum(1 for v in POOL.values() if _claude_count(v)))
         for c in clusters:
             group = [i for i in items if i["cluster"] == c]
-            self.assertEqual(len(group), 6, c)
-            self.assertEqual([i["track"] for i in group], ["explicit", "blind"] * 3, c)
+            self.assertEqual(len(group), _claude_count(POOL[c]), c)
+            expected = ["explicit" if n % 2 == 0 else "blind" for n in range(len(group))]
+            self.assertEqual([i["track"] for i in group], expected, c)
         self.assertEqual(items, self._run("--all", "--safe-profile", "claude", "--seed", "3"))
 
     def test_all_respects_mode_and_exclusions(self):
         items = self._run("--all", "--mode", "blind-only", "--safe-profile", "claude")
         self.assertTrue(all(i["track"] == "blind" for i in items))
         first = items[0]
+        last = items[-1]
+        self.assertNotEqual(first["cluster"], last["cluster"])
         items2 = self._run("--all", "--exclude-clusters", first["cluster"],
-                           "--exclude-ids", items[-1]["id"], "--safe-profile", "claude")
-        self.assertEqual(len(items2), 66 - 6 - 1)
+                           "--exclude-ids", last["id"], "--safe-profile", "claude")
+        self.assertEqual(len(items2), len(items) - _claude_count(POOL[first["cluster"]]) - 1)
         self.assertNotIn(first["cluster"], {i["cluster"] for i in items2})
+        self.assertNotIn(last["id"], {i["id"] for i in items2})
 
     def test_k_default_unchanged(self):
         items = self._run("--seed", "1")
@@ -265,6 +394,194 @@ class SampleDomainsTests(unittest.TestCase):
         self.assertEqual(len({i["cluster"] for i in items}), 4)
         self.assertEqual([i["track"] for i in items], ["explicit", "blind"] * 2)
         self.assertEqual(len(self._run("--k", "6", "--seed", "1")), 6)
+
+    def test_clusters_disjoint_up_to_pool_size(self):
+        for k in range(1, len(POOL) + 1):
+            for seed in range(5):
+                for pol in ("any",) + sd.POLARITIES:
+                    items = self._call("--k", str(k), "--seed", str(seed), "--polarity", pol)
+                    with self.subTest(k=k, seed=seed, polarity=pol):
+                        self.assertEqual(len(items), k)
+                        self.assertEqual(len({i["cluster"] for i in items}), k)
+                        self.assertEqual(len({i["id"] for i in items}), k)
+
+    def test_k_above_cluster_count_still_unique_ids(self):
+        items = self._call("--k", str(len(POOL) + 3), "--seed", "2", "--polarity", "human_ux")
+        self.assertEqual(len(items), len(POOL) + 3)
+        self.assertEqual(len({i["id"] for i in items}), len(items))
+
+    def test_claude_safe_profile_never_returns_excluded_ids(self):
+        for seed in range(50):
+            for pol in ("any", "adversarial", "physical_loop"):
+                items = self._call("--k", "6", "--seed", str(seed), "--safe-profile", "claude",
+                                   "--polarity", pol)
+                with self.subTest(seed=seed, polarity=pol):
+                    self.assertFalse({i["id"] for i in items} & sd.CLAUDE_SAFE_EXCLUDE_IDS)
+
+    def test_polarity_soft_weighting(self):
+        for pol in ("physical_loop", "human_ux", "adversarial"):
+            for k in (2, 3, 4, 5):
+                need = -(-k // 2)
+                for seed in range(30):
+                    for profile in ("full", "claude"):
+                        items = self._call("--k", str(k), "--seed", str(seed), "--polarity", pol,
+                                           "--safe-profile", profile)
+                        with self.subTest(polarity=pol, k=k, seed=seed, profile=profile):
+                            hits = sum(1 for i in items if pol in AFFINITY[i["id"]])
+                            self.assertGreaterEqual(hits, need)
+                            self.assertEqual(len({i["cluster"] for i in items}), k)
+                            for i in items:
+                                self.assertEqual(set(i["affinities"]), AFFINITY[i["id"]])
+
+    def test_polarity_falls_back_when_few_matching_clusters(self):
+        # Exclude every cluster that has a human_ux domain except one; still returns k picks.
+        ux = [c for c, items in POOL.items() if any("human_ux" in i["affinities"] for i in items)]
+        excluded = ux[1:]
+        k = len(POOL) - len(excluded)
+        items = self._call("--k", str(k), "--seed", "4", "--polarity", "human_ux",
+                           "--exclude-clusters", ",".join(excluded))
+        self.assertEqual(len(items), k)
+        self.assertGreaterEqual(sum(1 for i in items if "human_ux" in AFFINITY[i["id"]]), 1)
+        self.assertFalse({i["cluster"] for i in items} & set(excluded))
+
+    def test_polarity_cli_acceptance(self):
+        items = self._run("--k", "4", "--polarity", "physical_loop", "--safe-profile", "claude",
+                          "--seed", "42")
+        self.assertEqual(len(items), 4)
+        self.assertGreaterEqual(sum(1 for i in items if "physical_loop" in AFFINITY[i["id"]]), 2)
+        self.assertFalse({i["id"] for i in items} & sd.CLAUDE_SAFE_EXCLUDE_IDS)
+        self.assertTrue(all("mechanisms" not in i for i in items))
+
+    def test_include_hints(self):
+        for extra in ((), ("--all",)):
+            items = self._run("--seed", "5", *extra)
+            self.assertTrue(items)
+            self.assertTrue(all("mechanisms" not in i for i in items), extra)
+            self.assertTrue(all("affinities" in i for i in items), extra)
+            hinted = self._run("--seed", "5", "--include-hints", *extra)
+            self.assertTrue(all(isinstance(i.get("mechanisms"), (list, str)) and i["mechanisms"]
+                                for i in hinted), extra)
+            self.assertEqual([i["id"] for i in items], [i["id"] for i in hinted])
+
+    def test_seed_determinism(self):
+        for pol in ("any", "cooperative"):
+            a = self._run("--k", "5", "--seed", "123", "--polarity", pol)
+            self.assertEqual(a, self._run("--k", "5", "--seed", "123", "--polarity", pol))
+        runs = {json.dumps(self._call("--k", "4", "--seed", str(s))) for s in range(10)}
+        self.assertGreater(len(runs), 1)
+
+    def test_invalid_k_rejected(self):
+        for k in ("0", "-1"):
+            p = self._proc("--k", k)
+            self.assertEqual(p.returncode, 2, k)
+            self.assertIn("--k must be >= 1", p.stderr)
+            self.assertEqual(p.stdout, "")
+
+    def test_unknown_exclusions_rejected(self):
+        p = self._proc("--exclude-clusters", "markets_law,not_a_cluster")
+        self.assertEqual(p.returncode, 2)
+        self.assertIn("not_a_cluster", p.stderr)
+        self.assertIn("Valid clusters:", p.stderr)
+        self.assertIn("markets_law", p.stderr)
+        p = self._proc("--exclude-ids", "typo_domain")
+        self.assertEqual(p.returncode, 2)
+        self.assertIn("typo_domain", p.stderr)
+        self.assertIn("Valid ids:", p.stderr)
+        p = self._proc("--polarity", "chaotic")
+        self.assertEqual(p.returncode, 2)
+
+    def test_excluding_everything_is_a_clean_error(self):
+        p = self._proc("--exclude-clusters", ",".join(POOL))
+        self.assertEqual(p.returncode, 2)
+        self.assertIn("No eligible clusters", p.stderr)
+
+
+class CheckLeakTests(unittest.TestCase):
+    def _run(self, *args, stdin=None):
+        return subprocess.run([sys.executable, "-B", CHECK_LEAK] + list(args), input=stdin,
+                              capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", timeout=60)
+
+    def test_pass_exit_0(self):
+        p = self._run("--terms", "app,user", "--text", "A merchant approaches a guild hall.")
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertEqual(p.stdout.strip(), "PASS: 0 leaked terms")
+
+    def test_ascii_word_boundaries(self):
+        for text in ("Open the app.", "Two apps compete.", "The app's queue.", "APP store",
+                     "user-facing", "(app)"):
+            with self.subTest(text=text):
+                self.assertEqual(self._run("--terms", "app,user", "--text", text).returncode, 1)
+        for text in ("A new approach.", "An apple tree.", "Applause", "happy", "userland",
+                     "reusers"):
+            with self.subTest(text=text):
+                self.assertEqual(self._run("--terms", "app,user", "--text", text).returncode, 0)
+
+    def test_short_uppercase_term(self):
+        self.assertEqual(self._run("--terms", "PR", "--text", "Two PRs landed").returncode, 1)
+        self.assertEqual(self._run("--terms", "PR", "--text", "a prism and april").returncode, 0)
+
+    def test_multi_word_terms(self):
+        p = self._run("--terms", "chat filter", "--text", "line one\nthe Chat   Filter blocks it")
+        self.assertEqual(p.returncode, 1)
+        self.assertIn("FAIL:", p.stdout)
+        self.assertIn("chat filter", p.stdout)
+        self.assertIn("line 2", p.stdout)
+        self.assertEqual(self._run("--terms", "chat filter",
+                                   "--text", "chat with a coffee filter").returncode, 0)
+
+    def test_non_ascii_substring(self):
+        p = self._run("--terms", "앱,사용자", "--text", "첫 줄\n앱에서 사용자들이 떠난다")
+        self.assertEqual(p.returncode, 1)
+        self.assertIn("'앱'", p.stdout)
+        self.assertIn("'사용자'", p.stdout)
+        self.assertEqual(self._run("--terms", "応用,ПОЛЬЗОВАТЕЛЬ",
+                                   "--text", "Пользователь ушёл").returncode, 1)
+        self.assertEqual(self._run("--terms", "앱", "--text", "상인이 길드에 들어선다").returncode, 0)
+
+    def test_file_stdin_and_terms_file(self):
+        tmp = tempfile.mkdtemp(prefix="sfm-leak-")
+        try:
+            text_path = os.path.join(tmp, "masked.txt")
+            terms_path = os.path.join(tmp, "terms.txt")
+            with open(text_path, "w", encoding="utf-8") as f:
+                f.write("guild hall\nthe caravan\nan app slipped in\n")
+            with open(terms_path, "w", encoding="utf-8") as f:
+                f.write("platform, user\napp\n\n")
+            p = self._run("--terms-file", terms_path, "--file", text_path)
+            self.assertEqual(p.returncode, 1, p.stdout + p.stderr)
+            self.assertIn("'app'", p.stdout)
+            self.assertIn("line 3", p.stdout)
+            p = self._run("--terms", "app", stdin="clean caravan text\n")
+            self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+            p = self._run("--terms", "caravan", stdin="the caravans\n")
+            self.assertEqual(p.returncode, 1)
+            p = self._run("--terms", "app", "--file", os.path.join(tmp, "missing.txt"))
+            self.assertEqual(p.returncode, 2)
+            p = self._run("--terms-file", os.path.join(tmp, "missing.txt"), "--text", "x")
+            self.assertEqual(p.returncode, 2)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_json_output(self):
+        p = self._run("--terms", "app,user,앱", "--text", "apps\nok\nuser 앱", "--json")
+        self.assertEqual(p.returncode, 1)
+        data = json.loads(p.stdout)
+        self.assertEqual(data["status"], "FAIL")
+        self.assertEqual(data["leaked_count"], 3)
+        by_term = {d["term"]: d for d in data["leaks"]}
+        self.assertEqual(by_term["app"]["lines"], [1])
+        self.assertEqual(by_term["user"]["lines"], [3])
+        self.assertEqual(by_term["앱"]["mode"], "substring")
+        p = self._run("--terms", "app", "--text", "approach", "--json")
+        self.assertEqual(p.returncode, 0)
+        self.assertEqual(json.loads(p.stdout), {"status": "PASS", "leaked_count": 0,
+                                                "terms_checked": 1, "leaks": []})
+
+    def test_invalid_arguments_exit_2(self):
+        self.assertEqual(self._run("--text", "x").returncode, 2)
+        self.assertEqual(self._run("--terms", " , ,", "--text", "x").returncode, 2)
+        self.assertEqual(self._run("--terms", "a", "--text", "x", "--file", "y").returncode, 2)
 
 
 class InstallerTestBase(unittest.TestCase):
@@ -300,8 +617,9 @@ class InstallerTestBase(unittest.TestCase):
     def assertSkillInstalled(self, rel):
         dest = os.path.join(self.home, *rel.split("/"))
         for f in ("SKILL.md", "references/prompt_templates.md", "resources/domain_pool.json",
-                  "scripts/sample_domains.py"):
+                  "scripts/sample_domains.py", "scripts/check_leak.py"):
             src = os.path.join(REPO, "skill", "sfumato", *f.split("/"))
+            self.assertTrue(os.path.isfile(src), src)
             if os.path.exists(src):
                 self.assertTrue(os.path.isfile(os.path.join(dest, *f.split("/"))), rel + "/" + f)
 

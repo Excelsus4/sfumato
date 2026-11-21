@@ -2,8 +2,8 @@
 # Sfumato installer (macOS / Linux).
 #
 # Local checkout:   bash tools/install.sh [--target claude|agy|codex|all|auto] [--dry-run]
-# One-liner:        curl -fsSL https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.sh | bash
-#                   curl -fsSL .../install.sh | bash -s -- --target all
+# Recommended:      git clone the repo, inspect skill/sfumato and this script,
+#                   then run it from the checkout (no piping remote code into a shell).
 #
 # Targets:
 #   claude -> ~/.claude/skills/sfumato  (+ ~/.claude/commands/*.md)

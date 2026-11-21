@@ -1,9 +1,9 @@
 ---
 name: sfumato
 description: >-
-  Sfumato — Dual-Track Cross-Domain Ideation (Explicit Analogy + Blind Isomorphic Reframing)
-  using isolated parallel subagents and a clean-context selector to erase domain boundaries,
-  break LLM homogenization, and maximize peak (Top-1) creative quality.
+  Sfumato — Dual-Track Cross-Domain Ideation (Direct Anchor + Explicit Analogy + Blind Isomorphic Reframing)
+  using isolated parallel subagents, code-verified zero-leak masking, and a clean-context red-team selector to
+  erase domain boundaries, break LLM homogenization, and widen exploration diversity without regressing below baseline.
   Trigger explicitly when the user invokes `/sfumato`, `/sfm`, or asks to run Sfumato.
   Trigger autonomously ONLY when the user asks for high-ceiling, non-obvious brainstorming on
   hard open-ended problems (new product strategy, game mechanics, system breakthroughs, escaping
@@ -12,93 +12,113 @@ description: >-
 
 # Sfumato (`/sfumato`, `/sfm`) — Cross-Domain Ideation
 
-Named after Leonardo da Vinci's *sfumato* technique (dissolving rigid borders to let new forms emerge), this skill dissolves a problem's domain borders to escape LLM mode collapse (*Artificial Hivemind*) and maximize the **peak creativity ceiling (Top-1 hit rate)**.
+Named after Leonardo da Vinci's *sfumato* technique (dissolving rigid borders to let new forms emerge), this skill dissolves a problem's domain borders to escape LLM mode collapse (*Artificial Hivemind*), expand structural mechanism diversity, and raise the **peak creativity ceiling (Top-1)** without dropping below a strong direct baseline.
 
-## Core Principle: The Domain-Masking Trade-off
+## Core Principle: The Domain-Masking Trade-Off
 
-- **Track A — Explicit Analogy** *(original problem visible + assigned remote domain)*: High hit-rate and surgical precision against domain-specific constraints, but vulnerable to partial homogenization back toward industry clichés.
-- **Track B — Blind Isomorphic Reframing** *(original domain vocabulary completely erased → solved blind in an isolated session → back-translated)*: Lower average hit-rate (some ideas won't translate cleanly), but **zero cliché gravity**, producing true outlier mutations impossible in Track A.
-- **Stage 2 — Clean-Context Selection**: A fresh, uncontaminated evaluator filters out surface metaphors ("jargon cosplay") and selects the highest-ceiling Top-1~3 ideas.
+- **Direct Anchor** *(default in `dual-track` & `deep`)*: 1 isolated native-domain baseline solver placed in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — locking the quality floor on tightly coupled engineering/systems loops.
+- **Track A — Explicit Analogy** *(original problem visible + assigned remote domain)*: High hit-rate and surgical precision against domain-specific attack surfaces, though vulnerable to partial homogenization back toward industry clichés.
+- **Track B — Blind Isomorphic Reframing** *(original domain vocabulary erased & code-checked → solved blind in an isolated session → back-translated)*: Lower hit-rate (some abstractions won't translate cleanly), but **zero cliché gravity**, producing heavy-tail outlier mutations impossible in Track A.
+- **Stage 2a/2b — Clean-Context Red-Team Triage & Selective Hardening**: A fresh, uncontaminated evaluator classifies candidates (`PASS / HARDEN / KILL`), selects Top-1, and hardens *only* Top-1's single biggest operational weakness.
 
 ---
 
 ## Step-by-Step Procedure
 
-### 1. Frame the Problem (Neutral & Compact)
-Distill the user's request into a crisp 3–5 bullet problem brief:
+### 1. Frame the Problem (Neutral, Compact & Language-Matched)
+Record `{USER_LANGUAGE}` (matching the user's request language) and distill the request into a crisp 3–5 bullet problem brief:
 - **Core Goal** (what must change)
-- **Structural Constraints & Incentive Polarity** (hard limits + whether actors are **zero-sum/adversarial**, **cooperative**, or **platform-refereed**)
-- **Why Obvious Fixes Fail** (explicitly ban the top 2–3 clichés so neither track wastes budget on them)
+- **Structural Constraints & Incentive Polarity** (hard limits + primary polarity: `adversarial`, `cooperative`, `physical_loop`, `human_ux`, or `systems_ops`)
+- **Why Obvious Fixes Fail** (explicitly ban the top 2–3 clichés so no track wastes budget on them)
 
 ### 2. Sample Truly Distant Domains (Single Command — Never LLM Choice)
-Never ask an LLM to "pick random domains" (it repeats ants, jazz, and chess). Run the bundled stratified sampler directly (no need to run `--list-clusters` first):
+Never ask an LLM to "pick random domains" (it repeats ants, jazz, and chess). Run the bundled stratified sampler directly in a single shell call:
 
 - **Available macro-clusters (11):** `biology_ecology`, `physics_engineering`, `history_institutions`, `intelligence_conflict`, `markets_law`, `craft_operations`, `art_performance`, `social_anthropology`, `cognition_pedagogy`, `materials_chemistry`, `earth_navigation_grids`
-- **Default (`dual-track`):** `--k 4` (2 Explicit + 2 Blind). Use `--k 6` for `deep`, `--k 11` for `sweep`, or `--all` ONLY when the user explicitly requests `max` / `/sfm-max`.
-- **Claude Code Safety Profile:** When running on **Claude / Claude Code**, always append `--safe-profile claude` to exclude bio-pathogen, nuclear, cyber/EW, and espionage domains that can trigger false-positive safety refusals during Blind Masking (66 rich domains — exactly 6 per cluster across all 11 clusters — remain available). On Antigravity/Codex, omit it to use the full 74-domain pool across 11 clusters.
+- **Polarity-aware soft weighting (`--polarity`):** Pass `--polarity <adversarial|cooperative|physical_loop|human_ux|systems_ops>` (or `any` if mixed) so at least half of sampled remote domains share structural affinity with the problem while still spanning disjoint clusters.
+- **No hint priming by default:** `sample_domains.py` omits `mechanisms` hints by default so solvers don't collapse onto 4–5 pre-written keywords (pass `--include-hints` only if you intentionally want mechanism cues).
+- **Claude Code Safety Profile:** When running on **Claude / Claude Code**, always append `--safe-profile claude` to exclude 8 sensitive bio/CBRN/cyber/espionage domains — leaving **66 Claude-safe domains (exactly 6 per cluster across all 11 clusters)** with 0 safety refusals. On Antigravity/Codex, omit it for the full 74-domain pool across 11 clusters.
 
-```powershell
-python "<skill_dir>/scripts/sample_domains.py" --k 4 --exclude-clusters <same_cluster_if_any>
+```bash
+# Default dual-track: 3 remote domains (2 Explicit + 1 Blind) + 1 Direct Anchor = 4 isolated solvers
+python "<skill_dir>/scripts/sample_domains.py" --k 3 --mode dual-track --polarity <polarity> --exclude-clusters <same_cluster_if_any>
+
 # On Claude Code:
-python "<skill_dir>/scripts/sample_domains.py" --k 4 --safe-profile claude --exclude-clusters <same_cluster_if_any>
+python "<skill_dir>/scripts/sample_domains.py" --k 3 --mode dual-track --polarity <polarity> --safe-profile claude --exclude-clusters <same_cluster_if_any>
+
+# Deep mode: 6 remote domains (3 Explicit + 3 Blind) + 1 Direct Anchor = 7 isolated solvers
+python "<skill_dir>/scripts/sample_domains.py" --k 6 --mode dual-track --polarity <polarity> --exclude-clusters <same_cluster_if_any>
+
+# Opt-in sweep (11 clusters; add --safe-profile claude on Claude Code) or max (/sfm-max, 2-round tournament):
+python "<skill_dir>/scripts/sample_domains.py" --k 11 --mode dual-track --polarity <polarity> [--safe-profile claude]
+python "<skill_dir>/scripts/sample_domains.py" --all --safe-profile claude
 ```
 
-### 3. Prepare Track B Isomorphic Masks via a 3-Line Structural Skeleton (Crucial!)
-Before spawning Track B subagents, do **NOT** jump straight from the original problem to a remote-domain story (that leaks clichés or loses constraints). Use a 2-step masking pass:
+### 3. Prepare Track B Isomorphic Masks via 3-Line Structural Skeleton + Zero-Leak Check
+Before spawning Track B subagents, do **NOT** jump straight from the original problem to a remote-domain story. Use a 2-step masking pass:
 1. **Extract a 3-Line Domain-Neutral Structural Skeleton:**
-   - `Actors & Incentive Polarity:` (zero-sum/adversarial vs. cooperative vs. platform-refereed)
-   - `Core Asymmetry / Bottleneck:` (where effort, information, or friction is lopsided)
-   - `Why Static Controls Fail:` (exact failure mode of obvious fixes)
-2. **Map Skeleton → Target Domain + Zero-Leak Check:**
+   - `Actors & Incentive Polarity:` (zero-sum/adversarial vs. cooperative vs. physical-loop vs. platform-refereed)
+   - `Core Asymmetry / Bottleneck:` (exact cost, information, physics, or cognitive imbalance)
+   - `Why Static Controls Fail:` (exact failure mode of obvious rules/filters/tutorials)
+2. **Map Skeleton → Target Domain + Code-Verified Zero-Leak Check:**
    - Rewrite the skeleton using 100% native nouns of the target domain (**zero** leaked original-domain jargon).
-   - **Strict Polarity Preservation:** Never map zero-sum enemies onto a cooperative central authority (and vice versa) — mismatched polarity is the #1 cause of Track B translation loss.
+   - **Strict Polarity Preservation:** Never map zero-sum enemies onto a cooperative central authority (and vice versa).
+   - Run the bundled zero-leak validator before spawning the Blind solver (must exit `0`):
 
-See [prompt_templates.md](./references/prompt_templates.md) for the exact templates and masking checklist.
+```bash
+python "<skill_dir>/scripts/check_leak.py" --terms "<comma_separated_original_domain_terms>" --text "<masked_scenario_text>"
+```
 
-### 4. Launch Isolated Parallel Subagents (No Cross-Talk!)
-Spawn all Track A and Track B solvers **in parallel in separate, clean-context subagents** (`invoke_subagent` with `TypeName: "self"`, `Model: "inherit"` in Antigravity; `Agent` tool in Claude Code).
-- **Hard Rule 1 (No Cross-Talk):** Divergent solvers must NEVER see each other's outputs (prevents *Diversity Collapse*).
-- **Hard Rule 2 (Pure Internal Knowledge):** Instruct each subagent **not** to call tools, read files, or search the web, and to propose exactly 2 concrete structural mechanisms.
-- **UX Hygiene:** While waiting for parallel subagents, keep intermediate status notes to a bare minimum (1 short line) and never analyze partial results before all solvers return.
+See [prompt_templates.md](./references/prompt_templates.md) for the exact templates.
+
+### 4. Launch Isolated Parallel Subagents (Zero Cross-Talk!)
+Spawn all Stage 1 solvers (Direct Anchor + Track A + Track B) **in parallel in separate, clean-context subagents**:
+- **Antigravity (`agy`):** `invoke_subagent` with `TypeName: "self"`, `Model: "inherit"`
+- **Claude Code:** `Agent` tool (fresh context per solver)
+- **Codex CLI:** Use parallel isolated subagents if enabled; otherwise execute each solver in an isolated `codex exec` call (or isolated clean turn) without passing any previous solver's output.
+- **Hard Rule 1 (Zero Cross-Talk):** Divergent solvers must NEVER see each other's outputs (prevents *Diversity Collapse*).
+- **Hard Rule 2 (Pure Internal Knowledge):** Forbid tool calls, file reads, and web searches inside solvers; request exactly 2 concrete structural mechanisms in `{USER_LANGUAGE}`.
+- **UX Hygiene:** While waiting for parallel subagents, keep intermediate status notes to 1 short line and never analyze partial results before all solvers return.
 
 ### 5. Back-Translate Track B (Mechanism Only, Never Cosplay)
 For each Track B output:
-- Extract the **causal mechanism + trade-off** and translate it cleanly into the original problem's language.
-- **Be ruthless:** If a Track B idea only maps via a strained pun or relies on an impossible assumption (e.g., cooperative central ledger in an adversarial problem), discard it cleanly and log the reason. High ceiling requires tolerating discards.
+- Extract ONLY the **causal mechanism + trade-off** and translate it cleanly into the original problem's concrete primitives.
+- **Be ruthless:** If a Track B idea only maps via a strained pun or breaks under the problem's real polarity, discard it cleanly and log it as a translation loss.
 
-### 6. Clean-Context Red-Team Triage (Stage 2a) & Hardening Pass (Stage 2b)
-Normalize surviving Track A + translated Track B (+ Direct Anchor if used) candidates into an identical, unlabeled format (`Candidate 1..N`) and run **Stage 2a** (1 fresh clean-context evaluator subagent) using [prompt_templates.md](./references/prompt_templates.md):
-1. **Cut Surface Metaphors:** Reject any idea whose underlying causal mechanism is identical to a standard cliché with fancy domain jargon pasted on top.
-2. **Red-Team Killer-Flaw Triage:** Classify every candidate's flaws into **Unfixable** (disqualify from Top-1: e.g., fundamental polarity mismatch, wash-trading/sybil break, banned AI judge) vs. **Fixable Edge-Case** (promotable to Stage 2b Hardening).
+### 6. Clean-Context Red-Team Triage (Stage 2a) & Selective Hardening (Stage 2b)
+Normalize surviving Direct Anchor + Track A + translated Track B candidates into an identical, unlabeled format (`Candidate 1..N`) and run **Stage 2a** (1 fresh clean-context evaluator subagent) using [prompt_templates.md](./references/prompt_templates.md):
+1. **Cut Surface Metaphors (`KILL`):** Reject any idea whose causal mechanism is identical to a banned cliché with fancy domain jargon pasted on top.
+2. **Red-Team Flaw Triage (`PASS` / `HARDEN` / `KILL`):** Screen for Adverse Selection, Sybil/Wash-Trading exploits, and Feasibility/Premise violations. Disqualify unfixable flaws (`KILL`); promote fixable high-ceiling gems (`HARDEN`) with 1 explicit diagnosed flaw.
 3. **Select Top-1 Champion + 2 Distinct Runners-Up (+ Optional Wildcard).**
-4. **Stage 2b — Clean-Context Hardening & Grafting Pass *(optional in `fast`, default in `dual-track`/`deep`)*:**
-   - Take ONLY the winning Top-1 candidate (whether Cross-Domain or Direct Anchor — **never force-graft a polarity-mismatched cross-domain seed over a stronger Direct Anchor**) + its single biggest Red-Team edge-case critique (and optionally graft 1 practical primitive from a runner-up).
-   - Run 1 clean-context engineering pass to patch that exact edge case without diluting the core non-obvious mechanism.
-5. **Report Conclusion-First:** Lead with the hardened Top-1 Champion + 2 Runners-Up (+ Wildcard if any), each showing Mechanism, Why It's Hard to Defeat/Copy, Concrete Trade-Off, and Source Track/Domain, plus compact Red-Team notes.
+4. **Stage 2b — Clean-Context Hardening & Selective Grafting *(skipped in `fast` or if Top-1 is already `PASS`)*:**
+   - Take ONLY the winning Top-1 candidate (whether Cross-Domain or Direct Anchor — **never force-graft a polarity-mismatched cross-domain seed over a stronger Direct Anchor**) + its single biggest Red-Team flaw (and optionally 1 practical primitive from a passing runner-up).
+   - Run 1 fresh clean-context engineering pass to repair that weakness without diluting the core non-obvious mechanism.
+5. **Report Conclusion-First in `{USER_LANGUAGE}`:** Lead with the hardened Top-1 Champion + 2 Runners-Up (+ Wildcard if any), showing Mechanism, Why It's Hard to Defeat/Copy, Concrete Trade-Off, and Source Track/Domain, plus compact Red-Team triage notes.
 
 ---
 
-## Modes & Defaults
+## Modes, Composition & Compute Budget
 
-| Mode | Configuration | When to Use |
-|---|---|---|
-| `dual-track` *(default)* | **K=4** (2 Explicit + 2 Blind) → Red-Team Selector | Standard fast dogfooding & serious brainstorming |
-| `deep` | **1 Direct Anchor + K=6** (3 Explicit + 3 Blind) → Red-Team Selector | High-stakes breakthroughs — guarantees `max(Direct, Explicit, Blind) ≥ Direct` floor while raising the ceiling |
-| `fast` | **K=3** (3 Explicit) → Red-Team Selector | Quick practical ideation when time/tokens are tight |
-| `sweep` *(opt-in only)* | **1 Direct Anchor + K=11** (1 per macro-cluster, alternating Explicit/Blind) → Red-Team Selector | Full 11-cluster coverage in one wave without selector overload |
-| `max` (`/sfm-max`, *opt-in only*) | **All 66 (Claude) / 74 domains** → **2-Round Tournament** (11 Cluster Playoffs → 12-finalist Grand Final + Stage 2b Hardening) | Exhaustive high-budget brainstorming ("Company-Card Mode") for major strategy, product moats, or core mechanics |
+| Mode | Stage 1 Solvers | Total Isolated Subagent Calls | Relative Token Cost (vs. 1 Direct Call) | When to Use |
+|---|---|---:|---:|---|
+| `fast` | `3 Explicit` (`--k 3 --mode explicit-only`) | `4` (3 solvers + Stage 2a) | ~4–5× | Quick non-obvious ideas under tight token/latency budgets |
+| `dual-track` *(default)* | `1 Direct Anchor + 2 Explicit + 1 Blind` (`--k 3`) | `5–6` (4 solvers + Stage 2a + optional Stage 2b) | ~6–8× | Standard high-ceiling brainstorming (matches primary benchmark composition; guarantees `≥ Direct` floor) |
+| `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` (`--k 6`) | `8–9` (7 solvers + Stage 2a + optional Stage 2b) | ~10–12× | High-stakes strategic/architecture breakthroughs requiring maximum exploration breadth |
+| `sweep` *(opt-in only)* | `1 Direct Anchor + 11 domains` (`--k 11`, 1 per macro-cluster) | `13–14` (12 solvers + Stage 2a + opt. 2b) | ~15–18× | Full 11-cluster coverage in one wave without selector overload |
+| `max` (`/sfm-max`, *opt-in only*) | **All 66 (Claude) / 74 domains** (`--all`) + **1 Direct Anchor** → **2-Round Tournament** | `79–80` (Claude) / `87–88` (full) | ~80–90× | Exhaustive high-budget brainstorming (*mandatory pre-flight user confirmation*) |
 
-> **Why `Direct Anchor` in `deep` / `sweep` / `max`?** On engineering-native problems where a direct domain solution is already near-optimal, including 1 isolated `Direct Baseline` candidate in the unlabeled selector pool prevents regressions below baseline while letting Track A/B win whenever a cross-domain breakthrough genuinely dominates.
+> **Why `Direct Anchor` is on by default in `dual-track` / `deep` / `sweep` / `max`:** Benchmarks across 9 runs showed that on tightly coupled engineering/physics loops (`DOC-ROT`, `GAME-SNOWBALL`), unlucky domain draws can underperform a strong Direct Baseline. Including 1 isolated Direct Anchor in the unlabeled Stage 2a pool keeps exploration diversity high while protecting your floor (`max(Direct, Explicit, Blind) ≥ Direct`).
 
 ### Opt-In `max` (`/sfm-max`) Tournament Protocol & Guardrails
-- **NEVER auto-trigger `max` or `sweep`.** Run ONLY when the user explicitly asks for `sweep`, `max`, or `/sfm-max`.
-- **Mandatory Pre-Flight Confirmation (`max`):** Before spawning any subagents in `max` mode, display the exact session count (~78 sessions on `--safe-profile claude` / ~86 on `full`) and ask the user to confirm.
+- **NEVER auto-trigger `max` or `sweep`.** Run ONLY when the user explicitly requests `sweep`, `max`, or `/sfm-max`.
+- **Mandatory Pre-Flight Confirmation (`max`):** Before spawning any subagents in `max` mode, display the exact session count (**79–80 sessions** on `--safe-profile claude`: `66 remote + 1 Direct Anchor + 11 Cluster Judges + 1 Grand Final + opt. Stage 2b`; or **87–88 sessions** on `full`: `74 + 1 + 11 + 1 + opt. 2b`) and wait for explicit user confirmation.
 - **Why 2-Round Tournament (Never Dump 148 Ideas into 1 Selector):** Dumping 130+ raw ideas into one Stage 2 evaluator degrades judgment (*Lost-in-the-Middle*). Instead:
-  1. **Round 1 — Cluster Playoffs (11 waves):** Run `sample_domains.py --all` (with `--safe-profile claude` on Claude). Execute in cluster waves (6–8 concurrent subagents per wave to respect API rate limits). After each cluster finishes, 1 fresh Cluster Red-Team Judge picks that cluster's **Top-1 Champion** (optionally 1 Wildcard).
-  2. **Round 2 — Grand Final:** Pass the **11 unlabeled Cluster Champions + 1 Direct Anchor (12 finalists)** into 1 fresh Clean-Context Grand Final Red-Team Selector + Stage 2b Hardening Pass.
+  1. **Round 1 — Cluster Playoffs (11 waves):** Run `sample_domains.py --all` (with `--safe-profile claude` on Claude). Execute in cluster waves (6–8 concurrent subagents per wave). After each cluster finishes, 1 fresh Cluster Red-Team Judge picks that cluster's **Top-1 Champion** (plus optional Wildcard).
+  2. **Round 2 — Grand Final:** Pass the **11 unlabeled Cluster Champions + 1 Direct Anchor (12 finalists)** into 1 fresh Clean-Context Grand Final Red-Team Triage (Stage 2a) + Selective Hardening Pass (Stage 2b).
 
 ## Validation Checklist
-- [ ] Domains were sampled via `scripts/sample_domains.py` in a single call (default `--k 4`).
-- [ ] Every Track B prompt contains **zero** leaked terms from the original domain AND preserves **incentive polarity**.
-- [ ] All divergent subagents ran isolated with zero shared conversation history and zero tool calls.
-- [ ] Final picks were selected by a clean-context evaluator and change the **causal/incentive structure**, not just wording.
+- [ ] Domains were sampled via `scripts/sample_domains.py` in a single call (with `--polarity` and, on Claude Code, `--safe-profile claude`).
+- [ ] Every Track B masked scenario passed `scripts/check_leak.py` with exit code `0` AND preserved incentive polarity.
+- [ ] All Stage 1 solvers ran isolated with zero shared conversation history and zero tool calls.
+- [ ] Every prompt specified `{USER_LANGUAGE}` matching the user's request.
+- [ ] Stage 2a produced explicit `PASS / HARDEN / KILL` triage in a clean context, and Stage 2b hardened only the winning Top-1 without forcing polarity-mismatched grafts.
