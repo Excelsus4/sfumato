@@ -180,9 +180,9 @@
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
 
-# Claude Code (+ опциональный шорткат /sfm с --safe-profile claude)
+# Claude Code (+ опциональные шорткаты /sfm и /sfm-max с --safe-profile claude)
 cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+cp commands/*.md ~/.claude/commands/
 
 # Antigravity (agy)
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
@@ -220,6 +220,8 @@ bash tools/install.sh --target claude   # или agy | codex | all | auto
 | `dual-track` *(по умолчанию)* | `2 Explicit + 2 Blind` → Red-Team селектор | Повседневный брейнсторминг с высоким потолком |
 | `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` → Red-Team селектор | Сложные стратегические тупики (гарантирует уровень `≥ Direct`) |
 | `fast` | `3 Explicit` → Red-Team селектор | Быстрые практические попадания при жёстком бюджете токенов |
+| `sweep` *(по запросу)* | `1 Direct Anchor + 11 доменов` (по 1 из каждого кластера) → Red-Team | Полный охват всех 11 кластеров за одну волну |
+| `max` (`/sfm-max`, *по запросу*) | **Все 66 (Claude) / 74 домена** → 2-раундовый турнир *(11 отборочных кластеров → финал 12)* | Исчерпывающий брейнсторминг под ключевые решения *(всегда запрашивает подтверждение перед запуском)* |
 
 ---
 

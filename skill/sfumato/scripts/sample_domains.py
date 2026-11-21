@@ -74,6 +74,28 @@ def sample_domains(
     return picked
 
 
+def all_domains(
+    clusters: dict[str, list[dict]],
+    exclude_clusters: set[str],
+    exclude_ids: set[str],
+    seed: int | None,
+) -> list[list[dict]]:
+    """Return every eligible domain, grouped per cluster (shuffled cluster and item order)."""
+    rng = random.Random(seed)
+    groups: list[list[dict]] = []
+    for cname, items in clusters.items():
+        if cname in exclude_clusters:
+            continue
+        kept = [{"cluster": cname, **i} for i in items if i["id"] not in exclude_ids]
+        if kept:
+            rng.shuffle(kept)
+            groups.append(kept)
+    if not groups:
+        raise ValueError("No eligible clusters left after exclusions.")
+    rng.shuffle(groups)
+    return groups
+
+
 def assign_tracks(items: list[dict], mode: str) -> list[dict]:
     out = []
     for idx, item in enumerate(items):
@@ -115,6 +137,11 @@ def main() -> int:
         help="Filter out bio/CBRN/cyber/espionage domains that may trigger false-positive refusals on Claude (default: full)",
     )
     parser.add_argument("--seed", type=int, default=None, help="Optional RNG seed for reproducibility")
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Return ALL eligible domains grouped by cluster (ignores --k)",
+    )
     parser.add_argument("--list-clusters", action="store_true", help="List available macro-clusters and exit")
     args = parser.parse_args()
 
@@ -131,8 +158,16 @@ def main() -> int:
     if args.safe_profile == "claude":
         exclude_ids |= CLAUDE_SAFE_EXCLUDE_IDS
 
-    sampled = sample_domains(clusters, args.k, exclude_clusters, exclude_ids, args.seed)
-    assigned = assign_tracks(sampled, args.mode)
+    if args.all:
+        # Tracks alternate explicit/blind within each cluster (or follow --mode).
+        assigned = [
+            item
+            for group in all_domains(clusters, exclude_clusters, exclude_ids, args.seed)
+            for item in assign_tracks(group, args.mode)
+        ]
+    else:
+        sampled = sample_domains(clusters, args.k, exclude_clusters, exclude_ids, args.seed)
+        assigned = assign_tracks(sampled, args.mode)
 
     sys.stdout.reconfigure(encoding="utf-8")
     print(json.dumps(assigned, ensure_ascii=False, indent=2))

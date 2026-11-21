@@ -215,12 +215,87 @@ BASH_IS_WSL = bool(BASH) and os.name == "nt" and os.path.normcase(
     os.path.dirname(BASH)).endswith(os.path.normcase(os.path.join("windows", "system32")))
 
 
+SAMPLER = os.path.join(REPO, "skill", "sfumato", "scripts", "sample_domains.py")
+
+
+class SampleDomainsTests(unittest.TestCase):
+    def _run(self, *args):
+        p = subprocess.run([sys.executable, "-B", SAMPLER] + list(args), capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=60)
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        return json.loads(p.stdout)
+
+    def _assert_grouped(self, items):
+        seen = []
+        for it in items:
+            if not seen or seen[-1] != it["cluster"]:
+                self.assertNotIn(it["cluster"], seen, "clusters must be contiguous")
+                seen.append(it["cluster"])
+        return seen
+
+    def test_all_full_profile(self):
+        items = self._run("--all", "--safe-profile", "full", "--seed", "7", "--k", "2")
+        self.assertEqual(len(items), 74)
+        self.assertEqual(len({i["id"] for i in items}), 74)
+        self.assertEqual(len(self._assert_grouped(items)), 11)
+
+    def test_all_claude_profile_six_per_cluster_and_alternating_tracks(self):
+        items = self._run("--all", "--safe-profile", "claude", "--seed", "3")
+        self.assertEqual(len(items), 66)
+        clusters = self._assert_grouped(items)
+        self.assertEqual(len(clusters), 11)
+        for c in clusters:
+            group = [i for i in items if i["cluster"] == c]
+            self.assertEqual(len(group), 6, c)
+            self.assertEqual([i["track"] for i in group], ["explicit", "blind"] * 3, c)
+        self.assertEqual(items, self._run("--all", "--safe-profile", "claude", "--seed", "3"))
+
+    def test_all_respects_mode_and_exclusions(self):
+        items = self._run("--all", "--mode", "blind-only", "--safe-profile", "claude")
+        self.assertTrue(all(i["track"] == "blind" for i in items))
+        first = items[0]
+        items2 = self._run("--all", "--exclude-clusters", first["cluster"],
+                           "--exclude-ids", items[-1]["id"], "--safe-profile", "claude")
+        self.assertEqual(len(items2), 66 - 6 - 1)
+        self.assertNotIn(first["cluster"], {i["cluster"] for i in items2})
+
+    def test_k_default_unchanged(self):
+        items = self._run("--seed", "1")
+        self.assertEqual(len(items), 4)
+        self.assertEqual(len({i["cluster"] for i in items}), 4)
+        self.assertEqual([i["track"] for i in items], ["explicit", "blind"] * 2)
+        self.assertEqual(len(self._run("--k", "6", "--seed", "1")), 6)
+
+
 class InstallerTestBase(unittest.TestCase):
     def setUp(self):
         self.home = tempfile.mkdtemp(prefix="sfm-home-")
+        self.fake_src = None
 
     def tearDown(self):
         shutil.rmtree(self.home, ignore_errors=True)
+        if self.fake_src:
+            shutil.rmtree(self.fake_src, ignore_errors=True)
+
+    def make_fake_source(self, commands=("sfm.md", "sfm-max.md")):
+        self.fake_src = tempfile.mkdtemp(prefix="sfm-src-")
+        os.makedirs(os.path.join(self.fake_src, "skill", "sfumato"))
+        with open(os.path.join(self.fake_src, "skill", "sfumato", "SKILL.md"), "w") as f:
+            f.write("skill\n")
+        os.makedirs(os.path.join(self.fake_src, "commands"))
+        for name in commands:
+            with open(os.path.join(self.fake_src, "commands", name), "w") as f:
+                f.write(name + "\n")
+        with open(os.path.join(self.fake_src, "commands", "notes.txt"), "w") as f:
+            f.write("ignored\n")
+        return self.fake_src
+
+    def assertCommandsInstalled(self, names):
+        cmd_dir = os.path.join(self.home, ".claude", "commands")
+        self.assertEqual(sorted(os.listdir(cmd_dir)), sorted(names))
+        for n in names:
+            with open(os.path.join(cmd_dir, n)) as f:
+                self.assertEqual(f.read(), n + "\n")
 
     def assertSkillInstalled(self, rel):
         dest = os.path.join(self.home, *rel.split("/"))
@@ -278,6 +353,16 @@ class InstallPs1Tests(InstallerTestBase):
         p = self._ps("-Target", "claude")
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
 
+    def test_copies_all_command_files(self):
+        src = self.make_fake_source()
+        p = self._ps("-Target", "claude", "-Source", src, "-DryRun")
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertIn("sfm-max.md", p.stdout)
+        self.assertEqual(_tree(self.home), [])
+        p = self._ps("-Target", "claude", "-Source", src)
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertCommandsInstalled(["sfm.md", "sfm-max.md"])
+
     def test_invalid_target_rejected(self):
         p = self._ps("-Target", "bogus", "-DryRun")
         self.assertNotEqual(p.returncode, 0)
@@ -323,6 +408,20 @@ class InstallShTests(InstallerTestBase):
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         self.assertSkillInstalled(".gemini/config/skills/sfumato")
         self.assertFalse(os.path.exists(os.path.join(self.home, ".claude", "skills")))
+
+    def test_copies_all_command_files(self):
+        src = self._posix(self.make_fake_source())
+        p = self._sh("--target", "claude", "--source", src, "--dry-run")
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertIn("sfm-max.md", p.stdout)
+        self.assertEqual(_tree(self.home), [])
+        p = self._sh("--target", "claude", "--source", src)
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertCommandsInstalled(["sfm.md", "sfm-max.md"])
+
+    def test_install_sh_is_lf_only(self):
+        with open(os.path.join(HERE, "install.sh"), "rb") as f:
+            self.assertNotIn(b"\r", f.read())
 
     def test_invalid_target_rejected(self):
         p = self._sh("--target", "bogus")

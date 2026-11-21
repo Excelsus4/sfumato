@@ -180,9 +180,9 @@ Clone, inspect the files, and copy `skill/sfumato` into your agent's global skil
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
 
-# Claude Code (+ optional /sfm shortcut with --safe-profile claude)
+# Claude Code (+ optional /sfm and /sfm-max shortcuts with --safe-profile claude)
 cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+cp commands/*.md ~/.claude/commands/
 
 # Antigravity (agy)
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
@@ -220,6 +220,8 @@ bash tools/install.sh --target claude   # or agy | codex | all | auto
 | `dual-track` *(default)* | `2 Explicit + 2 Blind` → Red-Team Selector | Everyday high-ceiling brainstorming |
 | `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` → Red-Team Selector | Stuck strategic problems (guarantees `≥ Direct` floor) |
 | `fast` | `3 Explicit` → Red-Team Selector | Quick practical hits under tight token budgets |
+| `sweep` *(opt-in)* | `1 Direct Anchor + 11 domains` (1 per macro-cluster) → Red-Team | Full 11-cluster coverage in one wave |
+| `max` (`/sfm-max`, *opt-in*) | **All 66 (Claude) / 74 domains** → 2-Round Tournament *(11 Cluster Playoffs → 12-Finalist Grand Final)* | High-stakes exhaustive brainstorming *(always confirms session count before running)* |
 
 ---
 

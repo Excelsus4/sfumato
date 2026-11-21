@@ -33,8 +33,8 @@ Distill the user's request into a crisp 3–5 bullet problem brief:
 ### 2. Sample Truly Distant Domains (Single Command — Never LLM Choice)
 Never ask an LLM to "pick random domains" (it repeats ants, jazz, and chess). Run the bundled stratified sampler directly (no need to run `--list-clusters` first):
 
-- **Available macro-clusters (8):** `biology_ecology`, `physics_engineering`, `history_institutions`, `intelligence_conflict`, `markets_law`, `craft_operations`, `art_performance`, `social_anthropology`
-- **Default (`dual-track`):** `--k 4` (2 Explicit + 2 Blind). Use `--k 6` ONLY when the user explicitly requests `deep` mode.
+- **Available macro-clusters (11):** `biology_ecology`, `physics_engineering`, `history_institutions`, `intelligence_conflict`, `markets_law`, `craft_operations`, `art_performance`, `social_anthropology`, `cognition_pedagogy`, `materials_chemistry`, `earth_navigation_grids`
+- **Default (`dual-track`):** `--k 4` (2 Explicit + 2 Blind). Use `--k 6` for `deep`, `--k 11` for `sweep`, or `--all` ONLY when the user explicitly requests `max` / `/sfm-max`.
 - **Claude Code Safety Profile:** When running on **Claude / Claude Code**, always append `--safe-profile claude` to exclude bio-pathogen, nuclear, cyber/EW, and espionage domains that can trigger false-positive safety refusals during Blind Masking (66 rich domains — exactly 6 per cluster across all 11 clusters — remain available). On Antigravity/Codex, omit it to use the full 74-domain pool across 11 clusters.
 
 ```powershell
@@ -85,8 +85,17 @@ Normalize surviving Track A + translated Track B (+ Direct Anchor if used) candi
 | `dual-track` *(default)* | **K=4** (2 Explicit + 2 Blind) → Red-Team Selector | Standard fast dogfooding & serious brainstorming |
 | `deep` | **1 Direct Anchor + K=6** (3 Explicit + 3 Blind) → Red-Team Selector | High-stakes breakthroughs — guarantees `max(Direct, Explicit, Blind) ≥ Direct` floor while raising the ceiling |
 | `fast` | **K=3** (3 Explicit) → Red-Team Selector | Quick practical ideation when time/tokens are tight |
+| `sweep` *(opt-in only)* | **1 Direct Anchor + K=11** (1 per macro-cluster, alternating Explicit/Blind) → Red-Team Selector | Full 11-cluster coverage in one wave without selector overload |
+| `max` (`/sfm-max`, *opt-in only*) | **All 66 (Claude) / 74 domains** → **2-Round Tournament** (11 Cluster Playoffs → 12-finalist Grand Final + Stage 2b Hardening) | Exhaustive high-budget brainstorming ("Company-Card Mode") for major strategy, product moats, or core mechanics |
 
-> **Why `Direct Anchor` in `deep` mode?** On engineering-native problems where a direct domain solution is already near-optimal, including 1 isolated `Direct Baseline` candidate in the unlabeled selector pool prevents regressions below baseline while letting Track A/B win whenever a cross-domain breakthrough genuinely dominates.
+> **Why `Direct Anchor` in `deep` / `sweep` / `max`?** On engineering-native problems where a direct domain solution is already near-optimal, including 1 isolated `Direct Baseline` candidate in the unlabeled selector pool prevents regressions below baseline while letting Track A/B win whenever a cross-domain breakthrough genuinely dominates.
+
+### Opt-In `max` (`/sfm-max`) Tournament Protocol & Guardrails
+- **NEVER auto-trigger `max` or `sweep`.** Run ONLY when the user explicitly asks for `sweep`, `max`, or `/sfm-max`.
+- **Mandatory Pre-Flight Confirmation (`max`):** Before spawning any subagents in `max` mode, display the exact session count (~78 sessions on `--safe-profile claude` / ~86 on `full`) and ask the user to confirm.
+- **Why 2-Round Tournament (Never Dump 148 Ideas into 1 Selector):** Dumping 130+ raw ideas into one Stage 2 evaluator degrades judgment (*Lost-in-the-Middle*). Instead:
+  1. **Round 1 — Cluster Playoffs (11 waves):** Run `sample_domains.py --all` (with `--safe-profile claude` on Claude). Execute in cluster waves (6–8 concurrent subagents per wave to respect API rate limits). After each cluster finishes, 1 fresh Cluster Red-Team Judge picks that cluster's **Top-1 Champion** (optionally 1 Wildcard).
+  2. **Round 2 — Grand Final:** Pass the **11 unlabeled Cluster Champions + 1 Direct Anchor (12 finalists)** into 1 fresh Clean-Context Grand Final Red-Team Selector + Stage 2b Hardening Pass.
 
 ## Validation Checklist
 - [ ] Domains were sampled via `scripts/sample_domains.py` in a single call (default `--k 4`).

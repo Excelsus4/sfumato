@@ -180,9 +180,9 @@ Sfumato 본체는 [`skill/sfumato/`](./skill/sfumato/) 안의 **직접 열어볼
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
 
-# Claude Code (+ --safe-profile claude가 적용된 /sfm 단축 커맨드)
+# Claude Code (+ --safe-profile claude가 적용된 /sfm · /sfm-max 단축 커맨드)
 cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+cp commands/*.md ~/.claude/commands/
 
 # Antigravity (agy)
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
@@ -213,7 +213,16 @@ bash tools/install.sh --target claude   # 또는 agy | codex | all | auto
 ```text
 /sfm 비대칭 3진영 RTS에서 스노우볼링과 억지 고무줄을 동시에 해결할 새 메카닉 뽑아줘
 /sfumato deep 모드로 오픈소스 AI 슬롭 PR 홍수 방어법 브레인스토밍해줘
+/sfm-max 우리 제품의 3년 해자를 만들 비선형 리텐션 구조 전수 탐색해줘
 ```
+
+| 모드 | 파이프라인 | 추천 용도 |
+|---|---|---|
+| `dual-track` *(기본)* | `2 Explicit + 2 Blind` → 레드팀 셀렉터 | 일상적인 고천장 브레인스토밍 |
+| `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` → 레드팀 셀렉터 | 막힌 전략·설계 난제 (`≥ Direct` 하방 보장) |
+| `fast` | `3 Explicit` → 레드팀 셀렉터 | 토큰·시간이 빠듯할 때의 빠른 실용 탐색 |
+| `sweep` *(선택 전용)* | `1 Direct Anchor + 11개 도메인` (전 클러스터 각 1개) → 레드팀 | 11개 지식 축 전체 1회전 커버 |
+| `max` (`/sfm-max`, *선택 전용*) | **가용 전수 66(Claude) / 74개** → 2라운드 토너먼트 *(11클러스터 예선 → 12강 결선)* | 토큰을 아끼지 않는 핵심 전략·메카닉 전수 탐색 *(실행 전 호출 수 필수 확인)* |
 
 ---
 

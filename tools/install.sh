@@ -6,7 +6,7 @@
 #                   curl -fsSL .../install.sh | bash -s -- --target all
 #
 # Targets:
-#   claude -> ~/.claude/skills/sfumato  (+ ~/.claude/commands/sfm.md)
+#   claude -> ~/.claude/skills/sfumato  (+ ~/.claude/commands/*.md)
 #   agy    -> ~/.gemini/config/skills/sfumato
 #   codex  -> ~/.codex/skills/sfumato
 #   all    -> all of the above
@@ -119,14 +119,23 @@ for t in $TARGETS; do
   run mkdir -p "$dest"
   run cp -R "$SOURCE/skill/sfumato/." "$dest/"
   if [ "$t" = "claude" ]; then
-    cmd_src="$SOURCE/commands/sfm.md"
-    cmd_dest="$HOME_DIR/.claude/commands/sfm.md"
-    if [ -f "$cmd_src" ] || [ "$SOURCE" = "<downloaded-archive>" ]; then
-      log "[claude] command -> $cmd_dest"
-      run mkdir -p "$HOME_DIR/.claude/commands"
-      run cp "$cmd_src" "$cmd_dest"
+    cmd_dir="$HOME_DIR/.claude/commands"
+    if [ "$SOURCE" = "<downloaded-archive>" ]; then
+      log "[claude] commands -> $cmd_dir"
+      run mkdir -p "$cmd_dir"
+      run cp "$SOURCE/commands/*.md" "$cmd_dir/"
     else
-      log "[claude] warning: $cmd_src not found; skipping /sfm command"
+      found_cmd=0
+      for cmd_src in "$SOURCE"/commands/*.md; do
+        [ -f "$cmd_src" ] || continue
+        if [ "$found_cmd" -eq 0 ]; then run mkdir -p "$cmd_dir"; found_cmd=1; fi
+        cmd_dest="$cmd_dir/$(basename "$cmd_src")"
+        log "[claude] command -> $cmd_dest"
+        run cp "$cmd_src" "$cmd_dest"
+      done
+      if [ "$found_cmd" -eq 0 ]; then
+        log "[claude] warning: no $SOURCE/commands/*.md found; skipping slash commands"
+      fi
     fi
   fi
 done

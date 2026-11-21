@@ -4,7 +4,7 @@
 
 .DESCRIPTION
   Installs skill/sfumato into the skill directories of supported agents:
-    claude -> ~\.claude\skills\sfumato  (+ ~\.claude\commands\sfm.md)
+    claude -> ~\.claude\skills\sfumato  (+ ~\.claude\commands\*.md)
     agy    -> ~\.gemini\config\skills\sfumato
     codex  -> ~\.codex\skills\sfumato
   -Target auto (default) installs for every agent whose config dir exists,
@@ -131,19 +131,29 @@ try {
         }
 
         if ($t -eq 'claude') {
-            $cmdSrc = Join-Path $Source 'commands\sfm.md'
             $cmdDir = Join-Path $HomeDir '.claude\commands'
-            $cmdDest = Join-Path $cmdDir 'sfm.md'
-            if ($downloaded -or (Test-Path -LiteralPath $cmdSrc -PathType Leaf)) {
-                Write-Step "[claude] command -> $cmdDest"
-                if ($DryRun) { Write-Step "[dry-run] would copy $cmdSrc -> $cmdDest" }
-                else {
-                    New-Item -ItemType Directory -Path $cmdDir -Force | Out-Null
-                    Copy-Item -LiteralPath $cmdSrc -Destination $cmdDest -Force
-                }
+            if ($DryRun -and $Source -eq '<downloaded-archive>') {
+                Write-Step "[claude] commands -> $cmdDir"
+                Write-Step "[dry-run] would copy $Source\commands\*.md -> $cmdDir"
             }
             else {
-                Write-Step "[claude] warning: $cmdSrc not found; skipping /sfm command"
+                $cmdSrcDir = Join-Path $Source 'commands'
+                $cmdFiles = @()
+                if (Test-Path -LiteralPath $cmdSrcDir -PathType Container) {
+                    $cmdFiles = @(Get-ChildItem -LiteralPath $cmdSrcDir -Filter '*.md' -File | Sort-Object Name)
+                }
+                if ($cmdFiles.Count -eq 0) {
+                    Write-Step "[claude] warning: no $cmdSrcDir\*.md found; skipping slash commands"
+                }
+                else {
+                    if (-not $DryRun) { New-Item -ItemType Directory -Path $cmdDir -Force | Out-Null }
+                    foreach ($f in $cmdFiles) {
+                        $cmdDest = Join-Path $cmdDir $f.Name
+                        Write-Step "[claude] command -> $cmdDest"
+                        if ($DryRun) { Write-Step "[dry-run] would copy $($f.FullName) -> $cmdDest" }
+                        else { Copy-Item -LiteralPath $f.FullName -Destination $cmdDest -Force }
+                    }
+                }
             }
         }
     }

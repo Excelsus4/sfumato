@@ -180,9 +180,9 @@ Sfumato 运行所需的全部内容都在 [`skill/sfumato/`](./skill/sfumato/) �
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
 
-# Claude Code（含自动启用 --safe-profile claude 的 /sfm 快捷指令）
+# Claude Code（含自动启用 --safe-profile claude 的 /sfm 与 /sfm-max 快捷指令）
 cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+cp commands/*.md ~/.claude/commands/
 
 # Antigravity (agy)
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
@@ -220,6 +220,8 @@ bash tools/install.sh --target claude   # 或 agy | codex | all | auto
 | `dual-track` *（默认）* | `2 Explicit + 2 Blind` → Red-Team 筛选器 | 日常高上限创意发散 |
 | `deep` | `1 Direct Anchor + 3 Explicit + 3 Blind` → Red-Team 筛选器 | 卡壳的战略/架构难题（锁定 `≥ Direct` 下限） |
 | `fast` | `3 Explicit` → Red-Team 筛选器 | Token 预算紧凑时的快速实用方案 |
+| `sweep` *（仅手动启用）* | `1 Direct Anchor + 11 个领域`（每大类各 1 个）→ Red-Team | 一轮扫遍全部 11 个知识大类 |
+| `max`（`/sfm-max`，*仅手动启用*） | **全部 66（Claude）/ 74 个领域** → 两轮锦标赛 *（11 大类预选 → 12 强总决赛）* | 不惜 Token 的核心战略/机制穷举探索 *（运行前强制确认会话数）* |
 
 ---
 
