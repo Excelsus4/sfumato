@@ -1,0 +1,74 @@
+{
+  "experiment_id": "v2_ablation_doc_rot",
+  "problem_id": "DOC-ROT",
+  "title": "Self-Healing Documentation Rot in Fast-Moving Engineering Orgs",
+  "hypothesis": "DOC-ROT v1.2 lost 0-2 (43 vs 48) because Stage 2 binary-rejected cross-domain gems without repair/hardening and retreated to a narrow 1-shot direct_anchor (Runbook-as-Capability, missing non-executable docs). Under Equal Hardening (1-pass Stage 2b Clean-Context Hardening & Grafting on both sides), hardening a top cross-domain gem (thermodynamics_cryogenics) with Direct Anchor's non-executable coverage and low maintenance should close or flip the gap.",
+  "protocol": "equal_hardening_1pass_clean_context_2x_order_crossed_blind_judge",
+  "model": "antigravity-inherit",
+  "baseline_v1_2": {
+    "direct_champion": "증인 바인딩 세포자살 + 마찰 역전 라우팅 (Witness-Bound Doc Apoptosis & Friction-Reversal Routing)",
+    "sfumato_v1_2_champion": "권한 임대형 실행 문서 / JIT 실행 게이트 (Runbook-as-Capability / JIT Execution Gate)",
+    "sfumato_v1_2_source": "direct_anchor",
+    "scores": {
+      "ab": { "direct": 24, "sfumato": 22, "winner": "direct" },
+      "ba": { "direct": 24, "sfumato": 21, "winner": "direct" }
+    },
+    "total_direct": 48,
+    "total_sfumato": 43,
+    "outcome": "direct_win_2_0"
+  },
+  "candidates": {
+    "direct_hardened": {
+      "subagent_id": "97ce8cec-a5a2-49c8-93c6-2c732451c7f2",
+      "champion_name": "행동 증인 세포자살 + 독자 반증 마찰 역전 라우팅 (Behavioral-Witness Doc Apoptosis & Falsification Routing)",
+      "patched_weakness": "구문 앵커(심볼·라우트·환경변수)는 유지된 채 내부 로직·기본값·장애 절차만 바뀌어 검증 배지가 거짓 초록불로 남는 '침묵하는 의미적 부패(Silent Semantic Drift)'를 진단했다. 계약·실행 기반 행동 증인(계약 테스트·비동기 드라이런·스모크 프로브), 바인딩 코드 변경 누적 감쇠, 독자 원클릭 반증·실행 실패 텔레메트리 즉시 격리로 거짓 초록불을 구조적으로 봉쇄했다.",
+      "word_count": 170,
+      "char_count": 736,
+      "summary": "① 핵심 원리: 현행 문서를 계약·실행 기반 행동 증인에 바인딩해 이탈 시 PR 차단 없이 즉시 격리한다. 독자 반증과 변경 누적 감쇠로 거짓 초록불을 차단하고, 열람 수요 발생 시에만 작성자에게 질의를 직통 라우팅해 외부효과를 내부화하며, 과거 ADR은 불변 이력으로 분리한다. ② 작동 단계: 설계 문서에는 AST·계약 테스트·설정값 어서션을, 런북·온보딩 가이드에는 병합 후 비동기 드라이런·스모크 프로브를 연결한다. 증인 파손이나 내부 변경 누적 시 머지 차단 없이 취소선 격리·미검증 강등 및 검색·RAG 제외를 적용하고 원인 diff를 인라인 첨부한다. 미열람 문서는 자동 아카이브되며, 확인 요청·원클릭 반증·실행 실패 감지 시 즉시 격리 후 최근 변경 작성자(부재·퇴사·봇은 CODEOWNERS·스쿼드)에게 단일 중복제거 스레드로 라우팅된다. ③ 강점과 우회 방어: PR 체크리스트·문서 KPI·자동 덮어쓰기 없이 유지비를 읽히는 문서에만 집중해 개발 속도를 지키고, 심볼은 그대로인데 동작만 바뀐 의미적 부패까지 포착해 검색·RAG 오염을 차단한다. 증인 삭제·형식적 치환 커밋에도 동일한 격리와 작성자 귀속을 적용해 책임 회피를 봉쇄한다. ④ 트레이드오프와 완화책: 행동·실행 증인은 리팩토링·환경 오류 오탐이나 반증 남용·질의 집중을 부를 수 있다. 이는 정규화 AST 필터·프로브 재시도, 반증 시 실패 근거 첨부, 인라인 diff 자가 확인, 증인 감사, 미연결 문서 만료 정책으로 완화한다."
+    },
+    "sfumato_v2_hardened": {
+      "subagent_id": "5c1b412d-d7da-4d63-84e6-d96033d68929",
+      "source_gem": "explicit:thermodynamics_cryogenics",
+      "source_gem_mechanism": "Cryogenic 3-Stage Volatility Stratification (4K/50K/300K) + Thermal Bridge Linter & Deterministic AST Transclusion Quench-Break",
+      "champion_name": "변동성 3계층 격리·실시간 트랜스클루전 기반 수요 치유 문서 시스템 (Volatility-Stratified Transclusion & Demand-Healed Docs)",
+      "repaired_flaw": "심볼·설정 참조는 유효한데 설계·온보딩·운영 산문의 행위와 절차만 조용히 낡는 의미적 드리프트(Semantic Drift) 결함을 진단했다. 중위 산문 블록을 계약 테스트·모듈 경계·실행 체크포인트 등 행위 앵커에 바인딩해 변경 시 비차단 재검증 표기를 걸고, 실제 독자 열람·실행 실패 시에만 최근 변경자에게 지연 수리를 트리거하도록 수리했다.",
+      "grafted_anchor_traits": "실행형 런북뿐 아니라 비실행 설계 문서·온보딩 가이드까지 3대 영역 전체를 동일 계층·앵커 체계로 포괄하고, PR 머지를 차단하지 않은 채 독자 수요가 발생한 문서만 선별 치유하며 미열람 문서는 유지비 0으로 자동 아카이브(자연 도태)되게 접목했다.",
+      "word_count": 170,
+      "char_count": 736,
+      "summary": "① 핵심 원리: 변동성이 다른 정보를 한 문서에 섞지 않도록 불변 의사결정(ADR), 중위 서사(설계·온보딩·런북), 변동 사실(플래그·포트·환경변수·스키마·CLI)의 3계층으로 물리 분리한다. 산문 내 변동 리터럴 하드코딩을 린터로 차단하고 코드·IaC·스키마 단일 원천에서 결정론적 참조 토큰으로 실시간 트랜스클루전해 부패를 원천 예방한다. ② 작동 단계: 작성 시 IDE와 린터가 리터럴을 참조 토큰으로 자동 치환하고, 설계·온보딩·런북의 중위 블록은 계약 테스트·모듈 경계·실행 체크포인트 행위 앵커에 바인딩된다. 코드 변경 시 PR 머지는 비차단하되, 심볼·계약이 파손된 슬롯만 즉시 국소 단선 격리해 검색·RAG 노출을 막고, 행위 앵커만 바뀐 블록은 재검증 필요로 표기한다. 실제 독자가 격리·미검증 블록을 열람하거나 실행 실패를 보고할 때만 직전 변경자에게 diff 기반 지연 수리를 요청하며, 장기 미열람 문서는 유지비 0으로 자동 아카이브된다. ③ 강점과 우회 방어: 사실 부패를 사전 제거하고 의미 드리프트는 독자 수요로 선별 치유하며 조직 유지비를 극소화한다. 린터 우회 하드코딩은 심볼·패턴 감지로 차단하고, 형식적 확인 클릭은 후속 실패 신호 시 즉시 재격리해 거짓 확산을 막는다. ④ 트레이드오프와 완화책: 토큰 전환 마찰과 앵커 오탐 격리가 부담이다. 고조회·신규 문서부터 점진 도입하고 IDE 원클릭 치환, 공개 경계 한정 앵커, 격리 시 원본 코드 링크 병기로 마찰과 공백을 줄인다."
+    }
+  },
+  "blind_judges": {
+    "ab": {
+      "subagent_id": "9d312fd3-421b-4c06-8cf3-9ad51ee5272d",
+      "a_is": "direct_hardened",
+      "b_is": "sfumato_v2_hardened",
+      "direct_breakdown": { "novelty": 8, "effectiveness": 8, "feasibility": 6, "total": 22 },
+      "sfumato_breakdown": { "novelty": 7, "effectiveness": 9, "feasibility": 7, "total": 23 },
+      "direct_score": 22,
+      "sfumato_score": 23,
+      "winner": "sfumato_v2_hardened",
+      "reason": "두 안 모두 금지 클리셰를 피하며 PR 비차단·RAG 격리·수요 기반 치유·미열람 아카이브를 잘 결합했으나, 참신성에서는 행동 증인 세포자살·변경 누적 감쇠·독자 반증 마찰 역전 라우팅으로 공공재 외부효과와 의미적 부패를 정교하게 푼 A(8점)가 SSOT·트랜스클루전 계보를 확장한 B(7점)보다 근소하게 앞섭니다. 반면 실효성에서는 변동성 3계층 분리와 실시간 트랜스클루전으로 고빈도 사실 부패를 사후 격리가 아닌 원천 자가 치유로 제거하고 슬롯 단위 국소 격리로 문서 손실을 줄인 B(9점)가, 모든 변경을 증인 파손과 사후 격리·수리로 다루는 A(8점)보다 구조적 완결성이 높습니다. 현실성에서도 고조회·신규 문서 중심 점진 도입과 공개 경계 한정 앵커를 설계한 B(7점, 산문 린터 마찰 감안)가, 설계 AST 어서션과 런북·온보딩 비동기 드라이런 프로브의 구축·환경 오탐 비용이 큰 A(6점)보다 실무 안착 가능성이 높습니다. 결정적으로 A는 조직 라우팅 예외 처리(퇴사·봇 폴백, 증인 삭제 방어)가 우수하지만, B가 사실 부패의 구조적 자가 치유와 낮은 도입 마찰에서 우위를 보여 최종 승자로 판정합니다."
+    },
+    "ba": {
+      "subagent_id": "c4b9418b-2fd9-4173-ae3d-7a6c74b73fc3",
+      "a_is": "sfumato_v2_hardened",
+      "b_is": "direct_hardened",
+      "sfumato_breakdown": { "novelty": 8, "effectiveness": 8, "feasibility": 7, "total": 23 },
+      "direct_breakdown": { "novelty": 9, "effectiveness": 9, "feasibility": 8, "total": 26 },
+      "direct_score": 26,
+      "sfumato_score": 23,
+      "winner": "direct_hardened",
+      "reason": "두 후보 모두 금지 클리셰를 피하면서 비차단 격리와 독자 수요 기반 유지보수를 결합한 수준 높은 구조적 해법이지만, B가 공공재 딜레마 해소와 의미적 부패 대응, 도입 현실성에서 고르게 앞선다. 참신성과 실효성 측면에서 A는 3계층 변동성 분리와 실시간 트랜스클루전으로 사실 부패를 원천 예방하는 강점이 뚜렷하나, B는 행동 증인 세포자살·변경 누적 감쇠·원클릭 반증으로 '거짓 초록불'을 차단하고 독자 질의를 원인 작성자(및 CODEOWNERS 폴백)에게 중복제거 직통 라우팅하는 마찰 역전 구조로 인센티브 문제와 증인 삭제 등 우회 경로까지 훨씬 촘촘히 봉쇄한다. 또한 B는 설계(AST·계약)와 런북·온보딩(비동기 드라이런·스모크 프로브)을 영역별로 분화하고 격리 시 원인 diff를 인라인 제공해 장애·온보딩 현장의 공백을 최소화한다. 현실성에서도 A는 자연어 산문 내 리터럴 하드코딩을 린터로 차단하고 토큰화하는 작성·툴링 마찰이 큰 반면, B는 기존 마크다운과 CI·스레드 인프라에 점진 부착할 수 있어 빠른 조직의 도입 장벽이 더 낮다."
+    }
+  },
+  "summary_metrics": {
+    "direct_hardened_total": 48,
+    "sfumato_v2_hardened_total": 46,
+    "score_delta_sfumato_minus_direct": -2,
+    "sfumato_gain_vs_v1_2": 3,
+    "outcome": "split_1_1",
+    "position_note": "Both judges selected position B (AB: B=Sfumato 23 vs A=Direct 22; BA: B=Direct 26 vs A=Sfumato 23), indicating tight parity with mild recency bias.",
+    "verdict": "Hypothesis partially confirmed: replacing Stage 2 binary rejection + direct_anchor retreat with 1-pass Clean-Context Hardening & Grafting on explicit:thermodynamics_cryogenics lifted Sfumato from 43 (0-2 loss) to 46 (1-1 split, consistent 23/23) even under strict Equal Hardening where Direct also received 1-pass hardening (170w/736c exact parity). Remaining gap in Judge BA was prose-linter friction and thinner org-routing fallback details (CODEOWNERS/witness-deletion audit) vs Direct Hardened."
+  }
+}

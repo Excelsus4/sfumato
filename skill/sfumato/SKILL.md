@@ -43,11 +43,15 @@ python "<skill_dir>/scripts/sample_domains.py" --k 4 --exclude-clusters <same_cl
 python "<skill_dir>/scripts/sample_domains.py" --k 4 --safe-profile claude --exclude-clusters <same_cluster_if_any>
 ```
 
-### 3. Prepare Track B Isomorphic Masks (Crucial!)
-Before spawning subagents, rewrite the problem brief for each Track B domain so that:
-1. **Zero original-domain vocabulary survives** (no app/SNS/game/marketing/code terms if those belong to the original domain).
-2. **All structural invariants survive** (topology, friction limits, failure modes, asymmetric costs).
-3. **Incentive polarity is strictly preserved:** Never mask an **adversarial / zero-sum** conflict into a cooperative or centrally-refereed system (e.g., do not map rival armies to firms sharing one cooperative clearinghouse unless a real shared referee exists). Mismatched polarity is the #1 cause of Track B translation loss.
+### 3. Prepare Track B Isomorphic Masks via a 3-Line Structural Skeleton (Crucial!)
+Before spawning Track B subagents, do **NOT** jump straight from the original problem to a remote-domain story (that leaks clichés or loses constraints). Use a 2-step masking pass:
+1. **Extract a 3-Line Domain-Neutral Structural Skeleton:**
+   - `Actors & Incentive Polarity:` (zero-sum/adversarial vs. cooperative vs. platform-refereed)
+   - `Core Asymmetry / Bottleneck:` (where effort, information, or friction is lopsided)
+   - `Why Static Controls Fail:` (exact failure mode of obvious fixes)
+2. **Map Skeleton → Target Domain + Zero-Leak Check:**
+   - Rewrite the skeleton using 100% native nouns of the target domain (**zero** leaked original-domain jargon).
+   - **Strict Polarity Preservation:** Never map zero-sum enemies onto a cooperative central authority (and vice versa) — mismatched polarity is the #1 cause of Track B translation loss.
 
 See [prompt_templates.md](./references/prompt_templates.md) for the exact templates and masking checklist.
 
@@ -62,16 +66,15 @@ For each Track B output:
 - Extract the **causal mechanism + trade-off** and translate it cleanly into the original problem's language.
 - **Be ruthless:** If a Track B idea only maps via a strained pun or relies on an impossible assumption (e.g., cooperative central ledger in an adversarial problem), discard it cleanly and log the reason. High ceiling requires tolerating discards.
 
-### 6. Clean-Context Red-Team Gate & Top-K Selection
-Normalize surviving Track A + translated Track B candidates into an identical, unlabeled format (`Candidate 1..N`) and run **1 fresh clean-context evaluator subagent** using the 3-step rubric in [prompt_templates.md](./references/prompt_templates.md):
+### 6. Clean-Context Red-Team Triage (Stage 2a) & Hardening Pass (Stage 2b)
+Normalize surviving Track A + translated Track B (+ Direct Anchor if used) candidates into an identical, unlabeled format (`Candidate 1..N`) and run **Stage 2a** (1 fresh clean-context evaluator subagent) using [prompt_templates.md](./references/prompt_templates.md):
 1. **Cut Surface Metaphors:** Reject any idea whose underlying causal mechanism is identical to a standard cliché with fancy domain jargon pasted on top.
-2. **Red-Team Killer-Flaw Gate (Mandatory before ranking):** Test every candidate for:
-   - **Adverse Selection:** Does it accidentally punish legitimate/casual users MORE than the adversary (e.g., 48h deadlines that 24/7 bots beat easier than humans)?
-   - **Exploit / Sybil / Wash-Trading:** Can two colluding fake accounts trivially break or farm it (e.g., negative-fee arbitrage, self-vouching)?
-   - **Constraint / Feasibility Violation:** Does it secretly rely on a banned mechanism (e.g., hidden AI judge) or impossible automation?
-   Any candidate failing this gate is **disqualified from Top-1** (note it briefly as a "Wildcard needing redesign" if its core spark is still inspiring).
-3. **Select for Peak Ceiling Among Survivors:** Pick **Top-1 (Champion)** + **2 Distinct Runners-Up** (maximizing structural diversity across picks), plus optional **1 Wildcard** if a Track B outlier sparked a sharp angle despite a fixable flaw.
-4. **Report Conclusion-First:** Lead with the Top-1~3 picks (each showing: Mechanism, Why It's Hard to Defeat/Copy, Concrete Trade-Off, and Source Track/Domain), plus a compact summary of Red-Team cuts and cross-domain convergences.
+2. **Red-Team Killer-Flaw Triage:** Classify every candidate's flaws into **Unfixable** (disqualify from Top-1: e.g., fundamental polarity mismatch, wash-trading/sybil break, banned AI judge) vs. **Fixable Edge-Case** (promotable to Stage 2b Hardening).
+3. **Select Top-1 Champion + 2 Distinct Runners-Up (+ Optional Wildcard).**
+4. **Stage 2b — Clean-Context Hardening & Grafting Pass *(optional in `fast`, default in `dual-track`/`deep`)*:**
+   - Take ONLY the winning Top-1 candidate (whether Cross-Domain or Direct Anchor — **never force-graft a polarity-mismatched cross-domain seed over a stronger Direct Anchor**) + its single biggest Red-Team edge-case critique (and optionally graft 1 practical primitive from a runner-up).
+   - Run 1 clean-context engineering pass to patch that exact edge case without diluting the core non-obvious mechanism.
+5. **Report Conclusion-First:** Lead with the hardened Top-1 Champion + 2 Runners-Up (+ Wildcard if any), each showing Mechanism, Why It's Hard to Defeat/Copy, Concrete Trade-Off, and Source Track/Domain, plus compact Red-Team notes.
 
 ---
 

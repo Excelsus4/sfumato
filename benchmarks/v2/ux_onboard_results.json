@@ -1,0 +1,124 @@
+{
+  "problem_id": "UX-ONBOARD",
+  "title": "Solving Blank Canvas Paralysis with 3-Minute Emotional Aha Moment & Zero Expert Friction",
+  "category": "emotional_ux_experience_design",
+  "incentive_polarity": "cooperative_no_adversary",
+  "model": "Antigravity (Model=inherit)",
+  "seed": 707,
+  "protocol": "sfumato_v2_0_structural_skeleton_plus_equal_stage2b_hardening_iso_compute_4x2",
+  "direct_score": 20.5,
+  "sfumato_score": 24.5,
+  "structural_skeleton": {
+    "actors_and_polarity": "적대자 없는 순수 협력적 창작 환경. 고자유도 매체에 처음 진입한 미숙련 참여자는 3분 내로 자기 손으로 유의미한 초기 산출물을 완성해 강한 주체적 성취감(효능감)을 얻어야 하며, 매체에 이미 능숙한 숙련 참여자는 반복 진입 시 단 1초의 절차적 방해도 받지 않아야 한다.",
+    "cognitive_emotional_bottleneck": "진입 시점의 무한한 선택지와 완전한 백지(무제약 공백)가 극심한 인지 마비와 자기불신('무엇부터 건드려야 할지 모름')을 유발해, 첫 의미 있는 행위 임계치를 넘기 전에 조기 이탈이 발생한다.",
+    "why_existing_guides_fail": "외부 지시자가 순차적 설명을 강제하거나(수동성·숙련자 방해), 거대한 기성품 목록을 던져 선택 피로를 전가하거나(탐색 마비), 대리자가 결과물을 일괄 대신 생성해 주면(주체성·성취감 박탈), 또는 외적 점수·보상이나 사전 분류 질의로 유도하면 미숙련자의 내적 효능감이 형성되지 못하고 숙련자의 흐름도 파괴된다.",
+    "zero_leakage_audit": "PASS (0 leaked UX/app/tool/tutorial/canvas/template/AI/gamification/onboarding terms in skeleton and Track B masked prompt)"
+  },
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 4,
+    "unique_list": [
+      "[D1-1, D2-1 중복 패밀리] 가로채기 가능한 유령 궤적 (Mid-Stream Hijackable Kinetic Ghost): 임시 Layer 0의 3~5수 네이티브 생성 루프를 중간 가로채기해 실체화·분기",
+      "[D1-2, D2-2, D3-2 3중 중복 패밀리] 결정론적 조화 물리장 캔버스 (Harmonic Scale-Lock / Potter's Wheel & Kinematic Unclamping): 부드러운 비례·대칭·공간 중력 자기장으로 실패 바닥 상승 + 돌파 드래그 0ms 해제",
+      "[D3-1, D4-2 중복 패밀리] 망설임 감응 삐뚤어진 결함 유령 시드 & 구제 루프 (Tilted/Micro-Flaw Ghost Seed & Rescue Loop): 유휴 시 1~3요소 불균형 시드 부상 → 본능적 1회 교정으로 실체화 및 확장",
+      "[D4-1 단독] 무문법 원석과 60fps 물리 결정화 다이얼 (Ambiguous Raw-Input & Crystallization Dial): 도구 선택 전 날것 입력 포착 → 1.2초 정지 시 원형 다이얼로 3~4개 네이티브 구조 60fps 변환 후 고체화"
+    ],
+    "red_team_cuts": [
+      "Candidate 1 (가로채기 가능한 유령 궤적): 2.5초 사색 유휴만으로도 움직이는 시각 잡음을 띄워 숙련자를 방해하고, 후반 탈취 시 변장한 애니메이션 튜토리얼·미니 템플릿 퇴행 및 임시→네이티브 트랜잭션 구현 복잡도 과다로 탈락.",
+      "Candidate 2 (결정론적 조화 물리장 캔버스): 첫 입력 자체를 못 여는 도구·문법 개시 마비 해결력이 약하고, 의도적 비대칭 작업 시 자동 서식류 간섭·자석 해제 역체감 절벽(Harmonic Cliff) 및 Notion 범용성 한계로 탈락.",
+      "Candidate 3 (망설임 감응 삐뚤어진 결함 유령 시드): 1.2~5초 유휴 시 어긋난 요소 부상으로 렌더링 버그 오해 및 숙련자 시각 간섭 초래, 단일 정답 교정 미니 퍼즐 성격으로 유저 본래 창작 목적과 단절되어 탈락."
+    ],
+    "champion_name": "무문법 원석과 60fps 물리 결정화 다이얼",
+    "champion_source": "Direct Run 4 Idea 1 (Stage 2b 1-Pass Hardened, 175 words)",
+    "champion_summary": "[메커니즘 명칭] 무문법 원석과 60fps 물리 결정화 다이얼\n\n[핵심 구조 및 첫 3분 작동 흐름] '도구·문법 선택→입력' 순서를 '원시 입력→사후 결정화'로 역전한다. 초보자가 툴바 없이 빈 화면에 메모 몇 줄을 치거나 거친 도형·선·구역을 그리면 임시 원석으로 포착된다. 1.2초 정지 시 외곽에 텍스트 없는 원형 다이얼이 뜨고, 손으로 돌리면 원본 내용·비율을 100% 보존한 채 결정론적 위상 규칙으로 3~4개 네이티브 구조(칸반↔타임라인↔표, 히어로↔카드그리드, 돌출↔회전체↔서브디비전, 요새↔항구↔자원지구)를 60fps 변환한다. 손을 떼면 단일 Undo 네이티브 오브젝트로 고체화된다.\n\n[감성적 효능감(Aha Moment) 및 숙련자 0초 무간섭 원리] AI 생성이나 템플릿 없이 자신의 서툰 입력이 손끝 조작만으로 프로급 구조로 결정화되어 3분 안에 강한 주체성을 체감한다. 회전 중 인스펙터에 네이티브 속성이 실시간 동기화되어 튜토리얼 없이 원리를 익힌다. 숙련자의 단축키·툴바·붙여넣기 및 기존 객체 드래그 시에는 영구 침묵하며 0ms 표준 툴로 작동한다.\n\n[핵심 트레이드오프 및 실전 경화 완화책] 빈 화면 드래그 선택 충돌, 첫 입력 망설임, 난해한 입력의 파싱 실패가 핵심 리스크다. 객체 0개·도구 미선택의 무효 빈 드래그에서만 40px 임계 후 원석 스케치로 폴백(Esc 0ms 폐기)하고, 최초 프로필에만 비침습 커서 큐를 띄운다. 또한 입력을 저차원 위상 프리미티브로 정규화해 항상 유효한 기본 컨테이너로 폴백함으로써 파싱 오작동을 원천 차단한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1 Direct Anchor + 2 Track A Explicit (index 0, 1) + 1 Track B Blind (index 2)",
+    "sampled_domains": [
+      {
+        "index": 0,
+        "assigned_track": "explicit",
+        "cluster": "physics_engineering",
+        "id": "thermodynamics_cryogenics",
+        "name": "열역학·극저온 단열 설계 (Thermodynamics & Thermal Management)"
+      },
+      {
+        "index": 1,
+        "assigned_track": "explicit",
+        "cluster": "social_anthropology",
+        "id": "apprentice_guild_exams",
+        "name": "도제 길드 걸작(Masterpiece) 심사제 (Guild Apprenticeship & Proof-of-Craft)"
+      },
+      {
+        "index": 2,
+        "assigned_track": "blind",
+        "cluster": "art_performance",
+        "id": "film_editing_kuleshov",
+        "name": "영화 편집·쿨레쇼프 맥락 프레임 (Film Editing & Narrative Compression)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 7,
+    "unique_list": [
+      "[S-Anchor-1, S-Exp1-1 중복 통합 패밀리] 첫 시드 직교 유령 반향 & 끌어당겨 결정화 (Sympathetic Ghost-Echo + Supercooled Heterogeneous Nucleation: 단 1개 날것 시드 → 직교 기하·위상 결정면 국소 투영 → 직접 끈 거리만큼 응고 → 응고 잠열 자동 소멸 + 고속 입력 0ms 억제)",
+      "[S-Anchor-2] 무형식 시드와 2축 촉각 변이 프리즘 (Zero-Schema Seed & 2D Tactile Morph-Prism)",
+      "[S-Exp1-2 (thermodynamics_cryogenics)] 차등 공차 수축 유연 작업대 (Cryo-Contraction Self-Aligning Flexure Workspace: 300K 느슨한 조립 → 연속 가역 40K 3단계 수축 + 마찰열 국소 재가열 + Invar 앵커)",
+      "[S-Exp2-1 (apprentice_guild_exams)] 라이브 장력 반제품 작업대 (The Unfinished Keystone Bench: 단일 핵심 이음매 결함 복원으로 실시간 물리 작동 증명)",
+      "[S-Exp2-2 (apprentice_guild_exams)] 백지 규격 형틀 작업대와 실물 내하중 검수 (The Tolerance Jig & Live Proof-Stamp: 100% 백지 형틀 + 전경 기초 수공구 3종 + 3 불변량 센서 + 실물 부하 검증 레버)",
+      "[S-Blind-1 (film_editing_kuleshov 역번역)] 열린 스플라이스 의미 충돌 포켓 & 캔버스 승격 (Open-Splice Kuleshov Collision Pocket & Lift-to-Canvas: 100% 백지 메인 캔버스 + 주변부 의미-0 중립 그릇·단일 열린 슬롯 + 4~5 대비 조각 충돌 → 크기 상한 도달 시 메인 캔버스 이식)",
+      "[S-Blind-2 (film_editing_kuleshov 역번역)] 직교 리듬 스파인(2-변곡점 구조 뼈대) & 교차-위상 중첩 레버 (Orthogonal Cadence Spine & J/L-Cut Cross-Phase Overlap Lever)"
+    ],
+    "red_team_cuts": [
+      "Candidate 2 (S-Anchor-2, 무형식 시드 2축 변이 프리즘): 0→1 개시 단계 미해결·8px 핸들 발견성 부족·임의 3개 입력의 4대 툴 60fps 변환 취약성으로 탈락.",
+      "Candidate 3 (S-Exp1-2, 차등 공차 수축 유연 작업대): 공간 수축 모델의 Notion 텍스트·전략 게임 거시 규칙 억지 매핑 및 1→N 사후 정렬 편중으로 탈락.",
+      "Candidate 4 (S-Exp2-1, 라이브 장력 반제품 작업대): 변장한 샘플 수리 퍼즐 퇴행·무에서의 창조 주체성 훼손·새 문서 중앙 선배치의 숙련자 백지 침해로 탈락.",
+      "Candidate 5 (S-Exp2-2, 백지 규격 형틀 작업대 & 실물 검수): 지정 1줄 과제와 3 불변량 센서의 변장 체크리스트화 위험·진입 목적 충돌·동적 전략 게임 부자연스러움으로 탈락.",
+      "Candidate 6 (S-Blind-1, 열린 스플라이스 의미 충돌 포켓): 중립 그릇+4~5 대비 조각 선택의 소형 스타일 프리셋 경계 모호성 및 포켓→메인 캔버스 전환 단절 잔존으로 탈락.",
+      "Candidate 7 (S-Blind-2, 직교 리듬 스파인 & 교차-위상 중첩 레버): 시간·전환 축 종속으로 정적 문서(Notion)·단면 그래픽(Figma)·정적 3D 모델링(Blender) 적용 불가(4대 툴 범용성 게이트 치명 탈락)."
+    ],
+    "champion_name": "첫 시드 직교 유령 반향 & 끌어당겨 결정화 (Orthogonal Seed Facets & Pull-to-Crystallize)",
+    "champion_source": "Direct Anchor (Idea 1) + Track A Explicit 1 (thermodynamics_cryogenics: Supercooled Heterogeneous Nucleation) convergence (Stage 2b 1-Pass Hardened, 172 words)",
+    "champion_summary": "[메커니즘 명칭] 첫 시드 직교 유령 반향 & 끌어당겨 결정화 (Orthogonal Seed Facets & Pull-to-Crystallize)\n\n[핵심 구조 및 첫 3분 작동 흐름] 빈 캔버스에 초보자가 날것 시드 1개(단어·박스·기본면·첫 거점)를 놓으면, AI 생성 없이 기하·위상 규칙만으로 주변 2~3개 직교 방향(병렬·계층·방사)에 저채도 유령 결정면이 국소 투영된다. 원하는 방향을 직접 끈 물리적 거리만큼만 네이티브 구조(Auto-Layout·다단·Mirror·보급망)로 응고되고 나머지는 즉시 소멸한다. 응고 직후 0.7초간 네이티브 기능 발자국을 비춰 선성취·후명명을 유도하며, 3~4회 누적 시 보조장이 자동 소멸한다.\n\n[감성적 효능감(Aha Moment) 및 숙련자 0초 무간섭 원리] 자기 시드에서 직접 당긴 거리만큼 정교한 구조가 응고되므로, 학습·템플릿 없이 \"내 손으로 시스템을 세웠다\"는 강한 주체적 효능감을 3분 내에 체감한다. 숙련자가 새 문서에서 단축키·붙여넣기·고속 입력을 시작하면 0ms로 완전 억제되며, 비차단 투과 레이어라 클릭·선택을 일절 가로채지 않는다.\n\n[핵심 트레이드오프 및 실전 경화 완화책] 첫 입력조차 멈칫하는 0초 개시 마비, 숙련자 저속 사색 시 깜빡임·드래그 충돌, 직교 그리드 편향이 약점이다. 경화책으로 ① 무입력 3.5초 정지 시에만 커서 옆에 초미세 '단일 시드 맥박'을 띄워 첫 입력을 유도하고(단축키 0ms 억제), ② 400ms 정착 지연·16px 데드존 외곽 접점·숙련 계정 기본 비활성(Alt+드래그 전환)과 임계각 자유 축 해제로 오탐·충돌·편향을 차단한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": 20,
+      "sfumato_score": 25,
+      "direct_breakdown": {
+        "novelty": 8,
+        "effectiveness": 7,
+        "realism": 5
+      },
+      "sfumato_breakdown": {
+        "novelty": 8,
+        "effectiveness": 9,
+        "realism": 8
+      },
+      "winner": "sfumato",
+      "reason": "Direct(A)는 무문법 원석→60fps 물리 결정화 다이얼 발상이 감각적이나, 날짜·속성 없는 메모의 타임라인·칸반 변환이나 지형 제약·히어로 섹션 결정론적 파싱이 4대 툴 전반에서 현실성 균열(5점)을 보이고, 복수 입력 선요구·1.2초 정지 오탐(Notion 평문 사색)·자동 졸업 부재가 약점이다. Sfumato(B)는 최소 시드 1개+3.5초 맥박으로 개시 마비를 가장 낮게 돌파하며 직교 축(병렬·계층·방사)의 물리적 응고가 4대 툴 모두에 1:1 매핑되고, 0.7초 선성취·후명명 발자국·3~4회 누적 자동 소멸·숙련 계정 기본 비활성(Alt+드래그)·16px 데드존 경화로 감성적 효능감(9점)과 구현 현실성(8점)에서 명확히 앞섰다."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": 21,
+      "sfumato_score": 24,
+      "direct_breakdown": {
+        "novelty": 9,
+        "effectiveness": 7,
+        "realism": 5
+      },
+      "sfumato_breakdown": {
+        "novelty": 8,
+        "effectiveness": 8,
+        "realism": 8
+      },
+      "winner": "sfumato",
+      "reason": "Direct(B)는 도구 선택 순서를 역전한 60fps 다이얼 패러다임 참신성(9점)이 돋보이나, AI 없이 거친 메모·낙서를 타임라인·칸반·히어로·항구로 100% 보존 변환하는 것은 속성·지형·모호성 제약과 충돌해 단조로운 컨테이너 폴백 위험이 크고(현실성 5점), 1.2초 정지 텍스트 없는 다이얼은 초보자 의미 은닉과 Notion 숙련자 평문 사색 침범을 낳는다. Sfumato(A)는 취약한 의도 파싱 없이 시드 1개의 직교 기하·위상 유령면을 직접 당긴 거리만큼 응고시켜 4대 툴 전반에 일관 구현되며(현실성 8점), 0.7초 발자국·3~4회 자동 소멸·16px 외곽 데드존·숙련 계정 기본 비활성으로 주체적 손맛과 0ms 무간섭의 균형을 지켜내 우세했다."
+    }
+  },
+  "outcome": "sfumato_win"
+}

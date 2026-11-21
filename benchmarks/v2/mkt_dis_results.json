@@ -1,0 +1,68 @@
+{
+  "problem_id": "MKT-DIS",
+  "title": "Preventing Two-Sided Marketplace Disintermediation",
+  "model": "gemini-4-neon-high",
+  "seed": 202,
+  "protocol": "iso_compute_4x2_direct_vs_2explicit_2blind_plus_12run_scaling",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 3,
+    "unique_list": [
+      "Transferable Client-Book & Succession Royalty",
+      "T+0 Reverse-Escrow / Maturity Transformation",
+      "Idle-Slot Backfill & Context-Synced Hot-Swap"
+    ],
+    "scaling_k12_cumulative": [2, 3, 3, 3, 3, 4, 4, 6, 6, 6, 6, 6],
+    "champion_name": "예치 슬롯 연동 가동률 유동화 풀 & 교차 신뢰 패스트트랙",
+    "champion_summary": "온플랫폼 예치 슬롯 비율에 비례해 취소 공실 자동 백필·승인형 긴급 대타를 제공하고, 수요자 거래 신뢰도를 타 카테고리 희소 전문가 VIP 우선 슬롯 접근권으로 환원."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "2_explicit + 2_blind",
+    "sampled_domains": [
+      {"track": "explicit", "id": "fluid_microfluidics", "name": "유체역학·미세유체 분류공학"},
+      {"track": "blind", "id": "maritime_trade_guilds", "name": "17~18세기 해상 무역 길드·해상법"},
+      {"track": "explicit", "id": "parasitology_coevolution", "name": "기생생물학·붉은 여왕 공진화"},
+      {"track": "blind", "id": "horology_escapement", "name": "기계식 시계 탈진기·정밀 공학"}
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 7,
+    "unique_list": [
+      "Venturi Negative-Fee Shift-Option Suction",
+      "Laminar Co-Flow Unbundling",
+      "Multilateral Giro Netting Ledger",
+      "Manifest Co-Loading & Third-Party Lien Shield",
+      "Chimeric Task Recombination (3rd-Party Cross-Audit Slot)",
+      "Reverse-Escrow Metabolic Decoupling",
+      "Differential Remontoir Income/Capacity Smoothing"
+    ],
+    "scaling_k12_cumulative": [2, 4, 6, 7, 8, 10, 11, 13, 14, 15, 16, 18],
+    "red_team_cuts": [
+      "Venturi Negative-Fee (90->93): wash-trading arbitrage exploit between colluding friends",
+      "Tourbillon Bridge: discarded at Track B back-translation (mechanical runout loss)"
+    ],
+    "champion_name": "키메라 교차 재조합 프로토콜 (Chimeric Task Recombination)",
+    "champion_source": "explicit:parasitology_coevolution",
+    "champion_summary": "반복 수수료(15~18%) 중 5~7%를 매 N회차 독립 제3자 전문가의 10~15% 교차 검증·감리 슬롯으로 환원. 1:1 직거래가 물리적으로 복제 불가해 담합 구간이 소멸하고, 직거래 제안 자체가 검증 회피(레몬 신호)로 역전됨."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": 21,
+      "sfumato_score": 24,
+      "winner": "sfumato",
+      "reason": "신뢰가 쌓일수록 직거래로 이탈하는 역설을 '제3자 검증 회피(레몬 신호)'로 뒤집었으며, 소수 비동기 검증 풀로 고단가·비슬롯 영역까지 즉시 작동."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": 20,
+      "sfumato_score": 23,
+      "winner": "sfumato",
+      "reason": "1:1 직거래가 물리적으로 복제 불가한 품질 보증을 거래 내부에 심어 담합 유인을 붕괴시키며, 대기 풀 밀도·체리피킹 취약성 없이 흑자 자생."
+    }
+  },
+  "outcome": "sfumato_win_2_0"
+}

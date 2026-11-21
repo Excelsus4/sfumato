@@ -1,0 +1,161 @@
+{
+  "model": "claude-opus-5-5",
+  "safe_profile": "claude",
+  "refusals": 0,
+  "refusal_detail": "0 refusals across 16 solver, 4 Red-Team gate and 4 blind judge subagent calls; 0 CLAUDE_SAFE_EXCLUDE_IDS domains sampled for either problem",
+  "execution_mode": "Claude Code Agent tool: every solver, Red-Team gate and blind judge ran as its own isolated subagent (fresh context, no tool calls, inherited claude-opus-5-5). The coordinator (same model, main session) did Track B masking, back-translation, mechanism dedup and candidate normalization, so dedup is coordinator judgment, not an independent agent.",
+  "protocol": "iso_compute_4x2_direct_vs_2explicit_2blind; gate = 1 clean-context 3-step Red-Team selector per pool; judge = 2 independent blind judges (AB, BA) scoring 3 axes x 10 = 30",
+  "date": "2026-11-21",
+  "results": [
+    {
+      "problem_id": "MKT-DIS",
+      "sampler_cmd": "sample_domains.py --k 4 --safe-profile claude --seed 701 --exclude-clusters markets_law",
+      "direct_unique": 4,
+      "direct_total": 8,
+      "direct_unique_list": [
+        "Risk-pooled liquidity/credit rail (supplier advance pay + client BNPL + bank-recognized income proof) [4 runs converged]",
+        "Transferable client-book equity with earn-out",
+        "Fees paid used as the weight for allocating new leads",
+        "Density routing + flexible time windows + cancellation backfill [2 runs]"
+      ],
+      "sfumato_unique": 7,
+      "sfumato_total": 8,
+      "sfumato_unique_list": [
+        "Pod succession + shared context ledger (explicit:horology_escapement)",
+        "Lead escapement: 1 completed on-platform deal = 1 exclusive lead tick (explicit:horology_escapement)",
+        "Latent demand buffer / utilization insurance (explicit:thermodynamics_cryogenics)",
+        "Signed transaction records recognized by third parties: bank, tax, home-history registry (explicit:thermodynamics_cryogenics)",
+        "Transferable witnessed service claims (blind:gift_economy_reciprocity)",
+        "Diversity-weighted prestige tied to access rights (blind:gift_economy_reciprocity)",
+        "Evaporating live clearing field / continuous rematch (blind:swarm_social_insects)"
+      ],
+      "sfumato_translation_losses": [
+        "blind:swarm_social_insects #2 (immunization hub + quorum alarm): discarded at back-translation; the counterparty-hygiene premise does not hold for post-match pairs who already know and trust each other"
+      ],
+      "diversity_multiplier": 1.75,
+      "sampled_domains": [
+        {"track": "explicit", "cluster": "physics_engineering", "id": "thermodynamics_cryogenics"},
+        {"track": "blind", "cluster": "social_anthropology", "id": "gift_economy_reciprocity"},
+        {"track": "explicit", "cluster": "craft_operations", "id": "horology_escapement"},
+        {"track": "blind", "cluster": "biology_ecology", "id": "swarm_social_insects"}
+      ],
+      "excluded_ids_sampled": 0,
+      "red_team": {
+        "direct_cuts": [
+          "Fees as lead-allocation weight: the 1.5x repeat weighting can be farmed by self-dealing accounts; starves new and low-fee providers"
+        ],
+        "sfumato_cuts": [
+          "Lead tick: 2-account wash farming whenever tick value exceeds the fee; biased against new providers",
+          "Prestige: penalizes legitimate repeat clients; sybil rings defeat the diversity metric",
+          "Live clearing: surface metaphor for dynamic pricing; gives incumbents an information edge"
+        ],
+        "sfumato_wildcard": "Utilization insurance: moving clients off-platform lowers bookings, which triggers priority demand (inverted incentive). Fix: trigger on a market-level index, not individual bookings"
+      },
+      "direct_champion": "Risk-pooled liquidity/credit rail: the platform or a partner lender advances supplier pay and lets clients pay later or in installments; limits are priced only off verified on-platform history, which also serves as bank-recognized income proof",
+      "sfumato_champion": "Pod succession: a recurring client is bound to a 2-4 provider pod (primary + shadow) sharing a context ledger; the shadow rotates in periodically and takes over instantly on absence or exit; cancelled slots are refilled; an off-platform deal can only take one provider",
+      "sfumato_champion_source": "explicit:horology_escapement",
+      "blind_ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_score": 19,
+        "sfumato_score": 18,
+        "axes_novelty_robustness_impact_direct": [6, 6, 7],
+        "axes_novelty_robustness_impact_sfumato": [8, 5, 5],
+        "winner": "direct",
+        "reason": "Direct belongs to the embedded-finance category (lower novelty) but builds credit history on the supply side that cannot be replicated off-platform; the pod is the most novel, but the primary must cede revenue to the shadow, which risks team-wide defection and adds ops complexity."
+      },
+      "blind_ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "direct_score": 17,
+        "sfumato_score": 20,
+        "axes_novelty_robustness_impact_direct": [5, 5, 7],
+        "axes_novelty_robustness_impact_sfumato": [8, 6, 6],
+        "winner": "sfumato",
+        "reason": "The pod moves relationship ownership from one provider to a team plus ledger, far from the cliches; direct resembles existing embedded finance (Faire / Shopify Capital), its limits can be inflated with wash trades, and it is weak for small-ticket categories."
+      },
+      "aggregate": {"direct": 36, "sfumato": 38},
+      "outcome": "split_tie: each judge preferred the slot-A candidate (position bias); aggregate +2 sfumato; sfumato scored higher on novelty in both orders (8 vs 5-6), direct higher on practical impact (7 vs 5-6)"
+    },
+    {
+      "problem_id": "DOC-ROT",
+      "sampler_cmd": "sample_domains.py --k 4 --safe-profile claude --seed 702 --exclude-clusters craft_operations",
+      "direct_unique": 4,
+      "direct_total": 8,
+      "direct_unique_list": [
+        "Claim-level code anchors + probes; the breaker inherits the claim and reader questions are routed to them; ADRs carry valid_while predicates [3 runs]",
+        "Runbook as executable console; proof-of-use freshness; patches taken from the path that actually worked [2 runs]",
+        "Doc-as-source: typed doc blocks generate config, tests and architecture checks [2 runs]",
+        "Default half-life, renewed only by machine evidence (borderline overlap with #1 and #2; kept as a distinct expiry trigger)"
+      ],
+      "sfumato_unique": 7,
+      "sfumato_total": 8,
+      "sfumato_unique_list": [
+        "Consumer-registered flank probes, 2-angle crossfire, dead-ground map (explicit:siege_fortification)",
+        "Siege clock: layered auto-retreat + honorable deprecation vs sack (explicit:siege_fortification)",
+        "Attribution grades capped through the citation graph (explicit:provenance_anticounterfeit)",
+        "Signer stake + mystery-stone audits with planted false claims (explicit:provenance_anticounterfeit)",
+        "Volatile facts live on the artifact itself; prose holds only the stable layer + pointers (blind:disaster_triage)",
+        "A 'wrong' mark pages the owning team; reverse-triage incident mode (blind:disaster_triage)",
+        "Path signals derived from live topology that go dark when broken (blind:architectural_wayfinding)"
+      ],
+      "sfumato_dedup_merges": [
+        "blind:architectural_wayfinding #2 (shearing layers) merged into the co-locate mechanism (blind:disaster_triage #1)"
+      ],
+      "diversity_multiplier": 1.75,
+      "sampled_domains": [
+        {"track": "explicit", "cluster": "history_institutions", "id": "siege_fortification"},
+        {"track": "blind", "cluster": "intelligence_conflict", "id": "disaster_triage"},
+        {"track": "explicit", "cluster": "markets_law", "id": "provenance_anticounterfeit"},
+        {"track": "blind", "cluster": "art_performance", "id": "architectural_wayfinding"}
+      ],
+      "excluded_ids_sampled": 0,
+      "red_team": {
+        "direct_cuts": [
+          "Default half-life: adverse selection against accurate docs that cannot be executed (ADRs, concept docs); one-click quarantine invites griefing; git blame misattributes"
+        ],
+        "sfumato_cuts": [
+          "Signer stake + mystery stones: honest signers avoid staking; sign/report sybil loop; traps placed in tier-0 queues",
+          "Grade propagation: one refactor cascade can drop the whole knowledge base; overlaps the siege clock"
+        ],
+        "sfumato_wildcard": "'Wrong' mark as page: open to page spam and false reports. Fix: dedupe pages and require the executed command or log"
+      },
+      "direct_champion": "Claim-level code anchors + probes: a merge that breaks an anchor marks the sentence Contested, names the breaker and routes reader questions to them (fix / re-sign / retire); the sentence folds after N days; ADRs carry metric valid_while predicates",
+      "sfumato_champion": "Consumer-registered flank probes: downstream teams that depend on a claim register probes (symbol anchor, nightly sandbox exec, metric existence); 2 or more distinct angles = defended, otherwise grey dead ground; failures alert the dependent consumers first",
+      "sfumato_champion_source": "explicit:siege_fortification",
+      "blind_ab": {
+        "a_is": "direct",
+        "b_is": "sfumato",
+        "direct_score": 22,
+        "sfumato_score": 20,
+        "axes_novelty_robustness_impact_direct": [8, 7, 7],
+        "axes_novelty_robustness_impact_sfumato": [8, 6, 6],
+        "winner": "direct",
+        "reason": "Making the breaker pay, plus folding and valid_while, closes the loop; registering consumer probes is itself public-goods labor, and the alerts do not charge whoever caused the break."
+      },
+      "blind_ba": {
+        "a_is": "sfumato",
+        "b_is": "direct",
+        "direct_score": 22,
+        "sfumato_score": 20,
+        "axes_novelty_robustness_impact_direct": [7, 7, 8],
+        "axes_novelty_robustness_impact_sfumato": [7, 7, 6],
+        "winner": "direct",
+        "reason": "Anchors + routing to the breaker + valid_while make false docs evict themselves; consumer probes protect teams that are already diligent and leave grey dead ground, so the impact is smaller."
+      },
+      "aggregate": {"direct": 44, "sfumato": 40},
+      "outcome": "direct_win (both orders, 44 vs 40)"
+    }
+  ],
+  "summary": {
+    "mean_diversity_multiplier": 1.75,
+    "head_to_head": "MKT-DIS split tie (aggregate sfumato +2); DOC-ROT direct win in both orders",
+    "notes": [
+      "All 4 champions came from Explicit tracks; Blind-track ideas reached runner-up or wildcard only (MKT #3 transferable claims; DOC #3 co-locate and the page-on-wrong wildcard)",
+      "The Claude Opus 5.5 direct baseline is strong on the engineering-native DOC-ROT problem (3 of 4 runs converged on the claim-anchor family), consistent with the D-10 rationale for a Direct Anchor in deep mode",
+      "The MKT judges showed slot-A position bias; the AB+BA swap was needed to expose it",
+      "n=2 problems with 1 seed each: directional evidence only"
+    ]
+  },
+  "raw_notes": "benchmarks/v1_1_weekend/xmodel_claude_raw/notes.md"
+}

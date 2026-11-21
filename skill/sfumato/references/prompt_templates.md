@@ -31,14 +31,16 @@ Use these exact templates when spawning isolated subagents (`TypeName: "self"`, 
 
 ## 2. Track B — Blind Isomorphic Reframing
 
-### Step 2a. Masking Checklist (Coordinator Performs Before Spawning)
-Before writing the Track B subagent prompt, verify:
+### Step 2a. 3-Line Structural Skeleton & Masking Checklist (Coordinator Performs Before Spawning)
+First, extract a **3-line domain-neutral Structural Skeleton** (zero original-industry words):
+```text
+- Actors & Polarity: <e.g., two cooperative parties vs. a third-party mediator / zero-sum rivals / novice learner vs. complex tool>
+- Core Asymmetry / Bottleneck: <exact cost, information, or cognitive imbalance>
+- Why Static Controls Fail: <exact reason naive rules/filters/tutorials break>
+```
+Then map that skeleton into `{DOMAIN_NAME}` and verify:
 1. **Zero leaked vocabulary:** Delete every noun/jargon belonging to the original industry (e.g., for an SNS spam problem: NO *SNS, app, post, account, spam, bot, DM, platform, user*).
-2. **Exact structural isomorphism:** Preserve every hard constraint using native nouns of `{DOMAIN_NAME}`:
-   - Topology (open vs invite-only nodes, centralized vs autonomous units)
-   - Cost/friction asymmetry (why heavy gatekeeping destroys normal flow)
-   - Failure of static inspection (why disguises/mutations bypass pattern checks)
-   - Objective (blow up adversary cost OR force early self-exposure / structural breakthrough)
+2. **Exact structural isomorphism:** Preserve topology, friction limits, failure modes, and asymmetric costs using native nouns of `{DOMAIN_NAME}`.
 3. **Incentive polarity fidelity (CRITICAL):** Preserve whether the real actors are **adversarial / zero-sum**, **cooperative**, or **mediated by a neutral platform/referee**. Do NOT map zero-sum enemies onto cooperative institutions sharing a mutual ledger/bailout unless a real referee exists — polarity mismatch is the #1 cause of Track B back-translation failure.
 
 ### Step 2b. Blind Solver Subagent Prompt
@@ -91,5 +93,30 @@ Spawn 1 fresh clean-context subagent (after stripping all track labels and noisy
 1. **Top-1 (Champion):** 후보 번호, 핵심 메커니즘 2줄 요약, 왜 뻔하지 않고 강력한지, 가장 치명적인 리스크 1개
 2. **차순위 추천 (2~3위):** 각 3줄 요약
 3. **와일드카드 (선택, 최대 1건):** 레드팀 결함으로 Top-1은 못 올랐지만 발상 자체가 날카로워 보완 가치가 있는 돌연변이
-4. **레드팀 탈락 사유 한 줄 정리:** 표면 비유 또는 치명결함으로 탈락시킨 후보들
+4. **레드팀 탈락 사유 한 줄 정리:** 표면 비유 또는 수정 불가 치명결함으로 탈락시킨 후보들
+```
+
+---
+
+## 4. Stage 2b — Clean-Context Hardening & Grafting Pass (v2.0)
+
+Run 1 fresh clean-context subagent ONLY on the **winning Top-1 candidate** from Stage 2a (never force-graft a polarity-mismatched seed over a stronger Direct Anchor):
+
+```text
+도구 호출 없이 순수 실무 엔지니어링 관점으로 한국어로 답변해줘.
+
+[원래 문제 및 제약]
+{PROBLEM_BRIEF}
+
+[Stage 2a 선발 Top-1 원석]
+{TOP1_CANDIDATE}
+
+[레드팀이 지적한 단일 핵심 약점 / 엣지케이스]
+{SINGLE_BIGGEST_FLAW}
+
+[선택적 접목 재료 (다른 통과 후보의 검증된 실무 장치 1개, 없으면 생략)]
+{OPTIONAL_GRAFT_PRIMITIVE}
+
+[요청]
+Top-1 원석의 **핵심 비클리셰 메커니즘을 절대 희석하거나 평범한 클리셰로 되돌리지 말되**, 레드팀이 지적한 단일 핵심 약점(현실성·엣지케이스·역선택)만 정밀하게 수리·경화해 즉시 실행 가능한 최종 설계안으로 다듬어줘.
 ```

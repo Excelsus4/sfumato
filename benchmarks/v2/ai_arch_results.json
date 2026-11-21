@@ -1,0 +1,107 @@
+{
+  "problem_id": "AI-ARCH",
+  "title": "Preventing Gradual Architectural Erosion Under AI Coding Agents",
+  "model": "antigravity-self (inherit)",
+  "seed": 401,
+  "protocol": "iso-compute 4x2=8 ideas per side (Direct: 4x Direct Baseline; Sfumato: 1x Direct Anchor + 2x Track A Explicit + 1x Track B Blind) -> parallel clean-context Stage 2 Red-Team Selectors (150-180 word iso-format) -> order-swapped blind A/B & B/A judges (30pt scale: novelty 10 + effectiveness 10 + feasibility 10)",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 4,
+    "unique_list": [
+      "정보 격리 경계 검증: 인식적 워크스페이스 차폐·적대적 계약 카오스 막·맹목 클린룸 쌍둥이 치환 (Direct-1#1, Direct-2#1, Direct-3#1 전반, Direct-4#1 — 4/4 세션 반복 수렴)",
+      "무이력 클린룸 재합성 컴팩션·세포자멸사 & 차분 퍼징/동치성 검증 (Direct-2#2, Direct-3#1 후반, Direct-4#2 — 3/4 세션 반복 수렴)",
+      "시한부 패치 격리층(TTL Quarantine Overlays) & 컨텍스트 검색 방화벽 기반 이력 소각 재도출 (Direct-1#2)",
+      "비위조 출처 타입(Sealed Provenance) & 표준 기둥 변이 전파 게이트 (Direct-3#2)"
+    ],
+    "champion_name": "무이력 백지 재합성과 차분 퍼징 파레토 치환 래칫 (Zero-History Counterfactual Re-Synthesis & Differential Pareto Ratchet)",
+    "champion_summary": "[메커니즘 이름]\n무이력 백지 재합성과 차분 퍼징 파레토 치환 래칫\n\n[핵심 원리]\n구현 코드를 영구 자산이 아닌 계약·테스트·표준 프리미티브에서 재생성 가능한 투영물로 취급한다. 일상 PR 속도는 유지하되 모듈의 구조 질량 대 행위 명세 비율이 임계치를 넘으면, 기존 구현과 이력을 차단한 백지 재합성과 파레토 치환으로 아키텍처 엔트로피를 압축한다.\n\n[구체적 작동 단계]\n1. 복잡도 임계 초과 시 기존 코드·이력을 차단한 격리 에이전트가 계약, 테스트, 최신 전사 표준 프리미티브 목록만으로 신규 구현체를 합성한다.\n2. 신규 구현체가 테스트·성능을 동등 이상 통과하면서 구조 질량을 30% 이상 줄일 때만 후보로 승격한다.\n3. 구·신 구현체에 차분 퍼징을 실행해 출력이 갈리는 최소 반례 입력을 추출한다.\n4. 반례가 있으면 담당자는 단일 입출력 정오만 판정해 영구 테스트로 고정하고, 불일치 해소 시 신규 구현체로 원자적 치환한다.\n\n[우회·무력화 차단 구조]\nAI는 제안 생성기로만 쓰이고 치환은 테스트·성능·복잡도·차분 퍼징의 결정론적 게이트가 판정한다. 우회 패치와 중복 헬퍼는 재합성 시 표준 프리미티브로 수렴해 소거되며, 숨은 암묵 동작은 차분 반례로 노출된다.\n\n[트레이드오프 및 완화책]\n비기능 계약 유실과 화이트박스 테스트 오염 위험은 텔레메트리·p99 회귀 테스트, 선택적 섀도우 검증, 행위 기반 테스트 분리, 300~2,000줄 리프 모듈 한정, 30% 절감 히스테리시스로 완화한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1 Direct Anchor + 2 Track A Explicit + 1 Track B Blind",
+    "sampled_domains": [
+      {
+        "index": 0,
+        "assigned_track": "explicit",
+        "cluster": "art_performance",
+        "id": "improv_status_games",
+        "name": "즉흥연극(Improv)·지위 게임 설계 (Improvisational Theater & Status Transactions)"
+      },
+      {
+        "index": 1,
+        "assigned_track": "explicit",
+        "cluster": "markets_law",
+        "id": "insurance_moral_hazard",
+        "name": "보험계리·도덕적 해이 통제 (Actuarial Design & Moral Hazard Control)"
+      },
+      {
+        "index": 2,
+        "assigned_track": "blind",
+        "cluster": "physics_engineering",
+        "id": "fluid_microfluidics",
+        "name": "유체역학·미세유체 분류공학 (Fluid Dynamics & Microfluidic Sorting)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 7,
+    "unique_list": [
+      "정보 격리 경계 검증: 인식적 격리 프로젝션·경계 카오스 막 & 2-시드 맹목 대체 구현체 핫스왑 (Direct Anchor#1, Track A Improv#2 — 동일 정보장벽 계열로 엄격 병합)",
+      "청정실 재합성 기반 코드 세포자멸사 & 차분 증류 게이트 (Direct Anchor#2)",
+      "창발적 의존 지위(Fan-in PageRank) 기반 비대칭 양보 & 제로섬 진입점 에스크로 (Track A Improv#1)",
+      "3단계 자기선택 계약 메뉴(분리균형) & 리스크 중립 상계(Cap-and-Offset) 머지 (Track A Insurance#1)",
+      "사후 에이전트 마찰 발달 추적(IBNR 손해발달삼각형) & 동적 자율 머지 한도·적립금 국소 강제 청산 (Track A Insurance#2)",
+      "실행 유량 임계치 기반 승자독식 중복 추상화 자가 폐색 (Track B Blind Fluidics#1 역번역: Margination-Skimming & Murray Self-Pruning)",
+      "도메인 직교 역량 반송파 & 단방향 경계 정류기 (Track B Blind Fluidics#2 역번역: Iso-Baric Frequency-Orthogonal Hydraulic Impedance)"
+    ],
+    "red_team_cuts": [
+      "Anchor#2 (청정실 재합성 세포자멸사): 주기적 리팩터링의 자동화 변형 성격 및 상태/트랜잭션/외부 I/O 얽힌 모듈에서 사일런트 데이터 손상 위험으로 탈락",
+      "Track A Improv#2 (2-시드 맹목 대체 구현체 핫스왑): 결정적 도메인 경계에 한정되어 중복 추상화·우회 패치 누적·상태ful DB 경계 미방어로 감점 탈락",
+      "Track A Insurance#1 (3단계 자기선택 계약 메뉴 & 상계 머지): 동일 PR 내 구조 노출 상계 강제가 정상 기능 확장 오염(역선택) 및 정상 모듈 억지 병합·인라인 치팅 유인으로 탈락",
+      "Track B Blind Fluidics#1 (실행 유량 기반 승자독식 자가 폐색): 기존 부식 경로(V1)가 트래픽을 점유한 상태에서 신규 정규 추상화(V2)를 콜드스타트 질식시키는 역선택 및 승자 경로의 God-service화·저빈도 필수 경로 오삭제 위험으로 탈락",
+      "Track B Blind Fluidics#2 (도메인 직교 역량 반송파 & 경계 정류기): 에이전트가 경계 정류기를 만능 패스스루로 뚫는 우회 취약 및 도메인 내부 중복 추상화·우회 패치 누적 무방비로 탈락"
+    ],
+    "champion_name": "사후 에이전트 마찰 추적 기반 동적 자율 한도·정리 (Ex-Post Agent-Friction Loss-Development & Dynamic Binding Authority)",
+    "champion_source": "Track A Explicit — insurance_moral_hazard (#2: IBNR Loss-Development & Dynamic Binding Authority)",
+    "champion_summary": "[메커니즘 이름]\n사후 에이전트 마찰 추적 기반 동적 자율 한도·정리\n\n[핵심 원리]\n아키텍처 부식은 수십 PR 뒤 지연 발현된다. 사전 규칙이나 리뷰 점수 대신, 후속 에이전트들이 일정 창 동안 겪는 실측 작업 마찰을 변경 계보로 원인 PR과 영역에 소급 귀속해 자율 머지 한도와 집중 정리를 자동 제어한다.\n\n[구체적 작동 단계]\n1. 후속 에이전트의 타 도메인 파일 초과 열람, 테스트 재시도 급증, 교차 도메인 공동수정, 심볼 위 래퍼 증식을 계측해 영역별 마찰 지수를 산출한다.\n2. 건강한 영역은 자율 속도를 유지하고, 악화 영역은 PR 변경 폭·경계 접촉 한도를 축소하며 정리 예산을 적립한다.\n3. 임계치 초과 시 해당 영역의 신규 머지만 국소 정지하고, 정리 에이전트가 계보상 원인 PR 연쇄의 경계·중복만 외과적으로 해소해 복원한다.\n\n[우회·무력화 차단 구조]\n현재 PR 에이전트가 목킹이나 PR 분할로 당일 검사를 통과해도, 미래의 독립 에이전트들이 겪을 탐색·수정 마찰은 사전 조작이 불가능하며 중복·침범·암묵결합·우회패치 모두 실측 마찰로 귀결된다.\n\n[트레이드오프 및 완화책]\n정상 피벗 오귀속과 긴급 수정 지연 위험이 있다. 교차 도메인 파급과 타 도메인 탐색 폭증에 가중치를 두고, 실험 영역은 기한부 면제하며, 긴급 패치는 우회 허용 후 정리 예산을 배로 적립해 자동 수습한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": {
+        "novelty": 9.0,
+        "effectiveness": 7.5,
+        "feasibility": 6.0,
+        "total": 22.5
+      },
+      "sfumato_score": {
+        "novelty": 8.0,
+        "effectiveness": 7.5,
+        "feasibility": 7.5,
+        "total": 23.0
+      },
+      "winner": "sfumato",
+      "reason": "제안 A(Direct)는 백지 재합성·차분 퍼징·파레토 래칫의 참신성과 국소 엔트로피 압축의 결정론적 엄밀성이 탁월하나, 리프 모듈 한정으로 거시적 경계 침범 해소력이 약하고 차분 퍼징·행위 테스트 분리 유지 장벽이 높다. 제안 B(Sfumato)는 후속 에이전트 실측 작업 마찰을 지연 센서로 삼아 4대 부식 원인 전반을 포착하고 기존 프로덕션 저장소에 훨씬 현실적으로 적용 가능해 근소한 우위로 판정."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": {
+        "novelty": 9.5,
+        "effectiveness": 8.0,
+        "feasibility": 6.5,
+        "total": 24.0
+      },
+      "sfumato_score": {
+        "novelty": 8.0,
+        "effectiveness": 7.0,
+        "feasibility": 7.5,
+        "total": 22.5
+      },
+      "winner": "direct",
+      "reason": "제안 B(Direct)는 구현을 재생성 가능한 투영물로 재정의하고 차분 퍼징·파레토 치환으로 AI 우회 여지를 결정론적 게이트로 차단하며 숨은 암묵 동작까지 테스트로 고정하는 독창성과 검증 가능성이 돋보인다. 제안 A(Sfumato)는 현실적 적용성은 높으나 수십 개 PR에 걸친 마찰 인과 귀속 노이즈와 정리 에이전트 의존, 경계 접촉 한도 축소 시 로컬 복사 역유인 우려로 열위로 판정."
+    }
+  },
+  "outcome": "split_tie"
+}

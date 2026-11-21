@@ -1,0 +1,111 @@
+{
+  "problem_id": "WEB-SCRAPE",
+  "title": "Defending Open Web Knowledge from Predatory Mass AI Scrapers",
+  "model": "Antigravity (Model=inherit)",
+  "seed": 501,
+  "protocol": "iso-compute 4x2 (8 ideas each) -> Clean-Context 3-Step Red-Team Selector -> Order-Swapped Blind A/B Judge (30pt: novelty 10 + effectiveness 10 + feasibility 10)",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 6,
+    "unique_list": [
+      "[D1-1] 역전형 무비용 중계 프로토콜 (Zero-Egress Proxy-Arbitrage Relay): 0ms 첫 화면 후 소스 IP 바인딩 HTTPS 삼각 샤드(1~2MB) 중계 영수증으로 본문 해제",
+      "[D1-2] 암호학적 희소 주소·위상 단절 및 무-404 엔트로피 장막: 고엔트로피 URL + 10~30문서 의미 섬 단절 + 검색엔진 인증 피드 + 비인증 열거면 반사실 그림자 문서",
+      "[D2-1, D3-1 중복 패밀리] 연합 발행시점 무해-슬롯 방사성 시맨틱/관계 워터마킹 및 블랙박스 LLM 출처 감사 (D2-1: k-홉 샤미르 관계 조각, D3-1: 엣지 코호트 다형성 + 연합 통계 위상)",
+      "[D2-2, D4-1 완전 중복] 읽기-속도 동기화 정적 메모리-하드/DRAM-지연 순차 청크 복호화 (0ms 도입부 SSR + Web Worker 백그라운드 순차 해독 + RFC 9421 검색엔진 직통)",
+      "[D3-2] 연합 블라인드 서명 공익 열람권(RFC 9576) 및 HTTP 402 초과 트래픽 자동 정산 + 무료 저속 차선",
+      "[D4-2] 맥락-구속형 조합 실체화 (Context-Bound Parametric Knowledge Materialization): 개념은 평면 SSR, 조건부 해법은 다축 매개변수 매트릭스로 분리해 인간 O(1) vs 크롤러 O(k^d) 비대칭 구축"
+    ],
+    "champion_name": "맥락-구속형 조합 실체화 (Context-Bound Parametric Knowledge Materialization)",
+    "champion_summary": "[아이디어 이름]\n맥락-구속형 조합 실체화 (Context-Bound Parametric Knowledge Materialization)\n\n[핵심 메커니즘 및 작동 구조]\n개념·원리·대표 사례는 평면 SSR HTML로 완전 공개해 검색 색인과 접근성을 100% 유지한다. 반면 환경·버전·제약에 따라 갈리는 구체적 해법·수치·코드·반례는 4~6개 맥락 축의 매개변수 매트릭스로 분리한다. 독자가 무로그인·무자바스크립트 표준 접근성 HTML 폼(<select>, 라디오 버튼, ARIA)에서 자신의 조건 벡터를 선택하면, 엣지 KV/WASM 오라클이 해당 단일 좌표의 1~2KB 맞춤 해답만 즉석 렌더링해 반환한다.\n\n[왜 대량 약탈의 경제성을 무너뜨리며 우회하기 어려운가]\n인간 독자는 이미 자신의 맥락을 알고 있어 클릭 3~5번의 O(1) 조회로 오히려 더 정확한 맞춤 답을 얻지만, 모든 미래 질의에 대비해야 하는 AI 크롤러는 다차원 상태 공간 전체를 열거하는 O(k^d) 지수적 비용을 치러야 한다. 유효 조합이 희소한 다양체 구조라 무작위 스위프는 유효 신호율이 급락하고 벡터 DB 임베딩 충돌을 유발해, 분산 주거용 프록시나 헤드리스 브라우저를 동원해도 대량 약탈과 Zero-Click 대체 경제성이 구조적으로 무너진다.\n\n[핵심 트레이드오프 및 완화책]\n에세이·뉴스 같은 순수 선형 서사에는 적용이 어렵고, 초기 지식 구조화 비용과 전체 Ctrl+F 제약 및 오라클 무차별 스캔 관리가 필요하다. 이를 위해 문서·가이드·트러블슈팅 등 조건부 지식에 집중 도입하고, 무효 좌표는 초경량 엣지 캐시 스텁으로 응답하며 핵심 비교표는 평면 요약으로 병행 제공한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1 Direct Anchor + 2 Track A Explicit (index 0, 1) + 1 Track B Blind (index 2)",
+    "sampled_domains": [
+      {
+        "index": 0,
+        "assigned_track": "explicit",
+        "cluster": "biology_ecology",
+        "id": "invasive_ecology",
+        "name": "외래 침입종 방제학·행동생태학 (Invasive Species & Behavioral Ecology)"
+      },
+      {
+        "index": 1,
+        "assigned_track": "explicit",
+        "cluster": "intelligence_conflict",
+        "id": "arms_control_verification",
+        "name": "냉전 군축 검증 조약 설계 (Arms Control Verification & Mutual Inspection)"
+      },
+      {
+        "index": 2,
+        "assigned_track": "blind",
+        "cluster": "social_anthropology",
+        "id": "maritime_lazaretto",
+        "name": "역사적 검역소(라자레토)·공중보건 설계 (Quarantine & Lazaretto Public Health)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 7,
+    "unique_list": [
+      "[S-Anchor-1] 계보 결합형 역량 그래프 & 무중단 합성 다양체: 내부 링크 HMAC 탐색 계보로 IP 무관 다중 홉 팬아웃 추적 후 HTTP 200 경량 PCFG 합성 문서로 조용히 분기",
+      "[S-Anchor-2] 독서 리듬 이중 선별 & 호혜적 릴레이 커먼즈: 느린 키 스트리밍(Lane A) vs WebRTC P2P 연합 샤드 릴레이 즉시 해제(Lane B) + 공식 클린 API(Lane C)",
+      "[S-Exp1-1, S-Exp2-2 동일 패밀리] 0ms 시맨틱 골격 + 인간 독서속도 동기화 점진 본문 조립 (S-Exp1-1: 무상태 클라이언트 순차 Micro-VDF, S-Exp2-2: 단일 지속 HTTP/2 연결 바인딩 서버-시계 순차 HTML 스트리밍)",
+      "[S-Exp1-2] 유다-변이 수집-버킷별 진실-보존 시맨틱 표식 방사 및 하류 B2B IP 면책·보험 시장 감사 역전 (HIPV 상위 포식자 호출)",
+      "[S-Exp2-1] 다중방호격납고(MPS) 심층 열거면 20:1~50:1 합성 모사체 희석 + 검색엔진 SERP 상호 도전 사찰 검증 피드(Reciprocity Audit)",
+      "[S-Blind-1] 라자레토 소규모 정원 코호트별 독립 정합 지식 계통 순환 및 외부 대규모 통합 시 교차 오염 자가 붕괴",
+      "[S-Blind-2] 무식별 롱테일 집단 이상 감시 기반 국소 포위 감속(저속 순차 슬롯 전환) 및 전방 인과 링크 서명 패스 구제 (Syndromic Ring Quarantine & Sciorino)"
+    ],
+    "red_team_cuts": [
+      "Candidate 1 (S-Anchor-1): 정규 URL 냉방문 리셋과 노드 슬롯 소진 방어 간 역선택 딜레마, 비-LLM PCFG 합성문의 소형 로컬 분류기 필터링 취약성",
+      "Candidate 2 (S-Anchor-2): 경량 소켓 대량 연결로 Lane A 우회 가능, WebRTC 릴레이 영수증의 시빌 자전 중계 위조 위험, 연합 WebRTC 메시의 단일 인디 사이트 비현실성",
+      "Candidate 3 (S-Exp1-1): WASM vs 네이티브 GMP/AVX 연산 비대칭으로 저사양 기기만 역선택 피해, 100만 문서당 스팟 CPU 비용이 낮아 경제성 붕괴 미흡, No-JS 전역 예산 DoS 취약",
+      "Candidate 4 (S-Exp1-2): 당장의 오리진 트래픽 비용 폭증 억제 불가, 분산 프록시의 대표 캐시 버킷 우회, 폐쇄형 LLM 로그확률 비공개 및 대규모 연합·보험 시장 합의 전제",
+      "Candidate 5 (S-Exp2-1): 인증 검색엔진 SERP/내부 검색 경유 URL 수확 우회, <0.1ms 문법 모사체의 로컬 분류기 취약, 4페이지 이후 인간 오독 및 대형 검색엔진 개별 피드 온보딩 장벽",
+      "Candidate 6 (S-Exp2-2): JS/봇 판별 부재로 4KB 경량 HTTP/2 클라이언트로 하향 우회 시 RAM 비대칭 붕괴, 정적 CDN 캐싱 파괴 및 Slowloris형 연결 고갈 자초, 1회 점프 병렬 우회",
+      "Candidate 7 (S-Blind-1): 사실 기반 기술 문서·포럼에서 수십~수백 개 상호 양립 불가 정통 계통 유지 불가능(과잉 비유), 링크 공유 일관성 훼손 및 오리진 트래픽 비용 미절감"
+    ],
+    "champion_name": "무식별 롱테일 집단 이상 감시 기반 국소 포위 감속 및 인과 링크 구제",
+    "champion_source": "Track B Blind (maritime_lazaretto: 역사적 검역소(라자레토)·공중보건 설계)",
+    "champion_summary": "[아이디어 이름]\n무식별 롱테일 집단 이상 감시 기반 국소 포위 감속 및 인과 링크 구제\n\n[핵심 메커니즘 및 작동 구조]\n개별 IP·브라우저 추적 없이, 콘텐츠를 상시 정적 전방 계층(인기·최신 문서, 전체 색인·요약)과 저비용 휴면 롱테일 계층(희귀·심층 문서)으로 이원화한다. 서버는 롱테일 주제 클러스터 간 동시 접근 엔트로피만 감시한다. 무관한 다수 희귀 클러스터가 동시 급증하는 전방위 수집이 포착되면, 전방 계층은 0ms 무제한 유지한 채 이상 롱테일 고리만 원본 연산을 동결하고 소수 저속 순차 슬롯으로 전환한다. 전방 편집 링크의 인과적 롱테일 열람은 서명된 맥락 패스로 즉시 구제한다.\n\n[왜 대량 약탈의 경제성을 무너뜨리며 우회하기 어려운가]\n식별자 차단이 아니라 집단 분포를 감시하므로 수만 개 주거용 프록시로 IP를 매번 교체해도 전방위 수집의 고엔트로피 신호를 숨길 수 없다. 격리 발동 시 방어자의 원본 비용은 상수 수준으로 동결되는 반면, 공격자의 병렬 프록시 투입은 직렬 저속 슬롯 병목에 막혀 수집 가속이 무력화되고 대기·프록시 비용이 급증한다.\n\n[핵심 트레이드오프 및 완화책]\n공격 시간대에 검색이나 직접 URL로 희귀 롱테일에 진입한 극소수 독자가 일시 지연을 겪을 수 있다. 단일 클러스터의 자연 바이럴 급증은 정적 전방 계층으로 자동 승격해 오탐을 막고, 공격 시 저속 슬롯 공정 배분으로 독자 열람을 보호한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": {
+        "novelty": 9,
+        "effectiveness": 5,
+        "feasibility": 4,
+        "total": 18
+      },
+      "sfumato_score": {
+        "novelty": 7,
+        "effectiveness": 7,
+        "feasibility": 8,
+        "total": 22
+      },
+      "winner": "sfumato",
+      "reason": "Direct(A)는 O(1) vs O(k^d) 조합 비대칭 발상이 매우 독창적(참신성 9)이나, O(k^d) 조합 유지의 편집 비용·소수 규칙 역추론 역설, 비정형 포럼/서사 적용 불가, 검색 색인·Ctrl+F 훼손 및 실시간 AI 에이전트의 O(1) 우회 취약성으로 실효성(5)·현실성(4)이 낮다. Sfumato(B)는 클러스터 순차 우회·슬롯 기아 보완이 필요하지만, 콘텐츠 재작성이나 외부 합의 없이 기존 포럼·문서·인디 서버에 미들웨어로 즉시 도입 가능하고 식별자 없이 롱테일 동시 엔트로피로 주거용 프록시 순환을 무력화하며 원본 비용을 상수 동결해 실효성(7)·현실성(8)에서 결정적으로 앞선다."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": {
+        "novelty": 9,
+        "effectiveness": 5,
+        "feasibility": 4,
+        "total": 18
+      },
+      "sfumato_score": {
+        "novelty": 7,
+        "effectiveness": 6,
+        "feasibility": 7,
+        "total": 20
+      },
+      "winner": "sfumato",
+      "reason": "Direct(B)는 정보 표현 복잡도 비대칭(참신성 9)이 돋보이나 포럼·인디 서사형 사이트 전반에 적용 불가하고 4~6축 매트릭스 편집 부담이 막대하며, 폼 뒤 은닉으로 롱테일 검색 유입이 훼손되고 유효 조합 안내 여부에 따른 딜레마가 커 실효성(5)·현실성(4)이 크게 떨어진다. Sfumato(A)는 클러스터 순차 저엔트로피 우회·봇 홍수 시 슬롯 기아·검색봇 오탐 보완 과제가 있으나, 기존 콘텐츠 수정 없이 범용 서버에 즉시 적용해 전방 0ms 유지와 원본 비용 상수 동결을 달성하므로 실효성(6)·현실성(7) 우위로 승리했다."
+    }
+  },
+  "outcome": "sfumato_win"
+}

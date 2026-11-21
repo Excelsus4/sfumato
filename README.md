@@ -17,14 +17,11 @@
 </p>
 
 <p>
-  <img src="https://img.shields.io/badge/Diversity_at_K=12-3.0%C3%97_(18_vs_6)-B83B2A?style=for-the-badge" alt="3.0x Diversity" />
-  <img src="https://img.shields.io/badge/Blind_A%2FB_Judge-2--0_Win-2F5D62?style=for-the-badge" alt="Blind Judge 2-0" />
+  <img src="https://img.shields.io/badge/Diversity_Across_9_Runs-9%2F9_Undefeated_(60_vs_34)-B83B2A?style=for-the-badge" alt="9/9 Diversity Undefeated" />
+  <img src="https://img.shields.io/badge/K=12_Scaling-3.0%C3%97_(18_vs_6)-8E2F21?style=for-the-badge" alt="3.0x Scaling" />
+  <img src="https://img.shields.io/badge/Claude_Opus_5.5-0_Refusals_(safe--profile)-2F5D62?style=for-the-badge" alt="Claude 0 Refusals" />
   <img src="https://img.shields.io/badge/Dependencies-Zero_(Pure_Stdlib)-5C4E3F?style=for-the-badge" alt="Zero Dependencies" />
-  <img src="https://img.shields.io/badge/Works_With-Claude_Code_%C2%B7_Antigravity_%C2%B7_Codex-3E2F23?style=for-the-badge" alt="Agent Compatibility" />
-  <img src="https://img.shields.io/badge/License-MIT-7A6B57?style=for-the-badge" alt="MIT License" />
 </p>
-
-<sub>Created by <strong>Excelsus4</strong> with <strong>Gemini 4 Neon</strong> · All K=1..12 scaling experiments benchmarked on Gemini 4 Neon (High).</sub>
 
 > *"Sfumato" (Italian: evaporated like smoke) is Leonardo da Vinci's painting technique of dissolving harsh outlines so entirely new forms emerge. Leonardo didn't stay inside one discipline — he ported anatomy, fluid dynamics, fortification, and optics into each other.*
 >
@@ -68,26 +65,60 @@ We ran **12 completely isolated sessions (24 ideas each)** on a classic hard pro
 
 ---
 
-## 🏛️ How Sfumato Works: The *Domain-Masking Trade-Off*
+## 🌍 Multi-Problem & Cross-Model Benchmark (`9 / 9` Undefeated on Diversity)
+
+Does this hold outside marketplace game theory — including **emotional UX design**, **open-web anti-scraping**, **software architecture**, and **other frontier models** like **Claude Opus 5.5**?
+
+We ran **strict Iso-Compute benchmarks** (`4 isolated runs × 2 ideas = 8 ideas/method`, order-swapped `AB`/`BA` Blind Judges) across **7 public hard problems** on Gemini 4 Neon plus **2 cross-model replications** on **Claude Opus 5.5** using `--safe-profile claude` (which filters out 8 bio/CBRN/cyber/espionage domains so Claude hits **0 safety refusals across 24 isolated calls**):
+
+<p align="center">
+  <img src="./assets/multi_problem_benchmark.svg" alt="Multi-Problem and Cross-Model Benchmark: 9/9 Undefeated on Diversity" width="100%" />
+</p>
+
+| Public Hard Problem | Model | Direct Unique/8 | Sfumato Unique/8 | Gain | Blind `AB · BA` (30pt) | Verdict |
+|---|---|---:|---:|---:|---|---|
+| **`MKT-DIS`** *(Marketplace Disintermediation)* | Gemini 4 Neon | 3 / 8 | **7 / 8** | **2.33×** | **24:21 · 23:20** | **Sfumato 2–0 Win** |
+| **`UX-ONBOARD`** *(Blank-Canvas Fear · Emotion/UX, v2.0)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **25:20 · 24:21** | **Sfumato 2–0 Win** |
+| **`WEB-SCRAPE`** *(Open Web vs. Mass AI Scrapers)* | Gemini 4 Neon | 6 / 8 | **7 / 8** | **1.17×** | **22:18 · 20:18** | **Sfumato 2–0 Win** |
+| **`OSS-PR`** *(Open-Source AI-Slop PR Flood)* | Gemini 4 Neon | 2 / 8 | **5 / 8** | **2.50×** | **21:17 · 18:21** | **Split 1–1** *(Agg +1)* |
+| **`AI-ARCH`** *(AI Agent Architectural Erosion)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **23:22.5 · 22.5:24** | **Split 1–1** |
+| **`DOC-ROT`** *(Self-Healing Org Doc Rot, v2.0)* | Gemini 4 Neon | 2 / 8 | **6 / 8** | **3.00×** | **23:22 · 23:26** | **Split 1–1** *(+3pt vs v1.2)* |
+| **`GAME-SNOWBALL`** *(Snowball vs. Rubber-Banding)* | Gemini 4 Neon | 5 / 8 | **7 / 8** | **1.40×** | 22:23 · 21:23 | Direct 2–0 *(honest miss)* |
+| **`MKT-DIS`** *(Cross-Model · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 18:19 · **20:17** | **Split 1–1** *(Agg +2 · 0 refusals)* |
+| **`DOC-ROT`** *(Cross-Model · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 20:22 · 20:22 | Direct 2–0 *(no Anchor · 0 refusals)* |
+
+- **Grand Total (9 runs, 72 ideas/method):** **9 / 9 undefeated on diversity** — `60 / 72 (83.3%)` unique mechanisms vs. Direct `34 / 72 (47.2%)` (**1.76×**).
+- **7-Problem v2.0 Blind Judge Record:** **9 Sfumato vs. 5 Direct (`64.3%`)** — **3 Wins, 3 Splits, 1 Loss** (and **0 losses** on all 6 problems where a cross-domain mechanism survived to Top-1).
+- **Reproducible Raw Logs:** Every raw JSON transcript and judge rubric is published in [`benchmarks/v2/`](./benchmarks/v2/) — verify locally with `python tools/summarize_benchmarks.py benchmarks/v2`.
+
+> **⚖️ Where Sfumato Shines — and Where It Doesn't:**
+> - **Shines brightest** on open-ended strategy, incentive/mechanism design, non-obvious UX & behavioral design (`UX-ONBOARD` 2–0), and breaking entrenched industry clichés.
+> - **Honest limitation (`GAME-SNOWBALL`):** On tightly coupled real-time physics/balance loops with small sample budgets (`K=3`), unlucky institutional draws can lose to a strong Direct Baseline — and our v2.0 ablation proved **forced cross-domain grafting makes it worse (`43 → 39`)**. Use `deep` mode (`Direct Anchor + K=6`) for tight engineering/systems loops so the anchor locks your floor (`≥ Direct`).
+
+---
+
+## 🏛️ How Sfumato v2.0 Works: The *Domain-Masking Trade-Off*
 
 Most cross-domain prompting papers use **Explicit Analogy** (*"apply biology to solve marketplace churn"*). Because the original problem's words stay in the prompt, the LLM still suffers **partial homogenization** back toward industry clichés.
 
 Conversely, **pure Blind Reframing** (hiding the original problem completely) breaks cliché gravity 100%, but has a lower hit-rate because some abstract solutions don't translate cleanly back.
 
-**Sfumato pairs both tracks in parallel — then passes unlabeled candidates through a fresh Clean-Context Red-Team Gate:**
+**Sfumato v2.0 pairs both tracks in parallel — then runs a Clean-Context Red-Team Triage + Optional Hardening pass:**
 
 <p align="center">
   <img src="./assets/architecture_codex.svg" alt="Sfumato Architecture Diagram" width="100%" />
 </p>
 
-1. **Cluster-Stratified Code RNG (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **40 mechanism-rich domains across 8 disjoint macro-clusters** using pure Python `random`.
+1. **Cluster-Stratified Code RNG + Safety Profiles (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **40 mechanism-rich domains across 8 disjoint macro-clusters** using pure Python `random`. Pass `--safe-profile claude` to exclude 8 sensitive bio/cyber/espionage domains (leaving 32 domains across all 8 clusters with **0 safety refusals on Claude Opus 5.5**).
 2. **Track A — Explicit Analogy *(High Hit-Rate)*:** Original brief + assigned remote domain → surgical hits against domain-specific attack surfaces.
-3. **Track B — Blind Isomorphic Masking *(Max Ceiling)*:**
-   - Erase **100% of original-domain vocabulary** while preserving **incentive polarity** (*zero-sum vs. cooperative vs. platform-refereed*).
+3. **Track B — Blind Isomorphic Masking *(Max Ceiling · v2.0 3-Line Structural Skeleton)*:**
+   - First distill the problem into a **3-line domain-neutral Structural Skeleton** (*State Variables · Incentive Polarity · Irreducible Trade-Off*), then rewrite it into the target field with a **0-leak vocabulary check**.
    - A fresh, isolated subagent solves the masked twin purely inside the remote field — **physically incapable of emitting original-domain clichés.**
    - Back-translate only the causal mechanism & trade-off (ruthlessly discard strained translations).
 4. **Direct Anchor *(`deep` mode · Floor Guarantee)*:** Includes 1 isolated Direct Baseline solver in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — never worse than standard prompting on engineering-native problems.
-5. **Stage 2 — Clean-Context Red-Team Gate:** A fresh, uncontaminated evaluator cuts surface jargon cosplay, screens every candidate for **Adverse Selection**, **Sybil/Wash-Trading exploits**, and **feasibility**, then ranks for **Peak Top-1 Ceiling** (plus 2 distinct runners-up & 1 optional wildcard).
+5. **Stage 2a/2b — Clean-Context Red-Team Triage & Selective Hardening *(v2.0)*:**
+   - **Stage 2a:** A fresh, uncontaminated evaluator cuts surface jargon cosplay, screens every candidate for **Adverse Selection**, **Sybil/Wash-Trading exploits**, and **feasibility**, and tags fixable gems as `HARDEN` instead of binary-killing them.
+   - **Stage 2b:** Hardens *only* the Top-1 winner's single biggest operational weakness (without forcing cross-domain grafts when the `Direct Anchor` legitimately wins). This turned `DOC-ROT` from `0–2` to `1–1` (+3pt) and drove `UX-ONBOARD` to a `2–0` sweep.
 
 ---
 
@@ -138,19 +169,43 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
 
 ## 🚀 Quick Start (Zero Dependencies)
 
-Sfumato is just **4 lightweight files** (`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`). Drop it into your agent's global skills folder:
+Sfumato is just **4 lightweight files** (`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`). Install in one command for **Claude Code** (including `/sfm` shortcut with `--safe-profile claude`), **Antigravity (`agy`)**, or **Codex CLI**:
 
 ```bash
-# Claude Code (skill + optional /sfm 3-letter shortcut)
-cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+# macOS / Linux — one-line install (auto-detects installed agents, or pass --target claude|agy|codex|all)
+curl -fsSL https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.sh | bash
+```
 
-# Antigravity (agy)
+```powershell
+# Windows PowerShell — one-line install
+irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1 | iex
+```
+
+<details>
+<summary>Local checkout with <code>--dry-run</code> preview or manual copy</summary>
+
+```bash
+# Preview before installing (macOS / Linux)
+git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
+bash tools/install.sh --dry-run
+bash tools/install.sh --target all
+```
+
+```powershell
+# Preview before installing (Windows PowerShell)
+git clone https://github.com/Excelsus4/sfumato.git; Set-Location sfumato
+.\tools\install.ps1 -DryRun
+.\tools\install.ps1 -Target all
+```
+
+```bash
+# Manual copy (zero scripts)
+cp -r skill/sfumato ~/.claude/skills/sfumato && cp commands/sfm.md ~/.claude/commands/sfm.md
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
-
-# Codex CLI
 cp -r skill/sfumato ~/.codex/skills/sfumato
 ```
+
+</details>
 
 ### Usage
 

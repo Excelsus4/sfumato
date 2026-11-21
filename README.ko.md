@@ -17,14 +17,11 @@
 </p>
 
 <p>
-  <img src="https://img.shields.io/badge/K=12_아이디어_다양성-3.0%C3%97_(18_vs_6)-B83B2A?style=for-the-badge" alt="3.0x 다양성" />
-  <img src="https://img.shields.io/badge/블라인드_A%2FB_심판-2--0_완승-2F5D62?style=for-the-badge" alt="블라인드 2-0 승" />
-  <img src="https://img.shields.io/badge/외부_의존성-0_(Pure_Stdlib)-5C4E3F?style=for-the-badge" alt="외부 의존성 0" />
-  <img src="https://img.shields.io/badge/지원_에이전트-Claude_Code_%C2%B7_Antigravity_%C2%B7_Codex-3E2F23?style=for-the-badge" alt="지원 에이전트" />
-  <img src="https://img.shields.io/badge/License-MIT-7A6B57?style=for-the-badge" alt="MIT License" />
+  <img src="https://img.shields.io/badge/9%ED%9A%8C_%EB%B2%A4%EC%B9%98%EB%A7%88%ED%81%AC_%EB%8B%A4%EC%96%91%EC%84%B1-9%2F9_%EC%A0%84%EC%8A%B9_(60_vs_34)-B83B2A?style=for-the-badge" alt="9/9 다양성 전승" />
+  <img src="https://img.shields.io/badge/K=12_%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81-3.0%C3%97_(18_vs_6)-8E2F21?style=for-the-badge" alt="3.0x 스케일링" />
+  <img src="https://img.shields.io/badge/Claude_Opus_5.5-%EA%B1%B0%EC%A0%88_0%EA%B1%B4_(safe--profile)-2F5D62?style=for-the-badge" alt="Claude 거절 0건" />
+  <img src="https://img.shields.io/badge/%EC%99%B8%EB%B6%80_%EC%9D%98%EC%A1%B4%EC%84%B1-0_(Pure_Stdlib)-5C4E3F?style=for-the-badge" alt="외부 의존성 0" />
 </p>
-
-<sub><strong>Excelsus4</strong> with <strong>Gemini 4 Neon</strong> · 모든 K=1..12 스케일링 실험은 Gemini 4 Neon (High) 기준으로 측정되었습니다.</sub>
 
 > *'스푸마토(Sfumato, 연기처럼 경계를 흐린다)'는 레오나르도 다빈치가 딱딱한 윤곽선을 지워 전혀 새로운 형상을 끌어낸 회화 기법입니다. 다빈치는 한 분야에 갇히지 않고 해부학·유체역학·축성술·광학의 원리를 서로 이식해 천재적 발명을 만들어냈습니다.*
 >
@@ -68,26 +65,60 @@
 
 ---
 
-## 🏛️ 작동 원리: *도메인 마스킹 트레이드오프(Domain-Masking Trade-Off)*
+## 🌍 다중 난제 · 교차 모델 벤치마크 (다양성 `9 / 9` 전승)
+
+*"마켓플레이스 게임이론 말고 **감성·UX 설계**, **오픈 웹 크롤러 방어**, **소프트웨어 아키텍처**, 그리고 **Claude Opus 5.5** 같은 타 모델에서도 통하는가?"*
+
+**엄격한 동일 예산(`4격리 세션 × 2아이디어 = 8개/방식`) + 순서교차 블라인드 심판(`AB`·`BA`)**으로 공개 난제 **7종(Gemini 4 Neon)**과 **Claude Opus 5.5 교차 모델 2종**을 추가 검증했습니다. Claude에서는 민감한 생물·사이버·방첩 8개 도메인을 제외한 `--safe-profile claude`를 적용해 **24회 호출 동안 안전 거절 0건**을 달성했습니다.
+
+<p align="center">
+  <img src="./assets/multi_problem_benchmark.svg" alt="다중 난제 및 교차 모델 벤치마크: 다양성 9/9 전승" width="100%" />
+</p>
+
+| 공개 난제 | 모델 | Direct 고유/8 | Sfumato 고유/8 | 다양성 배수 | 블라인드 `AB · BA` (30점) | 최종 판정 |
+|---|---|---:|---:|---:|---|---|
+| **`MKT-DIS`** *(마켓플레이스 직거래 방지)* | Gemini 4 Neon | 3 / 8 | **7 / 8** | **2.33×** | **24:21 · 23:20** | **Sfumato 2–0 승** |
+| **`UX-ONBOARD`** *(빈 화면 공포 해소 · 감성 UX, v2.0)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **25:20 · 24:21** | **Sfumato 2–0 승** |
+| **`WEB-SCRAPE`** *(오픈 웹 vs 대규모 AI 스크래퍼)* | Gemini 4 Neon | 6 / 8 | **7 / 8** | **1.17×** | **22:18 · 20:18** | **Sfumato 2–0 승** |
+| **`OSS-PR`** *(오픈소스 AI 슬롭 PR 홍수 방어)* | Gemini 4 Neon | 2 / 8 | **5 / 8** | **2.50×** | **21:17 · 18:21** | **Split 1–1** *(합산 +1)* |
+| **`AI-ARCH`** *(AI 코딩 에이전트 아키텍처 침식)* | Gemini 4 Neon | 4 / 8 | **7 / 8** | **1.75×** | **23:22.5 · 22.5:24** | **Split 1–1** |
+| **`DOC-ROT`** *(자가 치유 조직 문서 부패, v2.0)* | Gemini 4 Neon | 2 / 8 | **6 / 8** | **3.00×** | **23:22 · 23:26** | **Split 1–1** *(v1.2 대비 +3점)* |
+| **`GAME-SNOWBALL`** *(스노우볼 vs 억지 고무줄)* | Gemini 4 Neon | 5 / 8 | **7 / 8** | **1.40×** | 22:23 · 21:23 | Direct 2–0 *(한계 사례)* |
+| **`MKT-DIS`** *(교차 모델 · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 18:19 · **20:17** | **Split 1–1** *(합산 +2 · 거절 0)* |
+| **`DOC-ROT`** *(교차 모델 · `--safe-profile claude`)* | **Claude Opus 5.5** | 4 / 8 | **7 / 8** | **1.75×** | 20:22 · 20:22 | Direct 2–0 *(Anchor 미포함 · 거절 0)* |
+
+- **전체 누적(9회 실험 · 방식당 72개):** **다양성 9/9 전승** — 고유 메커니즘 **`60 / 72 (83.3%)`** vs Direct `34 / 72 (47.2%)` (**1.76배**).
+- **v2.0 7개 공개 난제 블라인드 승률:** **9 Sfumato vs 5 Direct (`64.3%`)** — **3승 3무 1패** (크로스도메인 후보가 Top-1에 오른 6개 문제에서는 **0-2 패배 0건**).
+- **원시 재현 로그 공개:** 모든 실험 원시 JSON과 블라인드 채점 근거를 [`benchmarks/v2/`](./benchmarks/v2/)에 공개했습니다 — `python tools/summarize_benchmarks.py benchmarks/v2`로 직접 재집계할 수 있습니다.
+
+> **⚖️ 어디서 빛나고, 어디서 한계가 있는가?**
+> - **가장 강한 영역:** 열린 전략·기획, 인센티브/메커니즘 설계, 고정관념을 깨는 감성·UX 설계(`UX-ONBOARD` 2–0 완승), 뻔한 교과서 답안을 돌파해야 하는 시스템 아키텍처.
+> - **솔직한 한계 (`GAME-SNOWBALL`):** 물리·수치 결합도가 높은 실시간 게임 밸런스처럼 표본이 작은(`K=3`) 상황에서 제도·통치 도메인만 연속 추첨되면 정면 Baseline보다 약할 수 있습니다. v2.0 Ablation에서도 **궁합이 안 맞는 원석을 억지로 접목하면 오히려 점수가 떨어짐(`43 → 39`)**을 확인했으므로, 엔지니어링·밸런스 난제는 `deep` 모드(`Direct Anchor + K=6`)로 하방(`≥ Direct`)을 잠그고 쓰는 것이 정석입니다.
+
+---
+
+## 🏛️ Sfumato v2.0 작동 원리: *도메인 마스킹 트레이드오프*
 
 기존 교차 도메인 유추 연구는 대부분 **Explicit Analogy**(*"생물학 원리로 마켓플레이스 문제를 풀어봐"*)만 씁니다. 원문제 어휘가 프롬프트에 남아 있어 일부 해법이 여전히 기존 업계 클리셰로 끌려가는 **부분 동질화**가 발생합니다.
 
 반대로 원문제 어휘를 100% 지우는 **Blind Isomorphic Masking**은 클리셰 중력을 0으로 끊어 극단적 돌연변이를 만들어내지만, 역번역 실패율 때문에 평균 타율은 낮습니다.
 
-**Sfumato는 두 트랙을 상호 격리 병렬로 동시에 발사하고, 출처를 지운 후보를 깨끗한 컨텍스트의 레드팀 게이트로 걸러 최고점(Top-1)을 뽑습니다:**
+**Sfumato v2.0은 두 트랙을 상호 격리 병렬로 동시에 발사한 뒤, 깨끗한 컨텍스트에서 레드팀 트리아지와 선택적 실전 경화를 거쳐 최고점(Top-1)을 완성합니다:**
 
 <p align="center">
   <img src="./assets/architecture_codex.svg" alt="Sfumato 아키텍처 다이어그램" width="100%" />
 </p>
 
-1. **클러스터 층화 코드 난수 추출 (`sample_domains.py`):** LLM에게 "아무 분야나 골라봐"라고 하면 매번 *개미·재즈·체스*만 고릅니다. Sfumato는 8개 대분류 클러스터 × 5개 = **40개 고밀도 메커니즘 도메인**에서 파이썬 난수로 겹치지 않게 뽑습니다.
+1. **클러스터 층화 코드 난수 + 세이프 프로파일 (`sample_domains.py`):** LLM에게 "아무 분야나 골라봐"라고 하면 매번 *개미·재즈·체스*만 고릅니다. Sfumato는 8개 대분류 × 5개 = **40개 고밀도 메커니즘 도메인**에서 파이썬 난수로 겹치지 않게 뽑습니다. Claude 계열에서는 `--safe-profile claude`로 민감한 생물·사이버·방첩 8개를 제외해 **8개 전 클러스터 32개 도메인·안전 거절 0건**을 유지합니다.
 2. **Track A — Explicit Analogy *(고타율·정밀 타격)*:** 원문제 브리프 + 배정 원격 도메인 → 도메인 고유의 공격면을 정밀 저격.
-3. **Track B — Blind Isomorphic Masking *(최고점 돌연변이)*:**
-   - **원래 분야의 단어를 100% 소거**하되 **인센티브 극성**(적대적 제로섬 vs 협력 vs 플랫폼 중개)은 엄격히 보존.
+3. **Track B — Blind Isomorphic Masking *(최고점 돌연변이 · v2.0 3줄 구조 골격)*:**
+   - 마스킹 전 원문제를 **3줄 도메인 중립 구조 골격**(상태 변수 · 인센티브 극성 · 제거 불가 트레이드오프)으로 먼저 압축한 뒤, **원본 어휘 누출 0건 검증**을 거쳐 원격 분야 문제로 재작성합니다.
    - 원래 문제를 전혀 모르는 격리 세션이 순수 타 분야 해결책을 도출 → **원문제 클리셰 중력 = 0**.
    - 인과 메커니즘과 트레이드오프만 역번역 (억지 비유는 과감히 폐기).
 4. **Direct Anchor *(`deep` 모드 · 최소 동점 보장)*:** 익명 셀렉터 풀에 정면 Baseline 1개를 함께 넣어 `max(Direct, Explicit, Blind) ≥ Direct` 하방을 잠급니다.
-5. **Stage 2 — 클린 컨텍스트 레드팀 게이트:** 출처·노이즈가 제거된 깨끗한 평가자가 **표면 비유 코스프레**, **역선택(Adverse Selection)**, **시빌/자전거래 악용**, **구현 불가 결함**을 먼저 쳐낸 뒤 생존 후보 중 **최고점 Top-1**을 선발합니다.
+5. **Stage 2a/2b — 클린 컨텍스트 레드팀 트리아지 & 선택적 실전 경화 *(v2.0)*:**
+   - **Stage 2a:** 출처가 지워진 깨끗한 평가자가 표면 비유 코스프레·역선택·시빌/자전거래 악용을 걸러내되, 고칠 수 있는 원석은 무조건 탈락시키지 않고 `HARDEN`으로 분류합니다.
+   - **Stage 2b:** 최종 선발된 Top-1 1건(크로스도메인 또는 Direct Anchor)의 단일 운영 약점만 정밀 보강합니다(억지 접목 금지). 이 개선으로 `DOC-ROT`가 `0–2 → 1–1`(+3점)으로 반등했고 `UX-ONBOARD` 2–0 완승을 이끌었습니다.
 
 ---
 
@@ -138,19 +169,43 @@
 
 ## 🚀 빠른 설치 및 사용법 (외부 의존성 0)
 
-단 4개 파일(`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`)을 에이전트 글로벌 스킬 폴더에 복사하면 끝입니다.
+단 4개 파일(`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`)만으로 **Claude Code**(`/sfm` 단축키 및 `--safe-profile claude` 자동 포함), **Antigravity (`agy`)**, **Codex CLI**에 한 줄로 설치됩니다.
 
 ```bash
-# Claude Code (스킬 + 선택 /sfm 3글자 단축 커맨드)
-cp -r skill/sfumato ~/.claude/skills/sfumato
-cp commands/sfm.md ~/.claude/commands/sfm.md
+# macOS / Linux — 한 줄 설치 (설치된 에이전트 자동 감지 · --target claude|agy|codex|all 지원)
+curl -fsSL https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.sh | bash
+```
 
-# Antigravity (agy)
+```powershell
+# Windows PowerShell — 한 줄 설치
+irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1 | iex
+```
+
+<details>
+<summary>로컬 클론 <code>--dry-run</code> 미리보기 및 수동 복사 설치</summary>
+
+```bash
+# macOS / Linux 미리보기 후 설치
+git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
+bash tools/install.sh --dry-run
+bash tools/install.sh --target all
+```
+
+```powershell
+# Windows PowerShell 미리보기 후 설치
+git clone https://github.com/Excelsus4/sfumato.git; Set-Location sfumato
+.\tools\install.ps1 -DryRun
+.\tools\install.ps1 -Target all
+```
+
+```bash
+# 수동 복사 (스크립트 없이 직접 설치)
+cp -r skill/sfumato ~/.claude/skills/sfumato && cp commands/sfm.md ~/.claude/commands/sfm.md
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
-
-# Codex CLI
 cp -r skill/sfumato ~/.codex/skills/sfumato
 ```
+
+</details>
 
 ```text
 /sfm 비대칭 3진영 RTS에서 스노우볼링과 억지 고무줄을 동시에 해결할 새 메카닉 뽑아줘

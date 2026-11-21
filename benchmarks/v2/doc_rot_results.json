@@ -1,0 +1,77 @@
+{
+  "problem_id": "DOC-ROT",
+  "title": "Self-Healing Documentation Rot in Fast-Moving Engineering Orgs",
+  "model": "antigravity-inherit",
+  "seed": 301,
+  "protocol": "iso_compute_4x2_direct_vs_1anchor_2explicit_1blind",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 2,
+    "unique_list": [
+      "Capability-Bound Executable Docs & Break-Glass Settlement (권한 결합형 실행 문서 + 브레이크글래스 격리·부채 정산, 4/4 runs converged)",
+      "Witness/Anchor-Bound Non-Blocking Apoptosis & Demand-Pulled Author Interrupt Routing (구조 앵커 비차단 세포자살 + 수요 기반 변경자 직통 라우팅, 4/4 runs converged)"
+    ],
+    "champion_name": "증인 바인딩 세포자살 + 마찰 역전 라우팅 (Witness-Bound Doc Apoptosis & Friction-Reversal Routing)",
+    "champion_summary": "① 핵심 원리: 현재 상태를 기술하는 문서 블록을 코드베이스의 결정론적 검증 앵커에 바인딩하고, 앵커 파손 시 PR을 막지 않은 채 문서를 즉시 격리한다. 이후 실제 독자 수요가 발생할 때만 변경 작성자에게 질의를 직통 라우팅해 문서 부패의 외부효과를 내부화하며, 과거 ADR은 불변 이력으로 분리한다. ② 작동 단계: 설계 문서·런북·온보딩 가이드의 각 블록에 1~2개의 AST 심볼·API 라우트·환경변수·아키텍처 테스트를 연결한다. 커밋으로 앵커가 깨지면 머지를 차단하지 않고 즉시 취소선 격리 및 검색·RAG 제외를 적용하며 원인 커밋 diff를 인라인 첨부한다. 미열람 문서는 인터럽트 없이 자동 아카이브되고, 독자가 확인을 요청하면 파손 커밋 작성자(부재·퇴사·봇은 CODEOWNERS·스쿼드)에게 단일 중복제거 스레드로 라우팅된다. ③ 강점과 우회 방어: PR 체크리스트·문서 KPI·자동 덮어쓰기 없이도 유지 비용을 실제 읽히는 문서에만 집중해 개발 속도 저하와 알림 피로를 없애고, 거짓 문서의 검색·RAG 오염을 즉시 차단한다. 또한 앵커를 임의로 삭제하는 커밋에도 동일한 격리와 작성자 귀속을 적용해 책임 회피 우회를 봉쇄한다. ④ 트레이드오프와 완화책: 대규모 심볼 리팩토링 시 작성자에게 질의가 집중되거나, 형식적 앵커로 재연결하고 미연결 문서를 방치하는 우회가 생길 수 있다. 이는 인라인 diff 자가 확인, 단일 스레드 중복제거, CODEOWNERS 폴백, 앵커 변경 감사 및 미연결 문서 기간 만료 정책으로 완화한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1_direct_anchor + 2_explicit + 1_blind",
+    "sampled_domains": [
+      {
+        "track": "explicit",
+        "id": "thermodynamics_cryogenics",
+        "name": "열역학·극저온 단열 설계 (Thermodynamics & Thermal Management)"
+      },
+      {
+        "track": "explicit",
+        "id": "mycorrhizal_plant_defense",
+        "name": "식물 방어 생태학·균근 네트워크 (Plant Chemical Defense & Mycorrhizal Networks)"
+      },
+      {
+        "track": "blind",
+        "id": "maritime_trade_guilds",
+        "name": "17~18세기 해상 무역 길드·해상법 (Maritime Trade Guilds & Admiralty Law)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 6,
+    "unique_list": [
+      "Runbook-as-Capability / JIT Execution Gate (direct_anchor)",
+      "Structural-Anchor Non-Blocking Decay & Demand-Pulled Author Routing (direct_anchor; Exp1-2 Heat-Flux Boil-Off and Exp2-1 Mustard-Oil Bioactivation/Abscission merged into this causal family under strict deduplication)",
+      "Cryogenic 3-Stage Volatility Stratification (4K/50K/300K) + Thermal Bridge Linter & Deterministic AST Transclusion Quench-Break (explicit:thermodynamics_cryogenics)",
+      "Mycorrhizal Biological Market: Live Operational-Flux Coupled SRE L1 Shield & Platform Privilege Reciprocal Sanctions + Nursery Loan Feature-Freeze Rescue (explicit:mycorrhizal_plant_defense)",
+      "Deviation-Bound Charter Docs & Error-Budget General Average Indemnity + Volatility Warranty Auto-Blanking (blind:maritime_trade_guilds)",
+      "Virtual Pilotage On-Call Credit Escrow + Hostile Preventive-Salvage Seizure & Voluntary Pre-Emptive Surrender + Onboarding-Coupled Rare-DR Audit Pot (blind:maritime_trade_guilds)"
+    ],
+    "red_team_cuts": [
+      "Virtual Pilotage On-Call Credit Escrow (blind:maritime_trade_guilds): cut at Gate (a)/(b) — zero-sum on-call credit trading invites collusion/farming and dispute friction, while pre-emptive surrender encourages leaving docs vacant during refactoring.",
+      "Mycorrhizal Biological Market (explicit:mycorrhizal_plant_defense): cut at Gate (a)/(b) — revoking diagnostics/JIT privileges when doc flux drops worsens MTTR and customer blast radius (adverse selection), and is easily gamed via trivial probes or Slack DM bypass.",
+      "Deviation-Bound Charter Docs (blind:maritime_trade_guilds): cut at Gate (1)/(a)/(b) — heavy maritime-insurance framing; tying incident liability to doc adherence undermines blameless postmortem culture, reintroduces calendar TTL churn, and incentivizes vague defensive prose.",
+      "Structural-Anchor Decay Anchor #2 (direct_anchor): cut at Gate (a)/(b)/(c) — 14-day auto-archive of unanchored prose destroys rationale docs, and next-PR settlement gate reintroduces banned PR blocking and punishes unrelated subsequent committers."
+    ],
+    "champion_name": "권한 임대형 실행 문서 / JIT 실행 게이트 (Runbook-as-Capability / JIT Execution Gate)",
+    "champion_source": "direct_anchor",
+    "champion_summary": "① 핵심 원리: 문서를 코드 옆의 참고 설명서로 두지 않고 프로덕션 변경, 장애 복구, 마이그레이션, 개발환경 프로비저닝의 유일한 권한 발급 경로로 결합해 공공재 딜레마를 제거한다. ② 작동 단계: 먼저 상시 수동 CLI 및 콘솔 쓰기 권한을 회수하고 읽기 전용 조회만 자유롭게 유지한다. 작업자가 Git 기반 실행 가능 마크다운의 파라미터화된 블록을 호출하면 브로커가 커밋 서명을 검증해 해당 명령과 리소스에만 유효한 5~15분 최소권한 JIT 토큰을 발급한다. 실행 실패 시 동료 1명 승인의 경량 패스트트랙으로 문서를 고쳐 재실행함으로써 업무 부산물로 즉시 자가 치유되며, 6개월 미사용 문서는 자동 도태된다. ③ 강점과 우회 방어: 기존 사후 점검·알림과 달리 실제 명령이 통과해야 본인 업무가 끝나므로 고무도장이나 방치가 원천 불가능하다. 또한 OPA 정적 정책으로 범용 셸 패스스루를 차단해 우회 실행을 막고, 상시 권한 제거라는 보안 요건과 맞물려 조직 내 지속력이 높다. ④ 트레이드오프와 완화책: 주요 트레이드오프는 초응급 장애 지연 우려, 초기 전환 비용, 비실행 설계 문서 미포괄이다. 초응급 상황은 10초 내 무승인 Break-Glass를 허용하되 실행 명령 자동 녹화, 우회 문서 격리 배너 부착, 48시간 내 사후 정산으로 완화한다. 고빈도 작업부터 점진 전환하고, 개념 설계는 불변 의사결정 기록과 역할을 분리해 운용한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": 24,
+      "sfumato_score": 22,
+      "winner": "direct",
+      "reason": "Direct(A: 참신8+실효8+현실8=24) vs Sfumato(B: 참신9+실효7+현실6=22). B는 JIT 권한 결합의 참신성과 실행형 런북 강제 치유력이 뛰어나나 비실행 설계 문서를 핵심 메커니즘 밖으로 제외해 범위 공백이 크고 브로커·OPA·Break-Glass 정산 인프라 마찰이 높음. A는 설계·런북·온보딩 3대 영역을 모두 포괄하며 PR 비차단 즉시 격리(RAG 오염 차단)와 수요 기반 지연 내부화로 실효성·도입 현실성에서 우위."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": 24,
+      "sfumato_score": 21,
+      "winner": "direct",
+      "reason": "Sfumato(A: 참신8+실효7+현실6=21) vs Direct(B: 참신9+실효7+현실8=24). A는 실행형 런북·프로비저닝에 강하나 비실행 설계 문서·개념 온보딩과 실행 블록 주변 산문 부패를 포괄하지 못하고 초기 인프라·운영 마찰이 큼. B는 PR 무차단 즉시 격리와 독자 수요 기반 원인 작성자 지연 라우팅으로 세 문서 유형 전반을 아우르며 도입 현실성과 범위 포괄성에서 뚜렷한 우위."
+    }
+  },
+  "outcome": "direct_win_2_0"
+}

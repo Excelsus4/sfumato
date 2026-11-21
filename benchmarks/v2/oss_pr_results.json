@@ -1,0 +1,99 @@
+{
+  "problem_id": "OSS-PR",
+  "title": "Defending Open-Source Repos from AI-Slop PR Floods",
+  "model": "antigravity-inherit",
+  "seed": 102,
+  "protocol": "iso_compute_4x2_direct_vs_1anchor_2explicit_1blind",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 2,
+    "unique_list": [
+      "Adversarial Executable Peer-Triage & Canary Quarantine Gate (4/4 runs: D1-A, D2-A, D3-A, D4-A)",
+      "Overlay-First Shadow Staging & Pre-Snapshot Downstream Pull (4/4 runs: D1-B, D2-B, D3-B, D4-B)"
+    ],
+    "champion_name": "오버레이 우선 '살아있는 패치' 인큐베이션 (Overlay-First Living Patch Incubation)",
+    "champion_summary": "[메커니즘 명칭] 오버레이 우선 '살아있는 패치' 인큐베이션\n[핵심 작동 구조] 비요청 PR은 메인테이너 비노출 표준 오버레이 아티팩트로, 이슈는 실행형 재현 캡슐로 격리 게시된다. 다운스트림 CI가 이를 실행하면 OIDC 사용·재현 증명이 누적된다. 동시에 업스트림 main 변경마다 자동 리베이스·차등 실행이 돌며, 의미론적 충돌 시 제출자가 최신화해야 반감기 TTL 만료를 면하고 생존(Drift Survival)한다. 과거 동결된 패키지 레지스트리 역의존성 그래프의 TrustRank 임계치와 업스트림 변화 생존을 모두 충족한 패치만 Pull 승격되며, 크래시·메모리 안전성 결함은 오라클 패스트트랙으로 즉시 처리된다.\n[비대칭 역전 원리 및 우회 내성] 미검증 제출물의 리뷰 비용을 0으로 차단하고 지속 유지보수 부담을 제출자에게 전가한다. 일회성 자동 살포 슬롭은 Drift Survival을 통과하지 못해 자동 소멸한다. 또한 사전 스냅샷 의존성 그래프의 TrustRank 가중치와 CI OIDC 서명을 결합해 신규 가짜 계정, 사전 잠복 더미 저장소, 텔레메트리 위조를 차단하면서도 정상 신규 기여자의 진입 장벽을 없앤다.\n[트레이드오프 및 완화책] 역의존성이 적은 단독 앱이나 니치 기능은 승격 콜드스타트가 발생하며, 잦은 업스트림 변경은 정상 기여자에게 리베이스 피로를 주고 미검증 오버레이는 공급망 위험을 수반한다. 완화책으로 치명 결함은 오라클 패스트트랙으로 분리하고, Drift 검증 주기를 릴리스 단위로 조절하며, 다운스트림 CI 실행 시 네트워크·권한이 격리된 허메틱 샌드박스를 강제한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1_direct_anchor + 2_explicit + 1_blind",
+    "sampled_domains": [
+      {
+        "track": "explicit",
+        "id": "wildland_firefighting",
+        "name": "대형 산불 진압·맞불 공학 (Wildland Firefighting & Incident Command)"
+      },
+      {
+        "track": "explicit",
+        "id": "mycorrhizal_plant_defense",
+        "name": "식물 방어 생태학·균근 네트워크 (Plant Chemical Defense & Mycorrhizal Networks)"
+      },
+      {
+        "track": "blind",
+        "id": "film_editing_kuleshov",
+        "name": "영화 편집·쿨레쇼프 맥락 프레임 (Film Editing & Narrative Compression)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 5,
+    "unique_list": [
+      "Reverse-Pull Shadow-Overlay Soak & Graduation (direct_anchor; duplicated by explicit:wildland_firefighting Idea 2)",
+      "Adversarial Falsification Arena & Diff-Domination Duel (direct_anchor; duplicated by explicit:wildland_firefighting Idea 1 & explicit:mycorrhizal_plant_defense Idea 1)",
+      "Induced Resource Bunkering & Tannin Slow-Growth Future-Entropy Defense (explicit:mycorrhizal_plant_defense Idea 2)",
+      "Distant-Invariant Accordion Strip & Same-Slot KEM-Roll Homogeneity Audition (blind:film_editing_kuleshov Idea 1)",
+      "De-Polished 3-Beat Architectural Proof-Sheet & Beat-Lock Gate (blind:film_editing_kuleshov Idea 2)"
+    ],
+    "red_team_cuts": [
+      "Reverse-Pull Shadow-Overlay (direct_anchor): cut on downstream supply-chain risk, non-library inapplicability, and cold-start adverse selection",
+      "Adversarial Falsification Arena (direct_anchor): cut on 24/7 AI bot dominance over human newcomers and code-golf/pool-pollution exploits",
+      "Backfire Counter-Burn Protocol (explicit:wildland_firefighting): cut as jargon-cosplay duplicate of Adversarial Falsification Arena + unattacked survival bypass",
+      "Indirect Containment Overlay & Lookout Cross-Bearing (explicit:wildland_firefighting): cut as jargon-cosplay duplicate of Shadow-Overlay + Sybil cloud-fingerprint spoofing",
+      "Arbuscule Reciprocal Titration (explicit:mycorrhizal_plant_defense): cut as AI-friendly PoW trap (LLM bots beat humans at mutant-killing & git bisect)",
+      "Induced Resource Bunkering & Tannin Slow-Growth (explicit:mycorrhizal_plant_defense): cut on 24/7 bot auto-rebase adverse selection + missing prod shadow replay in OSS libraries",
+      "Distant-Invariant Accordion Strip & KEM-Roll Audition (blind:film_editing_kuleshov): conditional runner-up; cut from Top-1 due to multi-hop trace extraction noise & single-PR spread bypass"
+    ],
+    "champion_name": "표면 광택 박탈 3-비트 아키텍처 콘택트 시트 및 비트-락 2단계 해금 (De-Polished 3-Beat Architectural Proof-Sheet & Beat-Lock Gate)",
+    "champion_source": "blind:film_editing_kuleshov",
+    "champion_summary": "[메커니즘 명칭] 표면 광택 박탈 3-비트 아키텍처 콘택트 시트 및 비트-락 2단계 해금\n[핵심 작동 구조] 외부 PR은 무장벽 접수되나, 메인테이너 열람 전 정적·동적 분석기가 산문·주석·식별자를 전면 제거하고 변경을 균일한 3-비트 구조 골격으로 투영한다. 골격은 진입 경계·시그니처 변화, 제어흐름·상태변이·신규 모듈 의존성 엣지, 종료 불변식·부작용 변화로 구성된다. 메인테이너는 핵심 계층 경계인 1-스크린 아키텍처 스파인 아래 20~30건의 골격을 격자 병렬 판독해 통과분만 원문을 해금하며, 승인 엣지를 이탈한 구현은 CI 비트-락이 차단한다. 기여자·제보자는 3-비트 초안으로 사전 검증이 가능하다.\n[비대칭 역전 원리 및 우회 내성] 저품질 PR은 유려한 산문과 관용 코드로 건당 30분의 선형 읽기를 강제한다. 광택 박탈과 스파인 대조로 검토를 건당 1~2초 공간 스캔으로 압축해 비대칭을 역전한다. 결정론적 분석만 사용해 계정·비용 장벽과 AI 오탐이 없고, 동료 평가가 없어 시빌 공모가 무효화되며, 승인 후 바꿔치기를 비트-락이 차단하고 분산 살포에도 효력이 유지된다.\n[트레이드오프 및 완화책] 구조 위반 없는 함수 내부 논리 결함은 1단계를 통과하며, 동적 언어 리플렉션은 분석 정밀도를 낮추고 초기 스파인 작성 비용이 든다. 완화책으로 통과분 원문·테스트 검증을 병행하고, CI 동적 부작용 추적과 불투명 호출 경고를 추가하며, 기존 의존성 그래프에서 초기 스파인을 자동 추출한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": 17,
+      "sfumato_score": 21,
+      "direct_breakdown": {
+        "novelty": 8,
+        "effectiveness": 6,
+        "realism": 3
+      },
+      "sfumato_breakdown": {
+        "novelty": 9,
+        "effectiveness": 6,
+        "realism": 6
+      },
+      "winner": "sfumato",
+      "reason": "Sfumato는 외부 생태계 합의 없이 단일 저장소(라이브러리·앱 무관)에 즉시 도입 가능하고 정상 신규 기여자 역선택 없이 LLM 표면 광택을 결정론적 공간 스캔으로 무력화해 현실성·실전성 우위(Direct는 다운스트림 채택 콜드스타트·단독 앱 불가·리베이스 봇 역선택이 치명적)."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": 21,
+      "sfumato_score": 18,
+      "direct_breakdown": {
+        "novelty": 9,
+        "effectiveness": 7,
+        "realism": 5
+      },
+      "sfumato_breakdown": {
+        "novelty": 8,
+        "effectiveness": 5,
+        "realism": 5
+      },
+      "winner": "direct",
+      "reason": "Direct는 미검증 제출물의 메인테이너 노출을 O(0)으로 차단하고 Drift Survival·과거 동결 TrustRank·OIDC·재현 캡슐로 PR과 가짜 이슈를 동시 방어해 Brandolini's Law 역전력 우위(Sfumato는 O(N) 잔존, 경계 무위반 함수 내부 슬롭 및 가짜 이슈 취약)."
+    }
+  },
+  "outcome": "split_1_1"
+}

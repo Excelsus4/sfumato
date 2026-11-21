@@ -1,0 +1,108 @@
+{
+  "problem_id": "GAME-SNOWBALL",
+  "title": "Solving the Snowballing vs. Artificial Rubber-Banding Dilemma in Competitive Multiplayer",
+  "model": "antigravity (inherit)",
+  "seed": 601,
+  "protocol": "iso_compute_4runs_x_2ideas_clean_redteam_order_swapped_blind_ab",
+  "direct": {
+    "runs": 4,
+    "total_ideas": 8,
+    "unique_mechanisms": 5,
+    "unique_list": [
+      "전투력-승리 자본 분리 (Victory-Combat Capital Decoupling / Divestment / Anchoring) [3회 중복: Direct-1-1, Direct-3-2, Direct-4-1]",
+      "불가역적 빌드 결정화와 잔여 가소성 (Irreversible Crystallization & Residual Plasticity) [2회 중복: Direct-3-1, Direct-4-2(전역 패권 법칙 결합 변형 포함)]",
+      "대칭적 생존 여력 담보 배수진 (Symmetrical Safety-Buffer Collateralized Gambit / Empty-Net) [1회: Direct-1-2]",
+      "위상 결속형 전력망과 연쇄 단전 (Topology-Anchored Power Grid & Articulation Blackout) [1회: Direct-2-1]",
+      "에너지 상전이 이원 경제와 혁신가의 딜레마 (Thermodynamic Dual-Resource Phase-Shift Economy) [1회: Direct-2-2]"
+    ],
+    "champion_name": "위상 결속형 전력망과 연쇄 단전 (Topology-Anchored Power Grid & Cascading Blackout)",
+    "champion_summary": "메커니즘 이름: 위상 결속형 전력망과 연쇄 단전\n핵심 구조: 거점 점령의 핵심 전투력 보상을 휴대용 영구 스탯 대신 본진 코어와 위상 연결된 전장 중계망의 실시간 급전에 귀속시킨다. 선두의 영토 확장은 곧 화력 증폭이지만 동시에 외선 연장과 그래프 단절점을 동반하며, 열세 측은 압축된 영역에서 내선 기동 우위를 자연 획득한다.\n구체적 작동 단계: 본진 코어와 연결된 중계 거점을 점령할수록 아군 전체 화력과 스킬 출력이 실시간 증폭된다. 맵 대부분을 장악한 선두가 압도적 급전으로 공성 데스볼을 형성하면, 열세 측은 짧은 내선 기동력으로 배후 핵심 단절점을 기습 타격한다. 단절점이 과부하되면 하류 노드들이 25초간 연쇄 단전되어 전선 급전이 즉각 증발하고, 선두가 이를 막으려 병력을 분산하면 열세 측이 국지 수적 우위로 각개격파를 노린다.\n초반 보상 보존 및 역전 인과: 인위적 보정이나 선두 디버프 없이 초반 우위는 높은 실시간 출력과 경제로 100% 보상된다. 역전은 오직 과확장된 선두의 취약 위상을 간파해 병목을 끊는 정밀 기동과 전략으로만 성립한다.\n핵심 리스크 및 완화책: 소수 기동 유닛의 반복 기습으로 피로한 백도어 핑퐁이 유발될 위험이 있다. 단전을 25초 일시 과부하와 채널링·경보 조건으로 제한하고, 선두가 축적 자원으로 우회 회로와 전진 코어를 건설해 취약점을 단계적으로 봉인하도록 설계한다."
+  },
+  "sfumato": {
+    "runs": 4,
+    "composition": "1 Direct Anchor + 2 Track A Explicit + 1 Track B Blind",
+    "sampled_domains": [
+      {
+        "index": 0,
+        "assigned_track": "explicit",
+        "cluster": "history_institutions",
+        "id": "tokugawa_governance",
+        "name": "전근대 제국 통치·산킨코타이 제도 (Imperial Control & Asymmetric Commitment)"
+      },
+      {
+        "index": 1,
+        "assigned_track": "explicit",
+        "cluster": "social_anthropology",
+        "id": "ombudsman_whistleblower",
+        "name": "옴부즈만·익명 내부고발 보호 설계 (Ombudsman & Cryptographic Whistleblowing)"
+      },
+      {
+        "index": 2,
+        "assigned_track": "blind",
+        "cluster": "intelligence_conflict",
+        "id": "counter_intelligence",
+        "name": "지하 점조직 방첩학·정보전 (Clandestine Counter-Intelligence)"
+      }
+    ],
+    "total_ideas": 8,
+    "unique_mechanisms": 7,
+    "unique_list": [
+      "불가역적 전력·교리 공개 고착과 잔여 가소성 / 공용 인프라 역이용 (Irreversible Public Lock-in + Shared Physical Infrastructure Hijacking) [2건 부분 중복 병합: Direct Anchor-1 + Track A-1b(공용 고속 이동로 역이용 추가)]",
+      "위상 격리 다중 전선과 블로토 분산 (Phase-Locked Blotto Theaters) [1회: Direct Anchor-2]",
+      "자발적 핵심 자산(질자) 담보와 이중 거점 주기 순환 (Collateralized Sovereignty & Sankin-kotai Rotation) [1회: Track A-1a (tokugawa_governance)]",
+      "네트워크 규모(N) 비례 링 서명 익명 유출과 부당 감사 리스크 (Ring-Signature Anonymity-Set Whistleblower & Canary Trap) [1회: Track A-2a (ombudsman_whistleblower)]",
+      "자발적 정족수 임계치 암호화 공조 에스크로 (Callisto-Style Threshold Coalition Escrow) [1회: Track A-2b (ombudsman_whistleblower)]",
+      "구획화 센서 융합 순환 위장망과 바륨 밀 역추적 (Compartmentalized Sensor-Fusion Circular Spoofing & Barium-Meal Tracing) [1회: Track B-1 (counter_intelligence 역번역)]",
+      "직접 지휘 반경 vs. 위임 프로토콜 위장 지령과 재키잉 공백 (Direct-Command Horizon vs. False-Flag Protocol Spoofing & Re-keying Freeze) [1회: Track B-2 (counter_intelligence 역번역)]"
+    ],
+    "red_team_cuts": [
+      "Candidate 3 (Track A-1a, tokugawa_governance — 질자 담보 & 참근 순환): 핵심 전투 자산 강제 분리 예치와 최고 순자산자 예측 경로 셔틀 강제가 사실상 선두 디버프/세금(클리셰 #5) 및 1타 강탈(클리셰 #3) 변종으로 귀결되어 탈락.",
+      "Candidate 5 (Track A-2a, ombudsman_whistleblower — 링 서명 내부고발망): 1/N 무작위 색출 및 오인 감사 페널티가 실시간 경쟁 게임에서 선두에게 과도한 RNG·인지 부하 세금으로 작용하고 데스볼 역전 인과가 약해 탈락.",
+      "Candidate 6 (Track A-2b, ombudsman_whistleblower — 칼리스토 임계치 공조 에스크로, 와일드카드): 다자간(BR/4X/FFA) 보스 레이드 발상은 매우 날카로우나 2진영 대결(MOBA/1v1 RTS) 적용 불가 및 다자간 1위 은폐(샌드배깅)·허위 표적 휴전 악용 리스크로 Top-1 게이트 탈락.",
+      "Candidate 7 (Track B-1, counter_intelligence — 구획화 센서 융합 위장망): 첩보·센서 융합 표면 비유 성격이 강하며 인간 플레이어 기반 실시간 PvP에서 AI 경보 오판·시야 왜곡 강제가 비현실적이라 탈락.",
+      "Candidate 8 (Track B-2, counter_intelligence — 위임 프로토콜 위장 지령 & 재키잉 공백): 사이버보안·C2 코스프레 성격이 강하고 외곽 직접 통제 인위 차단이 확장 디버프(클리셰 #5) 및 관리 피로감을 유발해 탈락."
+    ],
+    "champion_name": "위상 격리 다중 전선과 블로토 분산 (Phase-Locked Blotto Theaters)",
+    "champion_source": "Direct Anchor (Idea 2)",
+    "champion_summary": "메커니즘 이름: 위상 격리 다중 전선과 블로토 분산\n핵심 구조: 중후반 결전의 승리 조건을 단일 전면전이 아닌 홀수 개 독립 전선의 과반 점유로 재설계해, 스노우볼링의 수학적 원인인 데스볼의 과잉 화력 이월을 차단하는 대칭형 배분 구조다.\n구체적 작동 단계: 핵심 페이즈마다 전장이 3개 또는 5개 독립 구역으로 동시 분화한다. 양측은 15초간 은닉 동시 배치 후 30~45초간 전선 간 이동과 글로벌 지원이 물리적으로 차단된 동시 국지전을 치른다. 각 전선은 100:0 대승이든 51:49 신승이든 동일하게 1승으로 집계되며, 과반(3중 2승, 5중 3승) 점유 측이 페이즈 진척도를 획득한다.\n초반 보상 보존 및 역전 인과: 초반 선두의 스탯·자원 우위는 1% 감쇄 없이 총 배분 예산으로 100% 보존되며, 예산이 클수록 균형 승률이 단조 상승해 고의 패배 유인이 없다. 1.7~2배 이상의 압도적 우위는 균등 배치로 깔끔히 승리를 종결하고, 1.2~1.6배 우위에서는 열세 측이 1개 전선을 의도적으로 포기하고 미끼 투입·정찰·집중 배치 심리전으로 남은 과반을 탈환하는 공정한 역전이 자연 발생한다.\n핵심 리스크 및 완화책: 주된 리스크는 빈집 엇갈림, 동시 교전의 관전 피로, 포기 전선에 배치된 팀원의 무기력감이다. 중앙·측면 전선 가치 차등화와 최소 진입 비용으로 빈집 꼼수를 방지하고, 3전선·30초 단축 설계 및 실시간 통합 HUD로 관전 가독성과 템포를 확보한다."
+  },
+  "blind_judges": {
+    "ab": {
+      "a_is": "direct",
+      "b_is": "sfumato",
+      "direct_score": {
+        "novelty": 7,
+        "effectiveness": 8,
+        "feasibility": 8,
+        "total": 23
+      },
+      "sfumato_score": {
+        "novelty": 9,
+        "effectiveness": 8,
+        "feasibility": 5,
+        "total": 22
+      },
+      "winner": "direct",
+      "reason": "Sfumato Champion(Proposal B)은 블로토 이론으로 과잉 화력 이월을 수학적으로 차단하는 참신성(9점)과 초반 예산 100% 보존의 이론적 완결성이 돋보이나, 30~45초 물리 격리가 실시간 경쟁 게임의 유기적 합류·기동을 끊고 포기 전선 팀원의 무기력감 및 동시 교전 관전 피로라는 심각한 현실성 장벽(5점)을 낳는다. 반면 Direct Champion(Proposal A)은 연속 전장 흐름과 전력선 점등·단전의 직관적 가독성, 우회 회로·전진 코어를 통한 선두의 능동적 봉인 수단까지 갖춰 실제 멀티플레이 게임 아키텍처 완결성에서 우위(23 vs 22)를 점했다."
+    },
+    "ba": {
+      "a_is": "sfumato",
+      "b_is": "direct",
+      "direct_score": {
+        "novelty": 7,
+        "effectiveness": 8,
+        "feasibility": 8,
+        "total": 23
+      },
+      "sfumato_score": {
+        "novelty": 8,
+        "effectiveness": 8,
+        "feasibility": 5,
+        "total": 21
+      },
+      "winner": "direct",
+      "reason": "Sfumato Champion(Proposal A)은 블로토 이론과 위상 격리를 결합한 참신하고 정교한 해법이나, 은닉 배치의 가위바위보 편차와 팀 기반 실시간 게임에서 포기 전선에 30~45초간 격리된 플레이어의 무기력감·전장 흐름 단절이라는 UX·관전 한계(현실성 5점)가 치명적이다. Direct Champion(Proposal B)은 순수 참신성은 다소 낮지만(7점), 단일 연속 전장 내 과확장의 기하학적 취약점(단절점)과 내선 기동 우위, 직관적 연쇄 단전 가독성, 선두의 우회 회로·전진 코어 봉쇄 수단까지 고루 갖춰 실전 완성도가 높다(23 vs 21)."
+    }
+  },
+  "outcome": "direct_win"
+}

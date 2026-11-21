@@ -1,0 +1,129 @@
+{
+  "experiment": "sfumato_v2_stage2b_ablation",
+  "problem_id": "GAME-SNOWBALL",
+  "title": "Solving the Snowballing vs. Artificial Rubber-Banding Dilemma in Competitive Multiplayer",
+  "hypothesis": "v1.2가 GAME-SNOWBALL에서 0-2로 패배한 원인이 Stage 2가 크로스도메인 원석을 수리·경화 없이 이진 탈락시키고 1-shot Direct Anchor로 후퇴했기 때문인지 검증",
+  "model": "antigravity (inherit)",
+  "seed": 601,
+  "protocol": "equal_hardening_1pass_clean_context_order_swapped_blind_ab",
+  "source_baseline": "../game_snowball_results.json",
+  "baseline_v1_2": {
+    "direct_champion": "위상 결속형 전력망과 연쇄 단전 (Topology-Anchored Power Grid & Cascading Blackout)",
+    "sfumato_champion": "위상 격리 다중 전선과 블로토 분산 (Phase-Locked Blotto Theaters)",
+    "sfumato_source": "Direct Anchor (Idea 2)",
+    "scores": {
+      "ab": {
+        "direct_total": 23,
+        "sfumato_total": 22,
+        "winner": "direct"
+      },
+      "ba": {
+        "direct_total": 23,
+        "sfumato_total": 21,
+        "winner": "direct"
+      }
+    },
+    "aggregate": {
+      "direct_sum": 46,
+      "sfumato_sum": 43,
+      "outcome": "direct_win (2-0)"
+    }
+  },
+  "stage2b_hardening": {
+    "direct_hardened": {
+      "arm": "direct_hardened",
+      "subagent_id": "95dfbb7f-6d86-4862-a8fb-38b670ba412f",
+      "base_champion": "위상 결속형 전력망과 연쇄 단전",
+      "diagnosed_weaknesses": [
+        "우회 회로·전진 코어 봉인 시 재스노우볼링 딜레마: 축적 자원이 앞선 선두가 우회 회로와 전진 코어로 그래프 단절점을 완전 봉인하면 위상 취약성이 소멸해 중후반 가비지 타임이 재발하고, 반대로 봉인을 약화하면 소수 기동 유닛의 반복 기습으로 피로한 백도어 핑퐁이 발생한다.",
+        "단순 25초 정전의 교전 회피(Stalling)와 기존 RTS 보급선 차단과의 차별성 한계: 단절 시 하류 급전이 25초간 일괄 증발하는 ON/OFF 구조는 기존 RTS 보급선·파일런 차단과 구조적으로 유사하며, 선두 데스볼이 단전 직후 25초간 후퇴·대기하기만 하면 역전 교전 자체가 성립하지 않는다."
+      ],
+      "repair_applied": "이진적 ON/OFF 단전과 영구 우회 봉인을 '양 팀 공통 키르히호프식 유량 보존 배선(단일 주간선 집중 vs 병렬 우회 분산)'과 '점유 접지·유량 관성 역류'로 구조적으로 교체했다. 선두는 총출력 100%를 유지하되 단일 데스볼 화력과 다전선 안정성 사이에서 항상 전략적 트레이드오프를 선택해야 하며, 열세 측은 단독 기습 대신 현장 상주 점유 접지로 7초 관성 지연과 국지 방호막 역류를 일으켜 후퇴 없는 정면 결전과 물리적 전선 탈환을 강제한다.",
+      "champion_name": "유량 보존 위상 도관과 점유 접지",
+      "word_count": 172,
+      "champion_summary": "메커니즘 이름: 유량 보존 위상 도관과 점유 접지\n핵심 구조: 거점 전투력 보상을 영구 스탯 대신 본진 코어에서 지향성 도관으로 송전되는 실시간 유량에 귀속시킨다. 양 팀 공통 유량 보존 법칙상 단일 주간선 집중은 압도적 공성 화력과 고부하 병목을 동반하고, 병렬 우회 분산은 총출력 100%를 보존하며 다전선 압박으로 전환된다.\n구체적 작동 단계: 지면 도관의 굵기와 밝기가 실시간 유량을 표시한다. 선두가 단일 주간선으로 공성 데스볼을 밀면, 열세 측은 내선 기동으로 배후 고부하 중계점에 주력을 투입해 점유 접지를 건다. 접지 중 하류 급전은 7초 관성 뒤 감쇠하고, 간선 유량이 점유 측 국지 방호막으로 전환되어 정면 결전을 강제한다. 10초 사수 시 거점이 탈환되며, 병렬 우회 전환 시 단절은 막되 데스볼이 다전선 국지전으로 분산된다.\n초반 보상 보존 및 역전 인과: 점수 보정이나 선두 페널티 없이 영토 우위는 100% 총출력과 배선 주도권으로 보상된다. 역전은 오직 집중 배선 타이밍을 읽어 내선 기동으로 병목을 접지하고 국지 결전을 이기는 전략으로만 성립한다.\n핵심 리스크 및 완화책: 소수 유닛의 교란 접지와 배선 조작 피로가 우려된다. 접지를 현장 상주와 전역 경보 조건에 묶어 단독 백도어를 차단하고, 배선은 원클릭 집중·분산 프리셋과 7초 관성 전환으로 단순화한다."
+    },
+    "sfumato_v2_hardened": {
+      "arm": "sfumato_v2_hardened",
+      "subagent_id": "5814b3f2-7256-4642-bae1-e0714f3a98a2",
+      "selected_domain": "tokugawa_governance",
+      "selected_gem": "공용 물리 인프라 역이용 (원석 1b) — 패권자가 확장·구축한 고속 이동로와 거점 인프라를 피아 구분 없는 개방 물리 규칙으로 열세 측도 대칭 역이용",
+      "grafted_anchor_element": "Anchor A(불가역적 전력·교리 공개 고착과 후발 잔여 가소성) + 30초 강제 격리 없는 연속 실시간 다중 거점 전장 가독성(2진영 MOBA/RTS부터 다자전까지 범용 대칭 작동)",
+      "repaired_redteam_defect": "원석 1a의 강제 자산 예치·예측 셔틀(선두 디버프/세금 클리셰 #5 및 1타 강탈 클리셰 #3)을 전면 제거하고, 모든 진영이 동일 슬롯으로 자발 구축하는 개방 인프라로 재설계. 선두의 무구축 저속 뭉침(데스볼) 회피는 넓은 다중 거점 지형상 압박 지연 및 열세 측 선구축 허용으로, 구축 측 역차별 및 단타 본진 백도어는 중립 지대 연결 제한과 노선 방향·교리 선점권으로 정면 수리",
+      "champion_name": "개방 동력망 (Open Conduit Grid)",
+      "word_count": 171,
+      "champion_summary": "메커니즘 이름: 개방 동력망 (Open Conduit Grid)\n핵심 구조: 모든 플레이어·진영이 동일한 한정 슬롯으로 전장에 고속 이동로와 교리 증폭 거점을 영구 각인하되, 피아 없는 개방 물리 규칙으로 선두의 인프라를 열세 측도 역이용·역접속하게 한다.\n구체적 작동 단계: ① 초반 우위 측은 분산 거점을 빠르게 장악·공성하려 자원을 투자해 중립 지대에 직선 동력선과 단일 교리(돌파·공성·지속전 중 택1)를 영구 공개 구축한다. ② 진입한 모든 유닛은 피아 무관하게 동일한 이동 가속과 교리 증폭을 실시간 적용받는다. ③ 열세 측은 공개된 노선·교리를 읽고 미사용 슬롯과 빌드 가소성으로 카운터를 갖춘 뒤, 빈 구간으로 후방을 급습하거나 교차 분기를 역접속해 역공한다.\n초반 보상 보존 및 역전 인과: 선두의 스탯·경제 우위는 100% 보존되며 노선 방향·교리 선택권과 선제 템포까지 독점한다. 그러나 우위를 승리로 굳히려 전선을 넓힐수록 공개된 가속로가 길어져, 후발 측이 적의 인프라와 교리를 역설계·역이용하는 공정한 실력 역전이 자연 발생한다.\n핵심 리스크 및 완화책: 선두가 구축을 기피해 저속 뭉침만 고집할 위험은 넓은 다중 거점 지형으로 무구축 시 압박을 늦춰 열세 측의 분산 성장·선구축을 허용해 해소한다. 반대로 구축이 손해가 되지 않도록 중립 지대만 연결해 단타 본진 침투를 막고, 교차점 수비 시 선두의 압승을 보장한다."
+    }
+  },
+  "blind_judges": {
+    "ab": {
+      "subagent_id": "b5bb952e-76f6-4149-bf36-5e801bbad64b",
+      "a_is": "direct_hardened",
+      "b_is": "sfumato_v2_hardened",
+      "direct_hardened_score": {
+        "novelty": 7,
+        "effectiveness": 8,
+        "feasibility": 7,
+        "total": 22
+      },
+      "sfumato_v2_hardened_score": {
+        "novelty": 9,
+        "effectiveness": 6,
+        "feasibility": 5,
+        "total": 20
+      },
+      "winner": "direct_hardened",
+      "raw_winner": "A",
+      "reason": "두 안 모두 금지 클리셰를 피하면서 선두의 우위 확장 행위 자체에서 전략적 취약점을 도출하려 했으나, 실전 역전 인과와 멀티플레이 현실성에서 승패가 갈렸다. Proposal B는 '피아 무관 영구 인프라 개방'과 '조기 커밋먼트 대비 후발 가소성'이라는 구조적 참신성이 매우 뛰어나지만, 대칭 증폭은 스탯이 앞선 측에 유리하기 쉽고 선두 보호를 위한 중립 지대 한정·교차점 수비 압승 장치가 역전 레버리지를 약화시키며 영구 각인으로 인한 팀 내 그리핑 및 최소 건설 퇴행 메타 위험이 크다. 반면 Proposal A는 보급선 차단 문법의 변주라 참신성은 다소 낮고 방호막 전환 계수가 과하면 유사 역전 버프로 변질될 여지는 있으나, 단일 데스볼 집중 시 병목 노출과 병렬 우회 시 다전선 분산이라는 유량 보존 딜레마가 가비지 타임을 깨는 실효적 인과가 훨씬 선명하다. 또한 도관 굵기·밝기 기반의 직관적 시각화, 원클릭 프리셋, 현장 상주·전역 경보를 통한 백도어 차단 등 실제 게임 구현과 관전성 측면의 완성도가 높아 Proposal A를 승자로 선정한다."
+    },
+    "ba": {
+      "subagent_id": "c97fb79d-8abc-4649-80f6-52075fdbe516",
+      "a_is": "sfumato_v2_hardened",
+      "b_is": "direct_hardened",
+      "direct_hardened_score": {
+        "novelty": 7,
+        "effectiveness": 8,
+        "feasibility": 8,
+        "total": 23
+      },
+      "sfumato_v2_hardened_score": {
+        "novelty": 8,
+        "effectiveness": 6,
+        "feasibility": 5,
+        "total": 19
+      },
+      "winner": "direct_hardened",
+      "raw_winner": "B",
+      "reason": "Proposal A는 피아 공용 인프라와 선제 구축의 경로 의존성을 후발 측이 역설계한다는 발상 자체는 참신하지만, 기본 스탯이 앞선 선두가 공용 고속 이동로와 교리 증폭을 오히려 더 유리하게 활용해 스노우볼을 가속하거나 구축을 기피할 퇴행 리스크가 커 역전 인과가 취약하다. 반면 Proposal B는 고전적인 보급선·내선 기동 문법에서 출발해 원천 참신성은 다소 낮으나, 거점 전투력을 유량 보존 법칙에 귀속시켜 단일 데스볼 집중(배후 고부하 병목 노출)과 병렬 분산(다전선 국지전 전환) 사이의 정당한 전략적 딜레마를 구조화했다. 특히 열세 측의 점유 접지가 적의 집중 유량을 국지 방호막으로 치환해 소수 백도어 핑퐁 대신 정면 국지 결전을 강제하는 구조는, 초반 총출력 우위를 100% 보존하면서도 지루한 데스볼 가비지 타임을 깨는 실효성이 탁월하다. 지면 도관의 굵기·밝기, 7초 관성 감쇠, 원클릭 배선 프리셋, 전역 경보 등 실시간 UX·관전성과 악용 방어 완성도에서도 Proposal B가 뚜렷하게 앞서므로 B를 승자로 선정한다."
+    }
+  },
+  "summary": {
+    "outcome": "direct_hardened_win",
+    "win_loss": "0-2 (Sfumato v2.0 Hardened 0 wins vs Direct Hardened 2 wins)",
+    "scores_aggregate": {
+      "direct_hardened_sum": 45,
+      "sfumato_v2_hardened_sum": 39,
+      "direct_hardened_mean": {
+        "novelty": 7.0,
+        "effectiveness": 8.0,
+        "feasibility": 7.5,
+        "total": 22.5
+      },
+      "sfumato_v2_hardened_mean": {
+        "novelty": 8.5,
+        "effectiveness": 6.0,
+        "feasibility": 5.0,
+        "total": 19.5
+      }
+    },
+    "delta_vs_v1_2": {
+      "direct_sum_delta": -1,
+      "sfumato_sum_delta": -4,
+      "sfumato_effectiveness_delta": -2.0,
+      "sfumato_feasibility_delta": 0.0,
+      "sfumato_novelty_delta": 0.0
+    },
+    "hypothesis_verdict": "REFUTED",
+    "diagnosis": "Stage 2b 실전 경화·접목을 양측 동일 예산으로 적용해도 Sfumato v2.0이 0-2(39 vs 45)로 패배했다. 크로스도메인 원석(tokugawa_governance 공용 인프라 역이용)은 참신성(8.5 vs 7.0)을 확보했으나, 피아 대칭 증폭 구조가 제로섬 실시간 경쟁 게임에서는 스탯 우위 선두의 스노우볼을 오히려 가속하거나 무건설·팀 그리핑 퇴행 메타를 유발해 실효성(6.0 vs 8.0)과 현실성(5.0 vs 7.5)이 무너졌다. 즉 GAME-SNOWBALL의 0-2 패인은 Stage 2 이진 탈락만이 아니라, Stage 1 샘플 도메인(통치/내부고발/방첩)이 제로섬 실시간 전투의 '보존 법칙 기반 트레이드오프(유량 보존·내선 기하학)'와 구조적 동형성이 약했던 근본적 도메인-극성 미스매치에 기인한다."
+  }
+}
