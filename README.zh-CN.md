@@ -25,7 +25,7 @@
 
 > *“Sfumato”（意大利语：如烟消散，中文常译作「晕涂法」）是列奥纳多·达·芬奇消融生硬轮廓、让全新形态自然浮现的绘画技法。达·芬奇从不把自己困在单一学科里——他将解剖学、流体力学、要塞筑城术与光学原理彼此移植，催生出惊人的发明。*
 >
-> **Sfumato** 是一款超轻量级智能体技能（`/sfumato`、`/sfm`），让前沿大语言模型也做到同样的事——**仅 5 个纯文本文件，无需外部 RAG、无需微调、零第三方依赖。**
+> **Sfumato** 是一款超轻量级智能体技能（`/sfumato`、`/sfm`），让前沿大语言模型也做到同样的事——**仅 4 个纯文本文件，无需外部 RAG、无需微调、零第三方依赖。**
 
 </div>
 
@@ -105,30 +105,31 @@
 - **跨模型裁判结果：** **3 胜（`MKT-DIS` 2–0、`WEB-SCRAPE` 2–0、`AI-ARCH` 2–0）、1 平（`GAME-SNOWBALL` 1–1）、3 负（`UX-ONBOARD`、`OSS-PR`、`DOC-ROT` v1.2）** — **7 Sfumato 对比 7 Direct**（7 题中有 6 题零顺序偏置）。
 - **数据诚实证明了什么：**
   - **跨模型稳定优势：** **9 / 9 多样性全胜（K=4 为 `1.76×`，K=12 为 `3.0×`）**，稳定发掘常规直出难以触达的结构性机制，并在 `MKT-DIS` 与 `WEB-SCRAPE` 上同时赢得 Gemini 与 Claude 双裁判 2–0 完胜（`AI-ARCH` 在 Claude 下 2–0 胜）。
-  - **诚实的局限（每题 `n=1` 种子）：** 面对强劲的 4 路 Direct Best-of-N，单次 Top-1 胜率接近均势（主实验 `9:9`，跨模型裁判 `7:7`），且 Track B 盲态轨道更偏向零陈词滥调的「破局外卡」而非高频直胜源。因此 **Sfumato v2.1 在 `dual-track` 与 `deep` 模式中均默认内置 Direct Anchor**，锁住不低于基线的下限（`≥ Direct`），同时提供 1.7–3.0× 的探索广度。
+  - **诚实的局限（每题 `n=1` 种子）：** 面对强劲的 4 路 Direct Best-of-N，单次 Top-1 胜率接近均势（主实验 `9:9`，跨模型裁判 `7:7`），且 Track B 盲态轨道更偏向零陈词滥调的「破局外卡」而非高频直胜源。因此 **Sfumato v2.2 在 `dual-track` 与 `deep` 模式中均默认内置 Direct Anchor**，锁住不低于基线的下限（`≥ Direct`），同时提供 1.7–3.0× 的探索广度。
 - **可复现日志与端到端执行记录：**
   - 本地验证全部 9 轮主实验与 2 组 v2.0 Stage 2b 消融（`v2_ablation_*.json`）：`python tools/summarize_benchmarks.py benchmarks/v2 --strict` *（单独的 Pool v2.0 实验记录见 [`game_snowball_pool_v2_results.json`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json)）*
   - 结构化基准摘要与裁判依据：[`benchmarks/v2/`](./benchmarks/v2/)
   - Claude Opus 5.5 独立跨模型审计：[`benchmarks/v2/cross_model_judges/claude_on_gemini.json`](./benchmarks/v2/cross_model_judges/claude_on_gemini.json)
-  - v2.1 端到端完整执行记录（`sample_domains.py` → `check_leak.py` → 4 路隔离求解摘要 → Stage 2a `PASS/HARDEN/KILL` → Stage 2b 加固）：[`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
+  - v2.1 归档端到端完整执行记录（`sample_domains.py` → 4 路隔离求解摘要 → Stage 2a `PASS/HARDEN/KILL` → Stage 2b 加固；v2.2 已移除该归档中的正则校验脚本，改为共享骨架与整段提示词复读审查）：[`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
 
 ---
 
-## 🏛️ Sfumato v2.1 工作原理：*领域掩码权衡*
+## 🏛️ Sfumato v2.2 工作原理：*领域掩码权衡*
 
 大多数跨领域提示词研究只使用 **显式类比（Explicit Analogy）**，原问题词汇残留导致局部同质化；纯 **盲态重构（Blind Reframing）** 虽能彻底切断陈词滥调引力，却常因回译失真拉低命中率。
 
-**Sfumato v2.1 将 Direct Anchor 与双跨领域轨道完全隔离并行运行，并结合极性感知代码抽样、代码级零泄漏校验与干净上下文红队分诊/选择性加固：**
+**Sfumato v2.2 将 Direct Anchor 与双跨领域轨道完全隔离并行运行，并结合极性感知代码抽样、共享骨架原生约束掩码与干净上下文红队分诊/选择性加固：**
 
 <p align="center">
-  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.1 架构图" width="100%" />
+  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.2 架构图" width="100%" />
 </p>
 
 1. **极性感知分簇代码抽样（`sample_domains.py`）：** 纯 Python 标准库从 **11 大类 74 个高机制密度领域** 中分层抽取，默认隐藏 `mechanisms` 提示防止领域内二次坍缩（可用 `--include-hints` 开启），并通过 `--polarity`（`adversarial | cooperative | physical_loop | human_ux | systems_ops`）确保至少半数领域与问题激励极性契合。Claude Code 下使用 `--safe-profile claude` 保留 **66 个安全领域（11 大类每类恰好 6 个）** 并实现 **0 拒答**。
 2. **Direct Anchor *（`dual-track` 与 `deep` 默认内置 · 下限保障）*：** 在匿名候选池中加入 1 路隔离直出方案，保证 `max(Direct, Explicit, Blind) ≥ Direct`。
 3. **Track A — 显式类比 *（高命中率）*：** 原问题简报 + 远程领域 → 精准结构迁移。
-4. **Track B — 盲态同构掩码 *（最高上限 · 三行结构骨架 + `check_leak.py`）*：**
-   - 先提炼 **三行领域中立结构骨架**，改写进目标领域，并 **调用 `scripts/check_leak.py` 进行代码级 0 词泄漏校验** 后再派发子智能体。
+4. **Track B — 盲态同构掩码 *（最高上限 · 共享三行结构骨架 + 原生约束内化）*：**
+   - 先统一提炼一份私有的 **三行领域中立结构骨架**（行动者/代价承担者与激励极性 · 核心非对称 · 静态控制失效原因），并在派发前对照原问题确认极性与代价承担者无误。
+   - 用 `{USER_LANGUAGE}` 将骨架改写为目标领域从业者自然会遇到的独立场景，把禁用老套路直接融入场景的物理/制度约束（不再单独拼接禁用列表），派发前通读整段提示词确认实务合理性、无源术语混入且极性一致。
    - 隔离求解器仅在远程学科内部求解——**物理隔绝原领域陈词滥调引力。**
    - 仅回译因果机制与权衡，果断淘汰牵强比喻。
 5. **Stage 2a/2b — 干净上下文红队分诊（`PASS / HARDEN / KILL`）与选择性加固：**
@@ -183,14 +184,13 @@
 
 ---
 
-## 🚀 安装与使用（5 个纯文本文件 · 零外部依赖）
+## 🚀 安装与使用（4 个纯文本文件 · 零外部依赖）
 
-Sfumato 运行所需的全部内容都在 [`skill/sfumato/`](./skill/sfumato/) 目录下——仅包含 **5 个可直接审阅的文件**：
+Sfumato 运行所需的全部内容都在 [`skill/sfumato/`](./skill/sfumato/) 目录下——仅包含 **4 个可直接审阅的文件**：
 - `SKILL.md` — 技能指令、多智能体指南（Claude Code / Antigravity / Codex CLI）与执行流程
 - `references/prompt_templates.md` — 语言无关（`{USER_LANGUAGE}`）的 Anchor、Explicit、Blind、Stage 2a 分诊与 Stage 2b 加固模板
 - `resources/domain_pool.json` — 11 大类 74 个高机制密度领域池（`66` 个 Claude 安全领域，每类均衡 6 个，含极性亲和标签 `affinities`）
 - `scripts/sample_domains.py` — 纯 Python 标准库极性感知分层抽样器（零网络请求、零磁盘写入）
-- `scripts/check_leak.py` — Track B 掩码代码级零泄漏校验器（支持英文整词边界及中文/韩文/西里尔子串匹配）
 
 克隆仓库、审阅文件内容后，将 `skill/sfumato` 复制到对应智能体的全局技能目录即可：
 
@@ -250,7 +250,7 @@ Sfumato 直接建立在 2025–2026 年四条交汇的 LLM 创造力研究脉络
 - **Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation** — Nuo Chen 等，2026（[arXiv:2604.18005](https://arxiv.org/abs/2604.18005)）：证明密集辩论与共识拓扑会压垮语义多样性，由此确立 Stage 1 严格**零串扰**并行架构。
 - **Unlocking LLM Creativity in Science through Analogical Reasoning** — Andrew Shen, Shaul Druckmann, James Zou，2026（[arXiv:2605.11258](https://arxiv.org/abs/2605.11258)）：证实结构化跨领域类比能显著提升方案多样性与新颖性。
 - **Assessing the Effect of Cross-Domain Mapping on Creativity in Humans and Large Language Models** — Qiawen Ella Liu, Marina Dubova, Henry Conklin, Takumi Harada, Thomas L. Griffiths，2026（[arXiv:2603.19087](https://arxiv.org/abs/2603.19087)）：揭示前沿 LLM 在源领域足够遥远且进行结构关系映射时获益最明显。
-- **Sfumato 的工程贡献：** 将 *显式类比* 与 *盲态同构掩码* 之间的 **领域掩码权衡** 工程化，并与 **Direct Anchor 下限保障**、**极性感知代码抽样**、**代码级零泄漏校验（`check_leak.py`）** 及 **干净上下文红队分诊/选择性加固** 闭环融合。
+- **Sfumato 的工程贡献：** 将 *显式类比* 与 *盲态同构掩码* 之间的 **领域掩码权衡** 工程化，并与 **Direct Anchor 下限保障**、**极性感知代码抽样**、**共享骨架原生约束掩码** 及 **干净上下文红队分诊/选择性加固** 闭环融合。
 
 ---
 

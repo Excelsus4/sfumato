@@ -54,6 +54,20 @@ class SummarizeTests(unittest.TestCase):
             code = sb.main([self.tmp] + list(extra))
         return code, out.getvalue(), err.getvalue()
 
+    def test_non_ascii_stdout_utf8_subprocess(self):
+        self._write("tr.json", _result("İSTANBUL-1", 2, 4, 3, 4, "sfumato", "sfumato"))
+        self._write("ru.json", _result("Şükrü-Model", 1, 4, 1, 4, "tie", "tie"))
+        env = dict(os.environ)
+        env.pop("PYTHONIOENCODING", None)
+        env.pop("PYTHONUTF8", None)
+        p = subprocess.run([sys.executable, "-B", os.path.join(HERE, "summarize_benchmarks.py"),
+                            self.tmp, "--strict"], capture_output=True, env=env, timeout=60)
+        self.assertEqual(p.returncode, 0, p.stderr.decode("utf-8", "replace"))
+        out = p.stdout.decode("utf-8")
+        self.assertIn("İSTANBUL-1", out)
+        self.assertIn("Şükrü-Model", out)
+        self.assertEqual(p.stderr.decode("utf-8"), "")
+
     def test_table_and_tally(self):
         self._write("mkt.json", _result("MKT-DIS", 6, 24, 18, 24, "sfumato", "sfumato"))
         self._write("oss.json", _result("OSS-PR", 5, 12, 5, 12, "direct", "sfumato"))
@@ -310,7 +324,6 @@ BASH_IS_WSL = bool(BASH) and os.name == "nt" and os.path.normcase(
 SAMPLER = os.path.join(REPO, "skill", "sfumato", "scripts", "sample_domains.py")
 
 
-CHECK_LEAK = os.path.join(REPO, "skill", "sfumato", "scripts", "check_leak.py")
 POOL_PATH = os.path.join(REPO, "skill", "sfumato", "resources", "domain_pool.json")
 BENCH_V2 = os.path.join(REPO, "benchmarks", "v2")
 
@@ -496,94 +509,6 @@ class SampleDomainsTests(unittest.TestCase):
         self.assertIn("No eligible clusters", p.stderr)
 
 
-class CheckLeakTests(unittest.TestCase):
-    def _run(self, *args, stdin=None):
-        return subprocess.run([sys.executable, "-B", CHECK_LEAK] + list(args), input=stdin,
-                              capture_output=True, text=True, encoding="utf-8",
-                              errors="replace", timeout=60)
-
-    def test_pass_exit_0(self):
-        p = self._run("--terms", "app,user", "--text", "A merchant approaches a guild hall.")
-        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
-        self.assertEqual(p.stdout.strip(), "PASS: 0 leaked terms")
-
-    def test_ascii_word_boundaries(self):
-        for text in ("Open the app.", "Two apps compete.", "The app's queue.", "APP store",
-                     "user-facing", "(app)"):
-            with self.subTest(text=text):
-                self.assertEqual(self._run("--terms", "app,user", "--text", text).returncode, 1)
-        for text in ("A new approach.", "An apple tree.", "Applause", "happy", "userland",
-                     "reusers"):
-            with self.subTest(text=text):
-                self.assertEqual(self._run("--terms", "app,user", "--text", text).returncode, 0)
-
-    def test_short_uppercase_term(self):
-        self.assertEqual(self._run("--terms", "PR", "--text", "Two PRs landed").returncode, 1)
-        self.assertEqual(self._run("--terms", "PR", "--text", "a prism and april").returncode, 0)
-
-    def test_multi_word_terms(self):
-        p = self._run("--terms", "chat filter", "--text", "line one\nthe Chat   Filter blocks it")
-        self.assertEqual(p.returncode, 1)
-        self.assertIn("FAIL:", p.stdout)
-        self.assertIn("chat filter", p.stdout)
-        self.assertIn("line 2", p.stdout)
-        self.assertEqual(self._run("--terms", "chat filter",
-                                   "--text", "chat with a coffee filter").returncode, 0)
-
-    def test_non_ascii_substring(self):
-        p = self._run("--terms", "앱,사용자", "--text", "첫 줄\n앱에서 사용자들이 떠난다")
-        self.assertEqual(p.returncode, 1)
-        self.assertIn("'앱'", p.stdout)
-        self.assertIn("'사용자'", p.stdout)
-        self.assertEqual(self._run("--terms", "応用,ПОЛЬЗОВАТЕЛЬ",
-                                   "--text", "Пользователь ушёл").returncode, 1)
-        self.assertEqual(self._run("--terms", "앱", "--text", "상인이 길드에 들어선다").returncode, 0)
-
-    def test_file_stdin_and_terms_file(self):
-        tmp = tempfile.mkdtemp(prefix="sfm-leak-")
-        try:
-            text_path = os.path.join(tmp, "masked.txt")
-            terms_path = os.path.join(tmp, "terms.txt")
-            with open(text_path, "w", encoding="utf-8") as f:
-                f.write("guild hall\nthe caravan\nan app slipped in\n")
-            with open(terms_path, "w", encoding="utf-8") as f:
-                f.write("platform, user\napp\n\n")
-            p = self._run("--terms-file", terms_path, "--file", text_path)
-            self.assertEqual(p.returncode, 1, p.stdout + p.stderr)
-            self.assertIn("'app'", p.stdout)
-            self.assertIn("line 3", p.stdout)
-            p = self._run("--terms", "app", stdin="clean caravan text\n")
-            self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
-            p = self._run("--terms", "caravan", stdin="the caravans\n")
-            self.assertEqual(p.returncode, 1)
-            p = self._run("--terms", "app", "--file", os.path.join(tmp, "missing.txt"))
-            self.assertEqual(p.returncode, 2)
-            p = self._run("--terms-file", os.path.join(tmp, "missing.txt"), "--text", "x")
-            self.assertEqual(p.returncode, 2)
-        finally:
-            shutil.rmtree(tmp, ignore_errors=True)
-
-    def test_json_output(self):
-        p = self._run("--terms", "app,user,앱", "--text", "apps\nok\nuser 앱", "--json")
-        self.assertEqual(p.returncode, 1)
-        data = json.loads(p.stdout)
-        self.assertEqual(data["status"], "FAIL")
-        self.assertEqual(data["leaked_count"], 3)
-        by_term = {d["term"]: d for d in data["leaks"]}
-        self.assertEqual(by_term["app"]["lines"], [1])
-        self.assertEqual(by_term["user"]["lines"], [3])
-        self.assertEqual(by_term["앱"]["mode"], "substring")
-        p = self._run("--terms", "app", "--text", "approach", "--json")
-        self.assertEqual(p.returncode, 0)
-        self.assertEqual(json.loads(p.stdout), {"status": "PASS", "leaked_count": 0,
-                                                "terms_checked": 1, "leaks": []})
-
-    def test_invalid_arguments_exit_2(self):
-        self.assertEqual(self._run("--text", "x").returncode, 2)
-        self.assertEqual(self._run("--terms", " , ,", "--text", "x").returncode, 2)
-        self.assertEqual(self._run("--terms", "a", "--text", "x", "--file", "y").returncode, 2)
-
-
 class InstallerTestBase(unittest.TestCase):
     def setUp(self):
         self.home = tempfile.mkdtemp(prefix="sfm-home-")
@@ -614,14 +539,20 @@ class InstallerTestBase(unittest.TestCase):
             with open(os.path.join(cmd_dir, n)) as f:
                 self.assertEqual(f.read(), n + "\n")
 
+    RUNTIME_FILES = ("SKILL.md", "references/prompt_templates.md",
+                     "resources/domain_pool.json", "scripts/sample_domains.py")
+    RETIRED_FILES = ("scripts/check_leak.py",)
+
     def assertSkillInstalled(self, rel):
         dest = os.path.join(self.home, *rel.split("/"))
-        for f in ("SKILL.md", "references/prompt_templates.md", "resources/domain_pool.json",
-                  "scripts/sample_domains.py", "scripts/check_leak.py"):
+        for f in self.RUNTIME_FILES:
             src = os.path.join(REPO, "skill", "sfumato", *f.split("/"))
             self.assertTrue(os.path.isfile(src), src)
-            if os.path.exists(src):
-                self.assertTrue(os.path.isfile(os.path.join(dest, *f.split("/"))), rel + "/" + f)
+            self.assertTrue(os.path.isfile(os.path.join(dest, *f.split("/"))), rel + "/" + f)
+        for f in self.RETIRED_FILES:
+            src = os.path.join(REPO, "skill", "sfumato", *f.split("/"))
+            self.assertFalse(os.path.exists(src), src)
+            self.assertFalse(os.path.exists(os.path.join(dest, *f.split("/"))), rel + "/" + f)
 
 
 @unittest.skipUnless(POWERSHELL, "PowerShell not available")

@@ -2,7 +2,7 @@
 name: sfumato
 description: >-
   Sfumato — Dual-Track Cross-Domain Ideation (Direct Anchor + Explicit Analogy + Blind Isomorphic Reframing)
-  using isolated parallel subagents, code-verified zero-leak masking, and a clean-context red-team selector to
+  using isolated parallel subagents, shared structural-skeleton masking, and a clean-context red-team selector to
   erase domain boundaries, break LLM homogenization, and widen exploration diversity without regressing below baseline.
   Trigger explicitly when the user invokes `/sfumato`, `/sfm`, or asks to run Sfumato.
   Trigger autonomously ONLY when the user asks for high-ceiling, non-obvious brainstorming on
@@ -18,7 +18,7 @@ Named after Leonardo da Vinci's *sfumato* technique (dissolving rigid borders to
 
 - **Direct Anchor** *(default in `dual-track` & `deep`)*: 1 isolated native-domain baseline solver placed in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — locking the quality floor on tightly coupled engineering/systems loops.
 - **Track A — Explicit Analogy** *(original problem visible + assigned remote domain)*: High hit-rate and surgical precision against domain-specific attack surfaces, though vulnerable to partial homogenization back toward industry clichés.
-- **Track B — Blind Isomorphic Reframing** *(original domain vocabulary erased & code-checked → solved blind in an isolated session → back-translated)*: Lower hit-rate (some abstractions won't translate cleanly), but **zero cliché gravity**, producing heavy-tail outlier mutations impossible in Track A.
+- **Track B — Blind Isomorphic Reframing** *(original domain vocabulary erased via a shared structural skeleton → solved blind in an isolated session → back-translated)*: Lower hit-rate (some abstractions won't translate cleanly), but **zero cliché gravity**, producing heavy-tail outlier mutations impossible in Track A.
 - **Stage 2a/2b — Clean-Context Red-Team Triage & Selective Hardening**: A fresh, uncontaminated evaluator classifies candidates (`PASS / HARDEN / KILL`), selects Top-1, and hardens *only* Top-1's single biggest operational weakness.
 
 ---
@@ -54,20 +54,18 @@ python "<skill_dir>/scripts/sample_domains.py" --k 11 --mode dual-track --polari
 python "<skill_dir>/scripts/sample_domains.py" --all --safe-profile claude
 ```
 
-### 3. Prepare Track B Isomorphic Masks via 3-Line Structural Skeleton + Zero-Leak Check
+### 3. Prepare Track B Isomorphic Masks via Shared 3-Line Structural Skeleton + Whole-Prompt Reread
 Before spawning Track B subagents, do **NOT** jump straight from the original problem to a remote-domain story. Use a 2-step masking pass:
-1. **Extract a 3-Line Domain-Neutral Structural Skeleton:**
-   - `Actors & Incentive Polarity:` (zero-sum/adversarial vs. cooperative vs. physical-loop vs. platform-refereed)
+1. **Extract ONE Shared Private 3-Line Structural Skeleton (Check Polarity First):**
+   - `Actors, Cost-Bearer & Incentive Polarity:` (who acts, who bears the downside, and whether actors are zero-sum/adversarial, cooperative, physical-loop, or platform-refereed)
    - `Core Asymmetry / Bottleneck:` (exact cost, information, physics, or cognitive imbalance)
-   - `Why Static Controls Fail:` (exact failure mode of obvious rules/filters/tutorials)
-2. **Map Skeleton → Target Domain + Code-Verified Zero-Leak Check:**
-   - Rewrite the skeleton using 100% native nouns of the target domain (**zero** leaked original-domain jargon).
+   - `Why Static Controls Fail:` (exact failure mode of obvious rules, filters, or tutorials)
+   - Check this skeleton against the original brief **before fanning out**: a mistaken polarity or cost-bearer spoils every Blind domain in the run.
+2. **Map Skeleton → Native Target-Domain Scenario + Whole-Prompt Reread:**
+   - For each Blind domain, rewrite the skeleton into a standalone problem in `{USER_LANGUAGE}` that a practitioner in `{DOMAIN_NAME}` could plausibly pose, using 100% native nouns of `{DOMAIN_NAME}`.
+   - **Fold failed fixes into native constraints:** Express why the banned clichés fail as natural physical, economic, or institutional constraints *inside* the scenario itself (do not append a separate banned-cliché list).
    - **Strict Polarity Preservation:** Never map zero-sum enemies onto a cooperative central authority (and vice versa).
-   - Run the bundled zero-leak validator before spawning the Blind solver (must exit `0`):
-
-```bash
-python "<skill_dir>/scripts/check_leak.py" --terms "<comma_separated_original_domain_terms>" --text "<masked_scenario_text>"
-```
+   - **Whole-Prompt Reread:** Reread the entire outgoing Blind prompt once before spawning: *(a) would a practitioner in `{DOMAIN_NAME}` find it natural, (b) did any source-domain jargon or proper nouns slip in, and (c) does the same actor still bear the same downside cost?* Repair any mismatch in place.
 
 See [prompt_templates.md](./references/prompt_templates.md) for the exact templates.
 
@@ -118,7 +116,7 @@ Normalize surviving Direct Anchor + Track A + translated Track B candidates into
 
 ## Validation Checklist
 - [ ] Domains were sampled via `scripts/sample_domains.py` in a single call (with `--polarity` and, on Claude Code, `--safe-profile claude`).
-- [ ] Every Track B masked scenario passed `scripts/check_leak.py` with exit code `0` AND preserved incentive polarity.
+- [ ] Shared 3-line Track B skeleton was checked against the brief for cost-bearer & polarity fidelity, failed fixes were folded into native scenario constraints, and each outgoing Blind prompt was reread end-to-end for plausibility and zero pasted source jargon.
 - [ ] All Stage 1 solvers ran isolated with zero shared conversation history and zero tool calls.
 - [ ] Every prompt specified `{USER_LANGUAGE}` matching the user's request.
 - [ ] Stage 2a produced explicit `PASS / HARDEN / KILL` triage in a clean context, and Stage 2b hardened only the winning Top-1 without forcing polarity-mismatched grafts.

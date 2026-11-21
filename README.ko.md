@@ -25,7 +25,7 @@
 
 > *'스푸마토(Sfumato, 연기처럼 경계를 흐린다)'는 레오나르도 다빈치가 딱딱한 윤곽선을 지워 전혀 새로운 형상을 끌어낸 회화 기법입니다. 다빈치는 한 분야에 갇히지 않고 해부학·유체역학·축성술·광학의 원리를 서로 이식해 발명을 만들어냈습니다.*
 >
-> **Sfumato**는 외부 RAG도, 파인튜닝도, 외부 라이브러리도 없이 **평문 파일 5개(`/sfumato`, `/sfm`)**만으로 AI 에이전트의 아이디어 탐색 폭을 넓히고 하방(`Direct Anchor`)을 지키면서 돌파구를 찾습니다.
+> **Sfumato**는 외부 RAG도, 파인튜닝도, 외부 라이브러리도 없이 **평문 파일 4개(`/sfumato`, `/sfm`)**만으로 AI 에이전트의 아이디어 탐색 폭을 넓히고 하방(`Direct Anchor`)을 지키면서 돌파구를 찾습니다.
 
 </div>
 
@@ -105,32 +105,33 @@
 - **교차 모델 심판 결과:** **3승(`MKT-DIS` 2–0, `WEB-SCRAPE` 2–0, `AI-ARCH` 2–0) · 1무(`GAME-SNOWBALL` 1–1) · 3패(`UX-ONBOARD`, `OSS-PR`, `DOC-ROT` v1.2)** — **7 Sfumato : 7 Direct** (7문제 중 6문제에서 순서 편향 0).
 - **데이터가 정직하게 말해주는 사실:**
   - **모델과 무관하게 입증된 강점:** **다양성 9/9 전승(`K=4` 1.76배, `K=12` 3.0배)**으로 Direct 프롬프팅이 닿지 못하는 구조적 대안을 일관되게 발굴하며, `MKT-DIS`·`WEB-SCRAPE`는 Gemini와 Claude 심판 모두에서 2–0 완승(`AI-ARCH`는 Claude 심판 2–0 승)을 거뒀습니다.
-  - **솔직한 한계(문제당 시드 `n=1`):** 강력한 4회 Direct Best-of-N 대비 단발 Top-1 승률은 호각(`9:9` 기본, `7:7` 교차 심판)이며, Track B(블라인드)는 단독 1위보다는 클리셰를 깨는 와일드카드·관점 전환 공급원으로 빛납니다. 그래서 **Sfumato v2.1은 `dual-track`과 `deep` 모드 모두에 Direct Anchor를 기본 포함**해 하방(`≥ Direct`)을 잠그면서 1.7~3배 넓은 탐색 공간을 확보합니다.
+  - **솔직한 한계(문제당 시드 `n=1`):** 강력한 4회 Direct Best-of-N 대비 단발 Top-1 승률은 호각(`9:9` 기본, `7:7` 교차 심판)이며, Track B(블라인드)는 단독 1위보다는 클리셰를 깨는 와일드카드·관점 전환 공급원으로 빛납니다. 그래서 **Sfumato v2.2는 `dual-track`과 `deep` 모드 모두에 Direct Anchor를 기본 포함**해 하방(`≥ Direct`)을 잠그면서 1.7~3배 넓은 탐색 공간을 확보합니다.
 - **재현 로그 및 종단간 실행 기록:**
   - 기본 9회 + v2.0 Stage 2b 절제 2건(`v2_ablation_*.json`) 로컬 검증: `python tools/summarize_benchmarks.py benchmarks/v2 --strict` *(별도 Pool v2.0 실행 로그는 [`game_snowball_pool_v2_results.json`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json)에 수록)*
   - 구조화 벤치마크 요약 및 채점 근거: [`benchmarks/v2/`](./benchmarks/v2/)
   - Claude Opus 5.5 독립 교차 심판 로그: [`benchmarks/v2/cross_model_judges/claude_on_gemini.json`](./benchmarks/v2/cross_model_judges/claude_on_gemini.json)
-  - v2.1 종단간 실행 기록 (`sample_domains.py` → `check_leak.py` → 격리 솔버 4개 요약 → Stage 2a `PASS/HARDEN/KILL` → Stage 2b 경화): [`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
+  - v2.1 아카이브 종단간 실행 기록 (`sample_domains.py` → 격리 솔버 4개 요약 → Stage 2a `PASS/HARDEN/KILL` → Stage 2b 경화; v2.2에서는 이 기록에 등장하는 정규식 누출 스크립트를 폐기하고 공유 골격·전체 프롬프트 재독으로 단순화): [`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
 
 ---
 
-## 🏛️ Sfumato v2.1 작동 원리: *도메인 마스킹 트레이드오프*
+## 🏛️ Sfumato v2.2 작동 원리: *도메인 마스킹 트레이드오프*
 
 기존 교차 도메인 유추 연구는 대부분 **Explicit Analogy**(*"생물학 원리로 마켓플레이스 문제를 풀어봐"*)만 씁니다. 원문제 어휘가 프롬프트에 남아 있어 일부 해법이 여전히 기존 업계 클리셰로 끌려가는 **부분 동질화**가 발생합니다.
 
 반대로 원문제 어휘를 100% 지우는 **Blind Isomorphic Masking**은 클리셰 중력을 0으로 끊어 극단적 돌연변이를 만들어내지만, 역번역 손실 때문에 평균 타율은 낮습니다.
 
-**Sfumato v2.1은 Direct Anchor와 두 크로스도메인 트랙을 상호 격리 병렬로 실행한 뒤, 코드 기반 누출 검증과 클린 컨텍스트 레드팀 트리아지·선택적 경화로 최고점(Top-1)을 완성합니다.**
+**Sfumato v2.2는 Direct Anchor와 두 크로스도메인 트랙을 상호 격리 병렬로 실행한 뒤, 공유 구조 골격 기반 마스킹과 클린 컨텍스트 레드팀 트리아지·선택적 경화로 최고점(Top-1)을 완성합니다.**
 
 <p align="center">
-  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.1 아키텍처 다이어그램" width="100%" />
+  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.2 아키텍처 다이어그램" width="100%" />
 </p>
 
 1. **극성 인식 클러스터 층화 코드 난수 (`sample_domains.py`):** LLM에게 "아무 분야나 골라봐"라고 하면 매번 *개미·재즈·체스*만 고릅니다. Sfumato는 11개 대분류 **74개 고밀도 메커니즘 도메인**에서 파이썬 난수로 겹치지 않게 뽑으며, 기본적으로 `mechanisms` 힌트를 생략해 도메인 내부 동질화를 막습니다(`--include-hints`로 선택 활성화). `--polarity` (`adversarial | cooperative | physical_loop | human_ux | systems_ops`)로 최소 절반은 문제 극성과 구조적으로 맞는 클러스터에서 추출하고, Claude에서는 `--safe-profile claude`로 **11개 전 클러스터 균등 6개씩 66개 안전 도메인·거절 0건**을 유지합니다.
 2. **Direct Anchor *(`dual-track`·`deep` 기본 포함 · 하방 보장)*:** 익명 셀렉터 풀에 정면 Baseline 1개를 기본 포함해 `max(Direct, Explicit, Blind) ≥ Direct` 하방을 잠급니다.
 3. **Track A — Explicit Analogy *(고타율·정밀 타격)*:** 원문제 브리프 + 배정 원격 도메인 → 도메인 고유의 공격면을 정밀 저격.
-4. **Track B — Blind Isomorphic Masking *(최고점 돌연변이 · 3줄 구조 골격 + `check_leak.py`)*:**
-   - 원문제를 **3줄 도메인 중립 구조 골격**(행위자·인센티브 극성 · 핵심 비대칭 · 정적 통제 실패 원인)으로 압축한 뒤 원격 분야로 재작성하고, **서브에이전트 호출 전 `scripts/check_leak.py`로 원문제 어휘 누출 0건을 코드 검증**합니다.
+4. **Track B — Blind Isomorphic Masking *(최고점 돌연변이 · 공유 3줄 구조 골격 + 고유 제약 내재화)*:**
+   - 원문제를 한 번 **비공개 3줄 도메인 중립 구조 골격**(행위자·비용 부담자·인센티브 극성 · 핵심 비대칭 · 정적 통제 실패 원인)으로 압축하고, 팬아웃 전 원문제 브리프와 대조해 극성·비용 부담자 정합성을 먼저 확정합니다.
+   - 각 원격 분야 실무자가 실제로 다룰 법한 독립 시나리오로 `{USER_LANGUAGE}`에 맞춰 재작성하되, 금지 클리셰는 별도 목록이 아니라 시나리오 안의 물리·제도적 제약으로 자연스럽게 녹여 넣은 뒤 발송 직전 전체 프롬프트를 1회 재독합니다(실무성·원본 용어 혼입 여부·극성 보존 점검).
    - 원래 문제를 전혀 모르는 격리 세션이 순수 타 분야 해법을 도출 → **원문제 클리셰 중력 = 0**.
    - 인과 메커니즘과 트레이드오프만 역번역 (억지 비유는 과감히 폐기).
 5. **Stage 2a/2b — 클린 컨텍스트 레드팀 트리아지(`PASS / HARDEN / KILL`) & 선택적 경화:**
@@ -185,14 +186,13 @@
 
 ---
 
-## 🚀 설치 및 사용법 (평문 파일 5개 · 외부 의존성 0)
+## 🚀 설치 및 사용법 (평문 파일 4개 · 외부 의존성 0)
 
-Sfumato 본체는 [`skill/sfumato/`](./skill/sfumato/) 안의 **직접 열어볼 수 있는 5개 파일**이 전부입니다:
+Sfumato 본체는 [`skill/sfumato/`](./skill/sfumato/) 안의 **직접 열어볼 수 있는 4개 파일**이 전부입니다:
 - `SKILL.md` — 스킬 지침, 멀티 에이전트 실행 가이드(Claude Code · Antigravity · Codex CLI) 및 워크플로
 - `references/prompt_templates.md` — 언어 중립(`{USER_LANGUAGE}`) Anchor · Explicit · Blind · Stage 2a 트리아지 · Stage 2b 경화 템플릿
 - `resources/domain_pool.json` — 11개 대분류 클러스터 × 74개 메커니즘 도메인(`66`개 Claude-safe, 클러스터당 6개 균등) + 극성 친화도 태그
 - `scripts/sample_domains.py` — 파이썬 표준 라이브러리만 사용하는 극성 인식 층화 샘플러 (네트워크 호출·파일 쓰기 없음)
-- `scripts/check_leak.py` — Track B 마스킹용 코드 검증 0-누출 검사기 (영문 단어 경계 + 한국어/CJK/키릴 부분 문자열 지원)
 
 저장소를 클론해 파일 내용을 확인한 뒤, 사용 중인 에이전트의 글로벌 스킬 폴더에 복사하면 바로 인식됩니다:
 
@@ -252,7 +252,7 @@ Sfumato는 2025~2026년 LLM 창의성 연구의 네 가지 흐름 위에 설계�
 - **Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation** — Nuo Chen 외, 2026 ([arXiv:2604.18005](https://arxiv.org/abs/2604.18005)): 밀집된 멀티에이전트 토론·합의 구조가 의미 다양성을 붕괴시킴을 입증 → Sfumato Stage 1의 엄격한 **무교신(zero-crosstalk) 병렬 격리** 근거.
 - **Unlocking LLM Creativity in Science through Analogical Reasoning** — Andrew Shen, Shaul Druckmann, James Zou, 2026 ([arXiv:2605.11258](https://arxiv.org/abs/2605.11258)): 구조적 교차 도메인 유추가 해법의 다양성과 참신성을 대폭 끌어올림을 검증.
 - **Assessing the Effect of Cross-Domain Mapping on Creativity in Humans and Large Language Models** — Qiawen Ella Liu, Marina Dubova, Henry Conklin, Takumi Harada, Thomas L. Griffiths, 2026 ([arXiv:2603.19087](https://arxiv.org/abs/2603.19087)): 프론티어 LLM은 출처 도메인이 충분히 멀고 구조적·기능적 관계를 이식할 때 독창성 향상을 얻음을 규명.
-- **Sfumato의 엔지니어링 기여:** *Explicit Analogy*(고타율·부분 동질화)와 *Blind Isomorphic Masking*(저타율·클리셰 중력 0·극단적 관점 전환) 사이의 **도메인 마스킹 트레이드오프**를 **Direct Anchor 하방 보장**, **극성 인식 코드 난수**, **코드 기반 0-누출 검증**, **클린 컨텍스트 레드팀 트리아지·선택적 경화**로 하나의 경량 워크플로에 통합했습니다.
+- **Sfumato의 엔지니어링 기여:** *Explicit Analogy*(고타율·부분 동질화)와 *Blind Isomorphic Masking*(저타율·클리셰 중력 0·극단적 관점 전환) 사이의 **도메인 마스킹 트레이드오프**를 **Direct Anchor 하방 보장**, **극성 인식 코드 난수**, **공유 골격·고유 제약 내재화 마스킹**, **클린 컨텍스트 레드팀 트리아지·선택적 경화**로 하나의 경량 워크플로에 통합했습니다.
 
 ---
 

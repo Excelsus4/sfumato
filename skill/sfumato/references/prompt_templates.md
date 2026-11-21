@@ -61,17 +61,19 @@ Format each proposal concisely with depth:
 
 ## 2. Track B — Blind Isomorphic Reframing
 
-### Step 2a. 3-Line Structural Skeleton & Code-Verified Zero-Leak Masking (Coordinator Performs Before Spawning)
-First, distill the problem into a **3-line domain-neutral Structural Skeleton** (zero original-industry words):
+### Step 2a. Shared 3-Line Structural Skeleton & Whole-Prompt Reread (Coordinator Performs Before Spawning)
+First, distill the problem once into a private **3-line domain-neutral Structural Skeleton** shared across all Blind domains (zero original-industry words):
 ```text
-- Actors & Incentive Polarity: <e.g., zero-sum rivals / two cooperative parties vs. a third-party mediator / novice creator vs. complex tool>
+- Actors, Cost-Bearer & Incentive Polarity: <who acts, who bears the downside, and whether actors are zero-sum rivals / cooperative / physical-loop / mediated by a neutral referee>
 - Core Asymmetry / Bottleneck: <exact cost, information, physics, or cognitive imbalance>
 - Why Static Controls Fail: <exact failure mode of obvious rules, filters, or tutorials>
 ```
-Then rewrite that skeleton entirely inside `{DOMAIN_NAME}` and verify:
-1. **Code-verified zero leaked vocabulary:** Extract 8–15 banned nouns/jargon from the original problem (e.g., for an SNS spam problem: `sns,app,post,account,spam,bot,dm,platform,user`; list irregular inflections explicitly, since ASCII matching covers base + plural/possessive `s`/`es`/`'s`) and run `python "<skill_dir>/scripts/check_leak.py" --terms "<banned_terms>" --text "<masked_scenario>"` (or `--file <masked_file>` / stdin). Do NOT spawn the Blind solver until it exits `0` (`PASS`).
-2. **Exact structural isomorphism:** Preserve topology, friction limits, failure modes, and asymmetric costs using 100% native nouns of `{DOMAIN_NAME}`.
-3. **Incentive polarity fidelity (CRITICAL):** Preserve whether the real actors are **adversarial / zero-sum**, **cooperative**, **physical-loop**, or **mediated by a neutral referee**. Never map zero-sum enemies onto cooperative institutions sharing a mutual ledger/bailout unless a real referee exists — polarity mismatch is the #1 cause of Track B back-translation failure.
+Check this skeleton against the original brief **before fanning out** — a mistaken cost-bearer or polarity spoils every Blind domain in the run.
+
+Then, for each Blind domain, rewrite that skeleton in `{USER_LANGUAGE}` as a standalone scenario a practitioner in `{DOMAIN_NAME}` could plausibly pose, and verify:
+1. **Native constraints (no separate cliché list):** Fold the failure modes of banned clichés directly into the scenario as natural physical, economic, or institutional constraints of `{DOMAIN_NAME}`. Keep the original brief, skeleton, and mapping private.
+2. **Exact structural isomorphism & incentive polarity fidelity (CRITICAL):** Preserve topology, friction limits, asymmetric costs, and **who bears each downside**. Never map zero-sum enemies onto cooperative institutions sharing a mutual ledger/bailout unless a real referee exists — polarity mismatch is the #1 cause of Track B back-translation failure.
+3. **Whole-prompt reread:** Read the complete outgoing Blind prompt once end-to-end before spawning: *(a) would a practitioner in `{DOMAIN_NAME}` recognize it as a real job, (b) did any source-domain jargon or product names slip in, and (c) does the same actor still bear the same cost?* Fix any slip in place.
 
 ### Step 2b. Blind Solver Subagent Prompt
 
@@ -82,7 +84,7 @@ Do NOT call any tools (no file reads, no web search, no shell commands). Answer 
 {ISOMORPHIC_MASKED_SCENARIO_IN_TARGET_DOMAIN}
 
 [Request]
-Do NOT propose obvious fixes like {MASKED_BANNED_CLICHES}. Using real principles from **{DOMAIN_NAME}**, propose **2** original, concrete designs that directly break the core constraint above.
+Using real principles from **{DOMAIN_NAME}**, propose **2** original, concrete designs that directly break the core constraint above without violating any of the scenario's operational limits.
 
 Format each design concisely with depth:
 - [Design Name]

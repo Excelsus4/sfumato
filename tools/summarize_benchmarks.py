@@ -464,6 +464,9 @@ def render_ablations(rows):
 
 
 def main(argv=None):
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description="Summarize Sfumato benchmark result JSON files.")
     ap.add_argument("directory", help="directory containing *.json result files")
     ap.add_argument("--strict", action="store_true", help="exit 1 if any file fails validation")

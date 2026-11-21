@@ -25,7 +25,7 @@
 
 > *"Sfumato" (Italian: evaporated like smoke) is Leonardo da Vinci's painting technique of dissolving harsh outlines so entirely new forms emerge. Leonardo didn't stay inside one discipline — he ported anatomy, fluid dynamics, fortification, and optics into each other.*
 >
-> **Sfumato** is an ultra-lightweight agent skill (`/sfumato`, `/sfm`) that does the same for frontier LLMs — **5 plain-text files, zero external RAG, zero fine-tuning, and zero third-party dependencies.**
+> **Sfumato** is an ultra-lightweight agent skill (`/sfumato`, `/sfm`) that does the same for frontier LLMs — **4 plain-text files, zero external RAG, zero fine-tuning, and zero third-party dependencies.**
 
 </div>
 
@@ -105,32 +105,33 @@ To guard against same-model self-preference, we ran **Claude Opus 5.5** as an in
 - **Cross-Model Judge Result:** **3 Wins (`MKT-DIS` 2–0, `WEB-SCRAPE` 2–0, `AI-ARCH` 2–0), 1 Split (`GAME-SNOWBALL` 1–1), 3 Losses (`UX-ONBOARD`, `OSS-PR`, `DOC-ROT` v1.2)** — **7 Sfumato vs. 7 Direct** (with 6/7 problems showing zero order bias).
 - **What the data honestly proves:**
   - **Model-invariant proven strength:** **9 / 9 undefeated exploration diversity (`1.76×` at K=4, `3.0×` at K=12)**, consistently unlocking structurally distinct mechanisms that Direct prompting never generates — and winning `2–0` across *both* Gemini and Claude judges on `MKT-DIS` and `WEB-SCRAPE` (plus `AI-ARCH` under Claude).
-  - **Honest limitations (`n=1` seed per problem):** Single-shot Top-1 win rate against a strong 4-run Direct Best-of-N baseline is near parity (`9:9` primary, `7:7` cross-model), and Track B Blind wins Top-1 less often than Track A Explicit (acting primarily as a zero-cliché wildcard and reframing generator). That is why **Sfumato v2.1 includes a Direct Anchor by default** in `dual-track` and `deep` modes — locking your quality floor (`≥ Direct`) while giving you 1.7–3.0× wider structural exploration.
+  - **Honest limitations (`n=1` seed per problem):** Single-shot Top-1 win rate against a strong 4-run Direct Best-of-N baseline is near parity (`9:9` primary, `7:7` cross-model), and Track B Blind wins Top-1 less often than Track A Explicit (acting primarily as a zero-cliché wildcard and reframing generator). That is why **Sfumato v2.2 includes a Direct Anchor by default** in `dual-track` and `deep` modes — locking your quality floor (`≥ Direct`) while giving you 1.7–3.0× wider structural exploration.
 - **Reproducible Logs & Execution Trace:**
   - Verify all 9 primary runs + both v2.0 Stage 2b ablations (`v2_ablation_*.json`) locally: `python tools/summarize_benchmarks.py benchmarks/v2 --strict` *(the separate Pool v2.0 run is logged in [`game_snowball_pool_v2_results.json`](./benchmarks/v2/ablations/game_snowball_pool_v2_results.json))*
   - Structured benchmark summaries & judge rationales: [`benchmarks/v2/`](./benchmarks/v2/)
   - Independent cross-model judge audit: [`benchmarks/v2/cross_model_judges/claude_on_gemini.json`](./benchmarks/v2/cross_model_judges/claude_on_gemini.json)
-  - End-to-end v2.1 execution trace (`sample_domains.py` → `check_leak.py` → 4 isolated solvers → Stage 2a `PASS/HARDEN/KILL` → Stage 2b Hardening): [`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
+  - Archived v2.1 end-to-end execution trace (`sample_domains.py` → 4 isolated solvers → Stage 2a `PASS/HARDEN/KILL` → Stage 2b Hardening; v2.2 retired the regex leak script shown in that archive in favor of shared-skeleton whole-prompt review): [`benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md`](./benchmarks/v2/transcripts/alert_fatigue_v2_1_full_transcript.md)
 
 ---
 
-## 🏛️ How Sfumato v2.1 Works: The *Domain-Masking Trade-Off*
+## 🏛️ How Sfumato v2.2 Works: The *Domain-Masking Trade-Off*
 
 Most cross-domain prompting papers rely only on **Explicit Analogy** (*"apply biology to solve marketplace churn"*). Because original-domain vocabulary stays in the prompt, the LLM still suffers **partial homogenization** back toward industry clichés.
 
 Conversely, **pure Blind Reframing** (erasing the original domain completely) breaks cliché gravity 100%, but has a lower hit-rate because some abstract solutions lose fidelity during back-translation.
 
-**Sfumato v2.1 pairs a Direct Anchor with both cross-domain tracks in isolated parallel — guarded by polarity-aware code RNG, code-verified zero-leak masking, and Clean-Context Red-Team Triage + Selective Hardening:**
+**Sfumato v2.2 pairs a Direct Anchor with both cross-domain tracks in isolated parallel — guarded by polarity-aware code RNG, shared-skeleton native-constraint masking, and Clean-Context Red-Team Triage + Selective Hardening:**
 
 <p align="center">
-  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.1 Architecture Diagram" width="100%" />
+  <img src="./assets/architecture_codex.svg" alt="Sfumato v2.2 Architecture Diagram" width="100%" />
 </p>
 
 1. **Polarity-Aware Cluster-Stratified Code RNG (`sample_domains.py`):** Never ask an LLM to "pick random domains" (it repeats *ants, jazz, and chess*). Sfumato samples from **74 mechanism-rich domains across 11 disjoint macro-clusters** using pure Python `random`, omits `mechanisms` hints by default (preventing intra-domain hint priming; opt-in via `--include-hints`), and supports `--polarity` (`adversarial | cooperative | physical_loop | human_ux | systems_ops`) so at least half of sampled domains share structural affinity while preserving cross-cluster breadth. Pass `--safe-profile claude` on Claude Code to keep **66 Claude-safe domains (exactly 6 per cluster across all 11 clusters)** with **0 safety refusals**.
 2. **Direct Anchor *(Default in `dual-track` & `deep` · Floor Guarantee)*:** Includes 1 isolated native-domain solver in the unlabeled pool so `max(Direct, Explicit, Blind) ≥ Direct` — never regressing on tightly coupled engineering or physics loops.
 3. **Track A — Explicit Analogy *(High Hit-Rate)*:** Original brief + assigned remote domain → surgical hits against concrete domain attack surfaces.
-4. **Track B — Blind Isomorphic Masking *(Max Ceiling · 3-Line Skeleton + `check_leak.py`)*:**
-   - Distill the problem into a **3-line domain-neutral Structural Skeleton** (*Actors & Incentive Polarity · Core Asymmetry · Why Static Controls Fail*), rewrite it inside the target field, and **verify 0 leaked original-domain terms via `scripts/check_leak.py`** before spawning.
+4. **Track B — Blind Isomorphic Masking *(Max Ceiling · Shared 3-Line Skeleton + Native Constraints)*:**
+   - Distill the problem once into a private **3-line domain-neutral Structural Skeleton** (*Actors, Cost-Bearer & Incentive Polarity · Core Asymmetry · Why Static Controls Fail*) and check cost-bearer/polarity fidelity against the brief before fanning out.
+   - Rewrite each Blind domain into a standalone practitioner scenario in `{USER_LANGUAGE}`, folding banned clichés directly into native physical/institutional constraints (no separate cliché slot), and reread the complete outgoing prompt for plausibility, zero accidentally pasted source jargon, and polarity preservation.
    - A fresh isolated subagent solves the masked twin purely inside the remote field — **physically incapable of emitting original-domain clichés.**
    - Back-translate only the causal mechanism & trade-off (ruthlessly drop strained fits).
 5. **Stage 2a/2b — Clean-Context Red-Team Triage (`PASS / HARDEN / KILL`) & Selective Hardening:**
@@ -185,14 +186,13 @@ Conversely, **pure Blind Reframing** (erasing the original domain completely) br
 
 ---
 
-## 🚀 Installation & Usage (5 Plain-Text Files · Zero Dependencies)
+## 🚀 Installation & Usage (4 Plain-Text Files · Zero Dependencies)
 
-Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **5 inspectable files**:
+Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **4 inspectable files**:
 - `SKILL.md` — skill instructions, multi-agent guide (Claude Code / Antigravity / Codex CLI) & workflow
 - `references/prompt_templates.md` — language-neutral (`{USER_LANGUAGE}`) Anchor, Explicit, Blind, Stage 2a Triage, and Stage 2b Hardening templates
 - `resources/domain_pool.json` — 74 curated mechanism-rich domains across 11 macro-clusters (`66` Claude-safe, balanced 6/cluster) with polarity affinities
 - `scripts/sample_domains.py` — pure Python stdlib stratified polarity-aware sampler (zero network calls, zero file writes)
-- `scripts/check_leak.py` — pure Python stdlib zero-leak vocabulary validator for Track B masking (ASCII word-boundary + CJK/Korean/Cyrillic substring matching)
 
 Clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:
 
@@ -252,7 +252,7 @@ Sfumato builds directly on four converging lines of 2025–2026 LLM creativity r
 - **Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation** — Nuo Chen et al., 2026 ([arXiv:2604.18005](https://arxiv.org/abs/2604.18005)): shows dense debate/consensus topologies crush semantic diversity; motivates Sfumato's strict **zero-crosstalk** parallel Stage 1.
 - **Unlocking LLM Creativity in Science through Analogical Reasoning** — Andrew Shen, Shaul Druckmann, James Zou, 2026 ([arXiv:2605.11258](https://arxiv.org/abs/2605.11258)): demonstrates substantial diversity and novelty gains from structural cross-domain analogies.
 - **Assessing the Effect of Cross-Domain Mapping on Creativity in Humans and Large Language Models** — Qiawen Ella Liu, Marina Dubova, Henry Conklin, Takumi Harada, Thomas L. Griffiths, 2026 ([arXiv:2603.19087](https://arxiv.org/abs/2603.19087)): shows frontier LLMs benefit from cross-domain mapping specifically when source domains are sufficiently remote and transfer relational/structural properties.
-- **Sfumato's Engineering Contribution:** Operationalizes the **Domain-Masking Trade-Off** between *Explicit Analogy* (high hit-rate, partial homogenization) and *Blind Isomorphic Masking* (lower hit-rate, zero cliché gravity, heavy-tail reframings), unified with a **Direct Anchor floor**, **polarity-aware code RNG**, **code-verified zero-leak masking**, and **Clean-Context Red-Team Triage + Selective Hardening**.
+- **Sfumato's Engineering Contribution:** Operationalizes the **Domain-Masking Trade-Off** between *Explicit Analogy* (high hit-rate, partial homogenization) and *Blind Isomorphic Masking* (lower hit-rate, zero cliché gravity, heavy-tail reframings), unified with a **Direct Anchor floor**, **polarity-aware code RNG**, **shared-skeleton native-constraint masking**, and **Clean-Context Red-Team Triage + Selective Hardening**.
 
 ---
 
