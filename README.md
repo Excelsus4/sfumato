@@ -167,42 +167,43 @@ Conversely, **pure Blind Reframing** (hiding the original problem completely) br
 
 ---
 
-## 🚀 Quick Start (Zero Dependencies)
+## 🚀 Installation & Usage (4 Plain-Text Files · Zero Dependencies)
 
-Sfumato is just **4 lightweight files** (`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`). Install in one command for **Claude Code** (including `/sfm` shortcut with `--safe-profile claude`), **Antigravity (`agy`)**, or **Codex CLI**:
+Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just **4 inspectable files**:
+- `SKILL.md` — skill instructions & workflow
+- `references/prompt_templates.md` — Explicit, Blind, and Red-Team templates
+- `resources/domain_pool.json` — 40 curated mechanism-rich domains across 8 macro-clusters
+- `scripts/sample_domains.py` — pure Python stdlib (`argparse`, `json`, `pathlib`, `random`, `sys`; zero network calls, zero file writes)
+
+Clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:
 
 ```bash
-# macOS / Linux — one-line install (auto-detects installed agents, or pass --target claude|agy|codex|all)
-curl -fsSL https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.sh | bash
-```
+git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
 
-```powershell
-# Windows PowerShell — one-line install
-irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1 | iex
+# Claude Code (+ optional /sfm shortcut with --safe-profile claude)
+cp -r skill/sfumato ~/.claude/skills/sfumato
+cp commands/sfm.md ~/.claude/commands/sfm.md
+
+# Antigravity (agy)
+cp -r skill/sfumato ~/.gemini/config/skills/sfumato
+
+# Codex CLI
+cp -r skill/sfumato ~/.codex/skills/sfumato
 ```
 
 <details>
-<summary>Local checkout with <code>--dry-run</code> preview or manual copy</summary>
+<summary>Optional local copy helper (<code>--dry-run</code> supported, after cloning)</summary>
 
 ```bash
-# Preview before installing (macOS / Linux)
-git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
+# macOS / Linux
 bash tools/install.sh --dry-run
-bash tools/install.sh --target all
+bash tools/install.sh --target claude   # or agy | codex | all | auto
 ```
 
 ```powershell
-# Preview before installing (Windows PowerShell)
-git clone https://github.com/Excelsus4/sfumato.git; Set-Location sfumato
+# Windows PowerShell
 .\tools\install.ps1 -DryRun
-.\tools\install.ps1 -Target all
-```
-
-```bash
-# Manual copy (zero scripts)
-cp -r skill/sfumato ~/.claude/skills/sfumato && cp commands/sfm.md ~/.claude/commands/sfm.md
-cp -r skill/sfumato ~/.gemini/config/skills/sfumato
-cp -r skill/sfumato ~/.codex/skills/sfumato
+.\tools\install.ps1 -Target claude      # or agy | codex | all | auto
 ```
 
 </details>

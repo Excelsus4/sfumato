@@ -167,45 +167,48 @@
 
 ---
 
-## 🚀 빠른 설치 및 사용법 (외부 의존성 0)
+## 🚀 설치 및 사용법 (평문 파일 4개 · 외부 의존성 0)
 
-단 4개 파일(`SKILL.md`, `domain_pool.json`, `sample_domains.py`, `prompt_templates.md`)만으로 **Claude Code**(`/sfm` 단축키 및 `--safe-profile claude` 자동 포함), **Antigravity (`agy`)**, **Codex CLI**에 한 줄로 설치됩니다.
+Sfumato 본체는 [`skill/sfumato/`](./skill/sfumato/) 안의 **직접 열어볼 수 있는 4개 파일**이 전부입니다:
+- `SKILL.md` — 스킬 지침 및 실행 흐름
+- `references/prompt_templates.md` — Explicit · Blind · Red-Team 프롬프트 템플릿
+- `resources/domain_pool.json` — 8개 대분류 클러스터 × 40개 메커니즘 도메인 풀
+- `scripts/sample_domains.py` — 파이썬 표준 라이브러리만 사용하는 층화 샘플러 (네트워크 호출·파일 쓰기 없음)
 
-```bash
-# macOS / Linux — 한 줄 설치 (설치된 에이전트 자동 감지 · --target claude|agy|codex|all 지원)
-curl -fsSL https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.sh | bash
-```
-
-```powershell
-# Windows PowerShell — 한 줄 설치
-irm https://raw.githubusercontent.com/Excelsus4/sfumato/main/tools/install.ps1 | iex
-```
-
-<details>
-<summary>로컬 클론 <code>--dry-run</code> 미리보기 및 수동 복사 설치</summary>
+저장소를 클론해 파일 내용을 확인한 뒤, 사용 중인 에이전트의 글로벌 스킬 폴더에 복사하면 바로 인식됩니다:
 
 ```bash
-# macOS / Linux 미리보기 후 설치
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato
-bash tools/install.sh --dry-run
-bash tools/install.sh --target all
-```
 
-```powershell
-# Windows PowerShell 미리보기 후 설치
-git clone https://github.com/Excelsus4/sfumato.git; Set-Location sfumato
-.\tools\install.ps1 -DryRun
-.\tools\install.ps1 -Target all
-```
+# Claude Code (+ --safe-profile claude가 적용된 /sfm 단축 커맨드)
+cp -r skill/sfumato ~/.claude/skills/sfumato
+cp commands/sfm.md ~/.claude/commands/sfm.md
 
-```bash
-# 수동 복사 (스크립트 없이 직접 설치)
-cp -r skill/sfumato ~/.claude/skills/sfumato && cp commands/sfm.md ~/.claude/commands/sfm.md
+# Antigravity (agy)
 cp -r skill/sfumato ~/.gemini/config/skills/sfumato
+
+# Codex CLI
 cp -r skill/sfumato ~/.codex/skills/sfumato
 ```
 
+<details>
+<summary>로컬 복사 도우미 스크립트 (클론 후 <code>--dry-run</code> 미리보기 지원)</summary>
+
+```bash
+# macOS / Linux
+bash tools/install.sh --dry-run
+bash tools/install.sh --target claude   # 또는 agy | codex | all | auto
+```
+
+```powershell
+# Windows PowerShell
+.\tools\install.ps1 -DryRun
+.\tools\install.ps1 -Target claude      # 또는 agy | codex | all | auto
+```
+
 </details>
+
+### 사용 예시
 
 ```text
 /sfm 비대칭 3진영 RTS에서 스노우볼링과 억지 고무줄을 동시에 해결할 새 메카닉 뽑아줘
