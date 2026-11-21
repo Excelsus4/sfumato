@@ -13,7 +13,7 @@
 ### *Dissolve domain boundaries. Break the Artificial Hivemind. Unlock Test-Time Scaling for Creativity.*
 
 <p>
-  <a href="./README.md"><strong>English</strong></a> · <a href="./README.ko.md">한국어</a>
+  <a href="./README.md"><strong>English</strong></a> · <a href="./README.ko.md">한국어</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
 <p>

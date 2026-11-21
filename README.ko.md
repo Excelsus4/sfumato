@@ -13,7 +13,7 @@
 ### *도메인의 경계를 지워 AI 동질화(Artificial Hivemind)를 깨는 초경량 창의성 플러그인*
 
 <p>
-  <a href="./README.md">English</a> · <a href="./README.ko.md"><strong>한국어</strong></a>
+  <a href="./README.md">English</a> · <a href="./README.ko.md"><strong>한국어</strong></a> · <a href="./README.ru.md">Русский</a> · <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
 <p>
