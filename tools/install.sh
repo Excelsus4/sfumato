@@ -74,10 +74,18 @@ if [ -z "$SOURCE" ]; then
   else
     command -v tar >/dev/null 2>&1 || { echo "error: tar is required" >&2; exit 1; }
     TMP_DIR="$(mktemp -d 2>/dev/null || mktemp -d -t sfumato)"
+    # Bounded network waits: a stalled peer or proxy must fail within minutes
+    # (so the EXIT trap cleans up), never hang silently.
     if command -v curl >/dev/null 2>&1; then
-      curl -fsSL "$REPO_TARBALL" -o "$TMP_DIR/src.tar.gz"
+      curl -fsSL --connect-timeout 30 --speed-limit 1 --speed-time 60 --max-time 600 \
+        "$REPO_TARBALL" -o "$TMP_DIR/src.tar.gz"
     elif command -v wget >/dev/null 2>&1; then
-      wget -qO "$TMP_DIR/src.tar.gz" "$REPO_TARBALL"
+      # -T is understood by GNU wget and BusyBox; GNU also retries 20x by default.
+      wget_opts="-q -T 60"
+      # (grep without -q reads all input, so pipefail never sees a SIGPIPE'd wget)
+      if wget --help 2>&1 | grep -- '--tries' >/dev/null; then wget_opts="$wget_opts --tries=2"; fi
+      # shellcheck disable=SC2086
+      wget $wget_opts -O "$TMP_DIR/src.tar.gz" "$REPO_TARBALL"
     else
       echo "error: curl or wget is required to download" >&2; exit 1
     fi
@@ -115,9 +123,18 @@ skill_dest() {
 for t in $TARGETS; do
   dest="$(skill_dest "$t")"
   log "[$t] skill -> $dest"
-  if [ -L "$dest" ]; then run rm -f "$dest"; elif [ -e "$dest" ]; then run rm -rf "$dest"; fi
+  # cp copies source permission bits, so a read-only source (Nix store,
+  # chmod -R a-w checkout) yields read-only copies. Restore owner write
+  # before removing an old install and after copying a new one.
+  if [ -L "$dest" ]; then
+    run rm -f "$dest"
+  elif [ -e "$dest" ]; then
+    run chmod -R u+w "$dest"
+    run rm -rf "$dest"
+  fi
   run mkdir -p "$dest"
   run cp -R "$SOURCE/skill/sfumato/." "$dest/"
+  run chmod -R u+w "$dest"
   if [ "$t" = "claude" ]; then
     cmd_dir="$HOME_DIR/.claude/commands"
     if [ "$SOURCE" = "<downloaded-archive>" ]; then
@@ -131,7 +148,10 @@ for t in $TARGETS; do
         if [ "$found_cmd" -eq 0 ]; then run mkdir -p "$cmd_dir"; found_cmd=1; fi
         cmd_dest="$cmd_dir/$(basename "$cmd_src")"
         log "[claude] command -> $cmd_dest"
+        # Replace (not overwrite in place): an earlier copy may be read-only.
+        run rm -f "$cmd_dest"
         run cp "$cmd_src" "$cmd_dest"
+        run chmod u+w "$cmd_dest"
       done
       if [ "$found_cmd" -eq 0 ]; then
         log "[claude] warning: no $SOURCE/commands/*.md found; skipping slash commands"

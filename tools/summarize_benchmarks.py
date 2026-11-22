@@ -26,6 +26,8 @@ ignored. ``blind_judges`` may also be a list of objects carrying an ``"order"`` 
 ("AB" / "BA"). ``winner`` is one of ``sfumato``, ``direct`` or ``tie``;
 ``scores`` is optional. Each score may be a plain number or an object with a
 numeric ``total`` (e.g. ``{"novelty": 9, "effectiveness": 5, "total": 18}``).
+Files must be strict JSON: ``NaN`` / ``Infinity`` and overflowing literals such as
+``1e400`` make a file unreadable. Fractional scores are summed as exact decimals.
 
 Cross-model multi-run containers (an object with a ``"results"`` list whose
 items carry benchmark fields, e.g. ``cross_model_claude.json``) are parsed too.
@@ -54,9 +56,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import re
 import sys
+from decimal import Decimal
 
 ARMS = ("direct", "sfumato")
 WINNERS = ("sfumato", "direct", "tie")
@@ -77,8 +81,22 @@ def _int(value, where):
 
 
 def _num(value, where):
-    if isinstance(value, bool) or not isinstance(value, (int, float)):
+    """Return a finite score as int or Decimal.
+
+    Floats become the Decimal of their shortest repr (the literal as written in
+    the JSON), so score sums are exact decimal arithmetic: 18.1 + 20.3 == 38.4,
+    and equal baseline/hardened sums give a delta of exactly 0.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
         raise SchemaError("%s must be a number (got %r)" % (where, value))
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise SchemaError("%s must be a finite number (got %r)" % (where, value))
+        return Decimal(repr(value))
+    if not value.is_finite():
+        raise SchemaError("%s must be a finite number (got %r)" % (where, value))
     return value
 
 
@@ -217,9 +235,21 @@ def outcome(result):
     return "Tie"
 
 
+def _reject_constant(name):
+    raise ValueError("non-finite number %s is not valid JSON" % name)
+
+
+def _finite_float(text):
+    value = float(text)
+    if not math.isfinite(value):  # overflowing literal such as 1e400
+        raise ValueError("number %s overflows to %r" % (text, value))
+    return value
+
+
 def _read_json(full):
+    """Load strict RFC 8259 JSON: NaN/Infinity and overflowing numbers are errors."""
     with open(full, "r", encoding="utf-8-sig") as fh:
-        return json.load(fh)
+        return json.load(fh, parse_constant=_reject_constant, parse_float=_finite_float)
 
 
 def load_dir(path, skipped=None):
@@ -275,7 +305,9 @@ def _multiplier(direct, sfumato):
 
 
 def _fmt(n):
-    return str(int(n)) if float(n).is_integer() else "%g" % n
+    if n == int(n):
+        return str(int(n))
+    return format(n.normalize(), "f") if isinstance(n, Decimal) else "%g" % n
 
 
 def _judge_cell(judge):

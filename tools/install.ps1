@@ -76,7 +76,13 @@ try {
             $tmpDir = Join-Path ([IO.Path]::GetTempPath()) ('sfumato-' + [Guid]::NewGuid().ToString('N'))
             New-Item -ItemType Directory -Path $tmpDir | Out-Null
             $zipPath = Join-Path $tmpDir 'src.zip'
-            Invoke-WebRequest -Uri $RepoZip -OutFile $zipPath -UseBasicParsing
+            # Bounded waits: a stalled peer must fail (and reach the finally cleanup),
+            # never hang. -TimeoutSec defaults to infinite; PowerShell 7.4+ also needs
+            # -OperationTimeoutSeconds to bound stalls while the body is streaming.
+            $iwr = @{ Uri = $RepoZip; OutFile = $zipPath; UseBasicParsing = $true; TimeoutSec = 60 }
+            $iwrCmdlet = Get-Command -Name Invoke-WebRequest -CommandType Cmdlet
+            if ($iwrCmdlet.Parameters.ContainsKey('OperationTimeoutSeconds')) { $iwr['OperationTimeoutSeconds'] = 60 }
+            Invoke-WebRequest @iwr
             Expand-Archive -LiteralPath $zipPath -DestinationPath $tmpDir -Force
             foreach ($d in @(Get-ChildItem -LiteralPath $tmpDir -Directory)) {
                 if (Test-SkillRoot $d.FullName) { $Source = $d.FullName; break }

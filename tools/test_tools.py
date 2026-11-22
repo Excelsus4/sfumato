@@ -260,6 +260,55 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("warning: ablations/v2_ablation_bad.json: missing required key(s): blind_judges", err)
         self.assertEqual(self._run("--strict")[0], 1)
 
+    def test_non_finite_numbers_rejected_under_strict(self):
+        good = json.dumps(_result("OK-1", 2, 4, 3, 4, "sfumato", "sfumato"))
+        for literal in ("NaN", "Infinity", "-Infinity", "1e400", "-1e400"):
+            with self.subTest(literal=literal):
+                for f in os.listdir(self.tmp):
+                    os.remove(os.path.join(self.tmp, f))
+                self._write("ok.json", None, raw=good)
+                bad = good.replace('"scores": {"sfumato": 24', '"scores": {"sfumato": ' + literal)
+                self.assertNotEqual(bad, good)
+                self._write("bad.json", None, raw=bad)
+                code, out, err = self._run("--strict")
+                self.assertEqual(code, 1, err)
+                self.assertIn("warning: bad.json: unreadable JSON", err)
+                self.assertNotIn("nan", out.lower())
+                self.assertNotIn("inf", out.lower())
+        # Ablation files get the same strict parsing.
+        os.makedirs(os.path.join(self.tmp, "ablations"))
+        with open(os.path.join(self.tmp, "ablations", "v2_ablation_nan.json"), "w") as f:
+            f.write('{"problem_id": "N", "baseline_v1_2": {"total_sfumato": NaN, "total_direct": 1},'
+                    ' "blind_judges": {"ab": {"sfumato": 1, "direct": 1, "winner": "tie"}}}')
+        os.remove(os.path.join(self.tmp, "bad.json"))
+        code, _, err = self._run("--strict")
+        self.assertEqual(code, 1)
+        self.assertIn("warning: ablations/v2_ablation_nan.json: unreadable JSON", err)
+
+    def test_non_finite_numbers_rejected_by_validate(self):
+        # Defense in depth for programmatic callers that bypass _read_json.
+        for value in (float("nan"), float("inf"), float("-inf")):
+            with self.subTest(value=value):
+                r = _result("X", 1, 2, 1, 2, "tie", "tie", ab_scores=(value, 1))
+                with self.assertRaisesRegex(sb.SchemaError, "finite"):
+                    sb.validate(r)
+
+    def test_ablation_equal_decimal_sums_render_zero_delta(self):
+        self._write("mkt.json", _result("MKT-DIS", 3, 8, 7, 8, "sfumato", "sfumato"))
+        os.makedirs(os.path.join(self.tmp, "ablations"))
+        abl = {"problem_id": "DRIFT",
+               "baseline_v1_2": {"total_sfumato": 38.4, "total_direct": 40.1},
+               "blind_judges": {
+                   "ab": {"sfumato_score": 18.1, "direct_score": 20.05, "winner": "direct"},
+                   "ba": {"sfumato_score": 20.3, "direct_score": 20.05, "winner": "direct"}}}
+        self.assertNotEqual(18.1 + 20.3, 38.4)  # the binary64 drift this guards against
+        with open(os.path.join(self.tmp, "ablations", "v2_ablation_drift.json"), "w") as f:
+            json.dump(abl, f)
+        code, out, err = self._run("--strict")
+        self.assertEqual(code, 0, err)
+        self.assertIn("| DRIFT | 38.4:40.1 | 38.4:40.1 | 0 | Direct 2-0 Win |", out)
+        self.assertNotIn("e-", out)
+
 
 class RealBenchmarksTests(unittest.TestCase):
     """Smoke test: benchmarks/v2 is the single source of truth for the README table."""
@@ -515,9 +564,10 @@ class InstallerTestBase(unittest.TestCase):
         self.fake_src = None
 
     def tearDown(self):
-        shutil.rmtree(self.home, ignore_errors=True)
-        if self.fake_src:
-            shutil.rmtree(self.fake_src, ignore_errors=True)
+        for path in (self.home, self.fake_src):
+            if path:
+                _make_tree_writable(path)
+                shutil.rmtree(path, ignore_errors=True)
 
     def make_fake_source(self, commands=("sfm.md", "sfm-max.md")):
         self.fake_src = tempfile.mkdtemp(prefix="sfm-src-")
@@ -617,6 +667,65 @@ class InstallPs1Tests(InstallerTestBase):
         self.assertNotEqual(p.returncode, 0)
         self.assertEqual(_tree(self.home), [])
 
+    def test_download_has_bounded_timeout_and_cleans_up(self):
+        # A standalone copy (no checkout next to it) takes the download path. A
+        # session-level function shadows the Invoke-WebRequest cmdlet, records the
+        # bound parameters, and fails like a stalled transfer timing out.
+        lone = tempfile.mkdtemp(prefix="sfm-lone-")
+        self.addCleanup(shutil.rmtree, lone, True)
+        script = os.path.join(lone, "install.ps1")
+        shutil.copy(self.SCRIPT, script)
+        log = os.path.join(lone, "iwr.log")
+        stub = (
+            "function Invoke-WebRequest { param($Uri, $OutFile, [switch]$UseBasicParsing, "
+            "$TimeoutSec, $OperationTimeoutSeconds) "
+            "Set-Content -LiteralPath '%s' -Value @(\"TimeoutSec=$TimeoutSec\", "
+            "\"OperationTimeoutSeconds=$OperationTimeoutSeconds\", \"OutFile=$OutFile\"); "
+            "throw 'simulated stalled transfer' }; "
+            "& '%s' -Target claude -HomeDir '%s'; exit 0" % (log, script, self.home))
+        p = subprocess.run([POWERSHELL, "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
+                            "-Command", stub], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=120)
+        self.assertIn("simulated stalled transfer", p.stdout + p.stderr)
+        with open(log, encoding="utf-8-sig") as f:
+            rec = dict(line.strip().split("=", 1) for line in f if "=" in line)
+        self.assertTrue(rec["TimeoutSec"].isdigit() and int(rec["TimeoutSec"]) > 0, rec)
+        if rec["OperationTimeoutSeconds"]:
+            self.assertGreater(int(rec["OperationTimeoutSeconds"]), 0)
+        # finally{} removed the temp download dir after the failure.
+        self.assertFalse(os.path.exists(os.path.dirname(rec["OutFile"])), rec["OutFile"])
+        self.assertEqual(_tree(self.home), [])
+
+    def test_reinstall_from_read_only_source(self):
+        src = self.make_fake_source()
+        _make_tree_read_only(src)
+        self.addCleanup(_make_tree_writable, src)
+        for _ in range(2):
+            p = self._ps("-Target", "claude", "-Source", src)
+            self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertCommandsInstalled(["sfm.md", "sfm-max.md"])
+
+
+def _make_tree_read_only(path):
+    # Files 0444 / dirs 0555 (on Windows os.chmod toggles the read-only attribute).
+    for root, dirs, files in os.walk(path, topdown=False):
+        for name in files:
+            os.chmod(os.path.join(root, name), 0o444)
+        for name in dirs:
+            os.chmod(os.path.join(root, name), 0o555)
+    os.chmod(path, 0o555)
+
+
+def _make_tree_writable(path):
+    if not os.path.exists(path):
+        return
+    os.chmod(path, 0o755)
+    for root, dirs, files in os.walk(path):
+        for name in dirs:
+            os.chmod(os.path.join(root, name), 0o755)
+        for name in files:
+            os.chmod(os.path.join(root, name), 0o644)
+
 
 def _bash_ok():
     if not BASH:
@@ -675,6 +784,65 @@ class InstallShTests(InstallerTestBase):
     def test_invalid_target_rejected(self):
         p = self._sh("--target", "bogus")
         self.assertEqual(p.returncode, 2)
+
+    def test_reinstall_from_read_only_source(self):
+        src = self.make_fake_source()
+        os.makedirs(os.path.join(src, "skill", "sfumato", "sub"))
+        with open(os.path.join(src, "skill", "sfumato", "sub", "ref.md"), "w") as f:
+            f.write("ref\n")
+        _make_tree_read_only(src)
+        self.addCleanup(_make_tree_writable, src)
+        sh_src = self._posix(src)
+        if subprocess.run([BASH, "-c", 'chmod -R a-w "$1"', "_", sh_src],
+                          capture_output=True, timeout=60).returncode != 0:
+            self.skipTest("chmod not usable")
+        for run in range(2):
+            p = self._sh("--target", "claude", "--source", sh_src)
+            self.assertEqual(p.returncode, 0, "run %d: %s" % (run + 1, p.stdout + p.stderr))
+        self.assertCommandsInstalled(["sfm.md", "sfm-max.md"])
+        skill = os.path.join(self.home, ".claude", "skills", "sfumato")
+        self.assertTrue(os.path.isfile(os.path.join(skill, "SKILL.md")))
+        self.assertTrue(os.path.isfile(os.path.join(skill, "sub", "ref.md")))
+        # The installation is left writable (owner can edit or remove it).
+        for root, dirs, files in os.walk(skill):
+            for name in dirs + files:
+                self.assertTrue(os.access(os.path.join(root, name), os.W_OK), name)
+        for name in os.listdir(os.path.join(self.home, ".claude", "commands")):
+            self.assertTrue(os.access(os.path.join(self.home, ".claude", "commands", name), os.W_OK))
+
+    def test_download_has_bounded_timeouts_and_cleans_up(self):
+        # Standalone copy -> download path. An exported shell function shadows
+        # curl, records its argv and fails like a timed-out transfer.
+        lone = tempfile.mkdtemp(prefix="sfm-lone-")
+        self.addCleanup(shutil.rmtree, lone, True)
+        script = os.path.join(lone, "install.sh")
+        shutil.copy(os.path.join(HERE, "install.sh"), script)
+        log = self._posix(os.path.join(lone, "curl.log"))
+        driver = ('curl() { printf "%s\\n" "$@" > "$LOG"; return 28; }; export -f curl; '
+                  'bash "$1" --target claude --home "$2"')
+        env = dict(os.environ, LOG=log)
+        p = subprocess.run([BASH, "-c", driver, "_", self._posix(script), self._posix(self.home)],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           timeout=120, env=env)
+        self.assertNotEqual(p.returncode, 0)
+        with open(os.path.join(lone, "curl.log"), encoding="utf-8") as f:
+            argv = f.read().split("\n")
+        for flag in ("--connect-timeout", "--max-time", "--speed-time"):
+            self.assertIn(flag, argv)
+            self.assertGreater(int(argv[argv.index(flag) + 1]), 0)
+        out_file = argv[argv.index("-o") + 1]
+        tmp_dir = subprocess.run([BASH, "-c", 'dirname "$1"', "_", out_file],
+                                 capture_output=True, text=True).stdout.strip()
+        self.assertEqual(subprocess.run([BASH, "-c", '[ ! -e "$1" ]', "_", tmp_dir]).returncode, 0,
+                         "EXIT trap did not remove " + tmp_dir)
+        self.assertEqual(_tree(self.home), [])
+
+    def test_wget_branch_bounds_timeout_and_retries(self):
+        # The wget branch is only reachable without curl; check its flags statically.
+        with open(os.path.join(HERE, "install.sh"), encoding="utf-8") as f:
+            text = f.read()
+        self.assertRegex(text, r'wget_opts="-q -T [1-9][0-9]*"')
+        self.assertRegex(text, r'--tries=[1-9]\b')
 
 
 if __name__ == "__main__":
