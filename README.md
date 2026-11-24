@@ -194,7 +194,12 @@ Everything Sfumato needs lives in [`skill/sfumato/`](./skill/sfumato/) — just 
 - `resources/domain_pool.json` — 74 curated mechanism-rich domains across 11 macro-clusters (`66` Claude-safe, balanced 6/cluster) with polarity affinities
 - `scripts/sample_domains.py` — pure Python stdlib stratified polarity-aware sampler (zero network calls, zero file writes)
 
-Clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:
+Install directly inside **Claude Code** via this repository's marketplace manifest, or clone, inspect the files, and copy `skill/sfumato` into your agent's global skills directory:
+
+```bash
+# Claude Code (one-step marketplace install, v2.1.275+)
+/plugin install sfumato --marketplace Excelsus4/sfumato
+```
 
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato

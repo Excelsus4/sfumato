@@ -3,7 +3,7 @@ description: Exhaustive Sfumato Tournament (opt-in only) — sweeps ALL eligible
 argument-hint: <high-stakes problem statement>
 ---
 
-Read and execute the `sfumato` skill (`~/.claude/skills/sfumato/SKILL.md`) in **explicit `max` mode (2-Round Cluster-Playoff Tournament)**.
+Read and execute the installed `sfumato` skill (from the active plugin's `skill/sfumato/SKILL.md` or `~/.claude/skills/sfumato/SKILL.md`) in **explicit `max` mode (2-Round Cluster-Playoff Tournament)**.
 
 **MANDATORY SAFETY GATE:**
 1. Always pass `--all --safe-profile claude` to `sample_domains.py` (66 safe domains across all 11 clusters — verified at 0 bio/cyber refusals in benchmarks).

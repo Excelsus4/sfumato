@@ -1,0 +1,22 @@
+{
+  "name": "sfumato",
+  "version": "2.2.0",
+  "description": "Dual-track cross-domain ideation (Direct Anchor + Explicit Analogy + Blind Isomorphic Masking + Clean-Context Red-Team) breaking LLM homogenization.",
+  "author": {
+    "name": "Excelsus4",
+    "url": "https://github.com/Excelsus4"
+  },
+  "homepage": "https://github.com/Excelsus4/sfumato",
+  "repository": "https://github.com/Excelsus4/sfumato",
+  "license": "MIT",
+  "keywords": [
+    "brainstorming",
+    "creativity",
+    "ai-agents",
+    "claude-code",
+    "prompt-engineering",
+    "agent-skills"
+  ],
+  "skills": "./skill",
+  "commands": "./commands"
+}

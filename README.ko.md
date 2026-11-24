@@ -194,7 +194,12 @@ Sfumato 본체는 [`skill/sfumato/`](./skill/sfumato/) 안의 **직접 열어볼
 - `resources/domain_pool.json` — 11개 대분류 클러스터 × 74개 메커니즘 도메인(`66`개 Claude-safe, 클러스터당 6개 균등) + 극성 친화도 태그
 - `scripts/sample_domains.py` — 파이썬 표준 라이브러리만 사용하는 극성 인식 층화 샘플러 (네트워크 호출·파일 쓰기 없음)
 
-저장소를 클론해 파일 내용을 확인한 뒤, 사용 중인 에이전트의 글로벌 스킬 폴더에 복사하면 바로 인식됩니다:
+**Claude Code**에서는 한 줄로 바로 설치하거나, 저장소를 클론해 파일 내용을 확인한 뒤 사용 중인 에이전트의 글로벌 스킬 폴더에 복사할 수 있습니다:
+
+```bash
+# Claude Code 원스텝 마켓플레이스 설치 (v2.1.275+)
+/plugin install sfumato --marketplace Excelsus4/sfumato
+```
 
 ```bash
 git clone https://github.com/Excelsus4/sfumato.git && cd sfumato

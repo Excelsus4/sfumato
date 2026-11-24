@@ -1,0 +1,32 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "excelsus4-sfumato",
+  "description": "Sfumato dual-track cross-domain ideation plugin for Claude Code.",
+  "owner": {
+    "name": "Excelsus4",
+    "url": "https://github.com/Excelsus4"
+  },
+  "plugins": [
+    {
+      "name": "sfumato",
+      "description": "Dual-track cross-domain ideation (Direct Anchor + Explicit Analogy + Blind Isomorphic Masking + Clean-Context Red-Team) breaking LLM homogenization.",
+      "version": "2.2.0",
+      "author": {
+        "name": "Excelsus4",
+        "url": "https://github.com/Excelsus4"
+      },
+      "homepage": "https://github.com/Excelsus4/sfumato",
+      "repository": "https://github.com/Excelsus4/sfumato",
+      "license": "MIT",
+      "keywords": [
+        "brainstorming",
+        "creativity",
+        "ai-agents",
+        "claude-code",
+        "prompt-engineering",
+        "agent-skills"
+      ],
+      "source": "./"
+    }
+  ]
+}
