@@ -261,6 +261,21 @@ Sfumato builds directly on four converging lines of 2025–2026 LLM creativity r
 
 ---
 
+## 🧩 Companion Tools & Design Lineage
+
+Sfumato is part of a lightweight **Renaissance Craft Quartet** of zero-dependency agent skills — each applying strict context boundaries to a different stage of building:
+
+| Tool | Stage | Isolation Axis | Focus |
+|---|---|---|---|
+| **[Sinopia](https://github.com/Excelsus4/sinopia)** (`/snp`) | **Pre-build** | Vertical *(register isolation)* | Plain-language intake + isolated senior review of a refined brief |
+| **Sfumato** (`/sfm`, *this repo*) | **Divergence** | Horizontal *(domain isolation)* | Dual-track cross-domain ideation breaking LLM homogenization |
+| **[Senato](https://github.com/Excelsus4/senato)** (`/snt`) | **Arbitration** | Stakeholder *(evidence isolation)* | Multi-seat trade-off deliberation with asymmetric evidence & preserved dissent |
+| **[Sprezzatura](https://github.com/Excelsus4/sprezzatura)** (`/spz`) | **Post-build QA** | Cluster *(evidence isolation)* | Read-only fault-cluster audit catching bugs that pass local tests |
+
+Licensed under the [MIT License](./LICENSE).
+
+---
+
 <div align="center">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Codex_Atlanticus.jpg" width="460" alt="Leonardo da Vinci — Codex Atlanticus" />
